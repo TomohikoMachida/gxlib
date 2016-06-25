@@ -128,6 +128,9 @@
     <ClCompile Include="..\..\src\visor\visorizer.cpp">
       <Filter>Source Files\src\visor</Filter>
     </ClCompile>
+    <ClCompile Include="..\..\gxLib\util\hitManager\CCollisionManager.cpp">
+      <Filter>Source Files\gxLib\util\hitManager</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="..\..\dqlib.h">
@@ -228,6 +231,9 @@
     </ClInclude>
     <ClInclude Include="..\..\src\visor\visorizer.h">
       <Filter>Source Files\src\visor</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\gxLib\util\hitManager\CCollisionManager.h">
+      <Filter>Source Files\gxLib\util\hitManager</Filter>
     </ClInclude>
   </ItemGroup>
   <ItemGroup>

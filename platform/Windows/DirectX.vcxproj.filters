@@ -125,6 +125,9 @@
     <ClCompile Include="..\..\gxLib\hard\win32cmn\CFileWave.cpp">
       <Filter>Source Files\gxLib\hard</Filter>
     </ClCompile>
+    <ClCompile Include="..\..\gxLib\util\hitManager\CCollisionManager.cpp">
+      <Filter>Source Files\gxLib\util\hitManager</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="..\..\dqlib.h">
@@ -210,6 +213,9 @@
     </ClInclude>
     <ClInclude Include="..\..\gxLib\hard\win32cmn\CFileWave.h">
       <Filter>Source Files\gxLib\hard</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\gxLib\util\hitManager\CCollisionManager.h">
+      <Filter>Source Files\gxLib\util\hitManager</Filter>
     </ClInclude>
   </ItemGroup>
   <ItemGroup>
