@@ -22,7 +22,7 @@ void Flip(){};
 void Resume(){};
 void Movie(){};
 void Clock(){};
-gxBool PadConfig( Sint32 padNo , Uint32 button ){};
+gxBool PadConfig(Sint32 padNo, Uint32 button) { return gxTrue; };
 
 
 HelloWorld *HelloWorld::s_pInstance = NULL;
