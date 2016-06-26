@@ -547,6 +547,8 @@ void HelloWorld::render( void *_pOdr )
 
 		case enOrderTypeNoneTexPolygon:
 			{
+				break;
+
 			    Size visibleSize = Director::getInstance()->getVisibleSize();
 
 				std::vector<Vec2> vecs;
@@ -753,16 +755,24 @@ void HelloWorld::Play()
 			{
 				//StopSound( ii );
 				Sint32 id = m_sRefSoundID[ ii ].playID;
-				CocosDenshion::SimpleAudioEngine::sharedEngine()->stopEffect( id );
+
+				if (ii == 0)
+				{
+					CocosDenshion::SimpleAudioEngine::sharedEngine()->stopBackgroundMusic();
+				}
+				else
+				{
+					CocosDenshion::SimpleAudioEngine::sharedEngine()->stopEffect(id);
+				}
 			}
 
 			if( pInfo->uStatus & enSoundReqLoad )
 			{
 				int fileID = -1;
 				
-				for( Sint32 ii=0; ii<MAX_SOUND_NUM; ii++ )
+				for( Sint32 jj=0; jj<MAX_SOUND_NUM; jj++ )
 				{
-					if( strcmp( soundFile[ii].fileName , pInfo->fileName ) == 0 )
+					if( strcmp( soundFile[jj].fileName , pInfo->fileName ) == 0 )
 					{
 						//既にある
 						fileID = ii;
@@ -774,9 +784,9 @@ void HelloWorld::Play()
 				{
 					//新規
 				
-					for( Sint32 ii=0; ii<MAX_SOUND_NUM; ii++ )
+					for( Sint32 jj=0; jj<MAX_SOUND_NUM; jj++ )
 					{
-						if( soundFile[ii].fileName[0] == 0x00 )
+						if( soundFile[jj].fileName[0] == 0x00 )
 						{
 							fileID = ii;
 							break;
@@ -789,8 +799,28 @@ void HelloWorld::Play()
 						continue;
 					}
 
+					if (soundFile[fileID].fileName[0])//pInfo->fileName[0] )
+					{
+						//既に音が入っている場合はその音を消す
+						if (ii == 0)
+						{
+							//CocosDenshion::SimpleAudioEngine::sharedEngine()->bgm willPlayBackgroundMusic();
+						}
+						else
+						{
+							CocosDenshion::SimpleAudioEngine::sharedEngine()->unloadEffect(soundFile[fileID].fileName);// pInfo->fileName );
+						}
+					}
+
 					//新規ファイル読み込み
-				    CocosDenshion::SimpleAudioEngine::sharedEngine()->preloadEffect( pInfo->fileName );
+					if (ii == 0 )
+					{
+						CocosDenshion::SimpleAudioEngine::sharedEngine()->preloadBackgroundMusic(pInfo->fileName);
+					}
+					else
+					{
+						CocosDenshion::SimpleAudioEngine::sharedEngine()->preloadEffect(pInfo->fileName);
+					}
 					sprintf( soundFile[fileID].fileName , "%s" , pInfo->fileName );
 					SAFE_DELETES( pInfo->m_pTempBuffer );
 					pInfo->m_uTempSize = 0;
@@ -800,18 +830,23 @@ void HelloWorld::Play()
 
 				//read( ii );
 				
-				if( pInfo->fileName[0] )
-				{
-					//既に音が入っている場合はその音を消す
-				    //CocosDenshion::SimpleAudioEngine::sharedEngine()->unloadEffect( pInfo->fileName );
-				}
 
 			}
 			if( pInfo->uStatus & enSoundReqPlay )
 			{
 				Sint32 n = m_sRefSoundID[ ii ].fileID;
-			    Sint32 id = CocosDenshion::SimpleAudioEngine::sharedEngine()->playEffect( soundFile[ n ].fileName , pInfo->bLoop );
-			    m_sRefSoundID[ ii ].playID = id;
+				Sint32 id = 0;
+
+				if (ii == 0 )
+				{
+					CocosDenshion::SimpleAudioEngine::sharedEngine()->playBackgroundMusic(soundFile[n].fileName, pInfo->bLoop );
+				}
+				else
+				{
+					id = CocosDenshion::SimpleAudioEngine::sharedEngine()->playEffect(soundFile[n].fileName, pInfo->bLoop);
+
+				}
+				m_sRefSoundID[ ii ].playID = id;
 			}
 
 			if( pInfo->uStatus & enSoundReqVolume )
