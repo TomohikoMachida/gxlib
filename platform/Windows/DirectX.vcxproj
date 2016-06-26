@@ -192,7 +192,6 @@
     <ClCompile Include="..\..\gxLib\util\Font\CFontManager.cpp" />
     <ClCompile Include="..\..\gxLib\util\gxImage\CGXImage.cpp" />
     <ClCompile Include="..\..\gxLib\util\gxUtil.cpp" />
-    <ClCompile Include="..\..\gxLib\util\hitManager\CCollisionManager.cpp" />
     <ClCompile Include="..\..\src\gameMain.cpp" />
     <ClCompile Include="..\..\src\visor\visorizer.cpp" />
   </ItemGroup>
@@ -224,7 +223,6 @@
     <ClInclude Include="..\..\gxLib\util\Font\CKanjiTbl.h" />
     <ClInclude Include="..\..\gxLib\util\gxImage\CGXImage.h" />
     <ClInclude Include="..\..\gxLib\util\gxUtil.h" />
-    <ClInclude Include="..\..\gxLib\util\hitManager\CCollisionManager.h" />
     <ClInclude Include="..\..\src\visor\visorizer.h" />
   </ItemGroup>
   <ItemGroup>
