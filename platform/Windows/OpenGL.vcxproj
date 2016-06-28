@@ -197,7 +197,7 @@
     <ClCompile Include="..\..\src\visor\visorizer.cpp" />
   </ItemGroup>
   <ItemGroup>
-    <ClInclude Include="..\..\dqlib.h" />
+    <ClInclude Include="..\..\gxlib.h" />
     <ClInclude Include="..\..\gxLib\gx.h" />
     <ClInclude Include="..\..\gxLib\gxDebug.h" />
     <ClInclude Include="..\..\gxLib\gxMovieManager.h" />

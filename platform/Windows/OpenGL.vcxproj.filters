@@ -130,9 +130,6 @@
     </ClCompile>
   </ItemGroup>
   <ItemGroup>
-    <ClInclude Include="..\..\dqlib.h">
-      <Filter>Source Files</Filter>
-    </ClInclude>
     <ClInclude Include="..\..\gxLib\gxSoundManager.h">
       <Filter>Source Files\gxLib</Filter>
     </ClInclude>
@@ -228,6 +225,9 @@
     </ClInclude>
     <ClInclude Include="..\..\src\visor\visorizer.h">
       <Filter>Source Files\src\visor</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\gxlib.h">
+      <Filter>Source Files</Filter>
     </ClInclude>
   </ItemGroup>
   <ItemGroup>
