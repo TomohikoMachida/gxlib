@@ -71,7 +71,7 @@
   <PropertyGroup Label="UserMacros" />
   <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">
     <LinkIncremental>true</LinkIncremental>
-    <IncludePath>$(VC_IncludePath);$(WindowsSDK_IncludePath);$(SolutionDir)\;$(SolutionDir)\platform\Windows\include\;$(SolutionDir)\src;$(SolutionDir)\platform\Windows\include\OpenCV;D:\dev\gxLib\platform\Windows\include\directx9</IncludePath>
+    <IncludePath>$(VC_IncludePath);$(WindowsSDK_IncludePath);$(SolutionDir)\;$(SolutionDir)\platform\Windows\include\;$(SolutionDir)\src;$(SolutionDir)\platform\Windows\include\OpenCV;$(SolutionDir)\platform\Windows\include\directx9</IncludePath>
     <LibraryPath>$(VC_LibraryPath_x86);$(WindowsSDK_LibraryPath_x86);$(NETFXKitsDir)Lib\um\x86;$(SolutionDir)\platform\Windows\lib;$(SolutionDir)\platform\Windows\lib\directx9\x86</LibraryPath>
     <OutDir>$(SolutionDir)run\</OutDir>
     <IntDir>$(Configuration)\$(Platform)\</IntDir>
@@ -79,7 +79,7 @@
   </PropertyGroup>
   <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">
     <LinkIncremental>true</LinkIncremental>
-    <IncludePath>$(VC_IncludePath);$(WindowsSDK_IncludePath);$(SolutionDir)\;$(SolutionDir)\platform\Windows\include\;$(SolutionDir)\src;$(SolutionDir)\platform\Windows\include\OpenCV;D:\dev\gxLib\platform\Windows\include\directx9</IncludePath>
+    <IncludePath>$(VC_IncludePath);$(WindowsSDK_IncludePath);$(SolutionDir)\;$(SolutionDir)\platform\Windows\include\;$(SolutionDir)\src;$(SolutionDir)\platform\Windows\include\OpenCV;$(SolutionDir)\platform\Windows\include\directx9</IncludePath>
     <LibraryPath>$(VC_LibraryPath_x64);$(WindowsSDK_LibraryPath_x64);$(NETFXKitsDir)Lib\um\x64;$(SolutionDir)\platform\Windows\lib;$(SolutionDir)\platform\Windows\lib\directx9\x64</LibraryPath>
     <OutDir>$(SolutionDir)run\</OutDir>
     <IntDir>$(Configuration)\$(Platform)\</IntDir>
@@ -87,7 +87,7 @@
   </PropertyGroup>
   <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Release|Win32'">
     <LinkIncremental>false</LinkIncremental>
-    <IncludePath>$(VC_IncludePath);$(WindowsSDK_IncludePath);$(SolutionDir)\;$(SolutionDir)\platform\Windows\include\;$(SolutionDir)\src;$(SolutionDir)\platform\Windows\include\OpenCV;D:\dev\gxLib\platform\Windows\include\directx9</IncludePath>
+    <IncludePath>$(VC_IncludePath);$(WindowsSDK_IncludePath);$(SolutionDir)\;$(SolutionDir)\platform\Windows\include\;$(SolutionDir)\src;$(SolutionDir)\platform\Windows\include\OpenCV;$(SolutionDir)\platform\Windows\include\directx9</IncludePath>
     <LibraryPath>$(VC_LibraryPath_x86);$(WindowsSDK_LibraryPath_x86);$(NETFXKitsDir)Lib\um\x86;$(SolutionDir)\platform\Windows\lib;$(SolutionDir)\platform\Windows\lib\directx9\x86</LibraryPath>
     <OutDir>$(SolutionDir)run\</OutDir>
     <IntDir>$(Configuration)\$(Platform)\</IntDir>
@@ -95,7 +95,7 @@
   </PropertyGroup>
   <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Release|x64'">
     <LinkIncremental>false</LinkIncremental>
-    <IncludePath>$(VC_IncludePath);$(WindowsSDK_IncludePath);$(SolutionDir)\;$(SolutionDir)\platform\Windows\include\;$(SolutionDir)\src;$(SolutionDir)\platform\Windows\include\OpenCV;D:\dev\gxLib\platform\Windows\include\directx9</IncludePath>
+    <IncludePath>$(VC_IncludePath);$(WindowsSDK_IncludePath);$(SolutionDir)\;$(SolutionDir)\platform\Windows\include\;$(SolutionDir)\src;$(SolutionDir)\platform\Windows\include\OpenCV;$(SolutionDir)\platform\Windows\include\directx9</IncludePath>
     <LibraryPath>$(VC_LibraryPath_x64);$(WindowsSDK_LibraryPath_x64);$(NETFXKitsDir)Lib\um\x64;$(SolutionDir)\platform\Windows\lib;$(SolutionDir)\platform\Windows\lib\directx9\x64</LibraryPath>
     <OutDir>$(SolutionDir)run\</OutDir>
     <IntDir>$(Configuration)\$(Platform)\</IntDir>
