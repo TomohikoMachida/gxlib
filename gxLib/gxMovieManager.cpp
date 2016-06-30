@@ -118,8 +118,8 @@ void CMovieManager::Action()
 #else
 				argb = ARGB(0xff, pData[n * 3 + 2], pData[n * 3 + 1], pData[n * 3 + 0]);
 #endif
-//				pTga->SetARGB( offsetX + x, offsetY + y, argb );
-				pTga->SetRGB( offsetX + x, offsetY + y, argb );
+				pTga->SetARGB( offsetX + x, offsetY + y, argb );
+//				pTga->SetRGB( offsetX + x, offsetY + y, argb );
 
 				n++;
 			}

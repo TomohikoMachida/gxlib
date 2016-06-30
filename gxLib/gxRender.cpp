@@ -771,7 +771,7 @@ INLINE void CRender::drawLineStrip( StOrder* pOdr )
 		Pt.y *= pOdr->sy;
 
 		//回転処理
-		Sint32 rot = pOdr->rz;
+		Float32 rot = pOdr->rz;
 
 		gxUtil::RotationPoint( &Pt , rot );
 
@@ -840,7 +840,7 @@ INLINE void CRender::spriteRotationScale( StOrder* pOdr )
 		Pt.y *= ABS(pOdr->sy);
 
 		//回転処理
-		Sint32 rot = pOdr->rz;
+		Float32 rot = pOdr->rz;
 
 		gxUtil::RotationPoint( &Pt , rot );
 

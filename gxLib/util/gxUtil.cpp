@@ -622,7 +622,7 @@ Uint32 gxUtil::PutFreeSprite(
 
 		if( bDebug )
 		{
-			gxLib::DrawBox( pos[ii].x -3 +x, pos[ii].y -3+y , pos[ii].x +3 +x, pos[ii].y +3 +y, 100 ,ATR_DFLT , debARGB );
+			gxLib::DrawBox( pos[ii].x -3 +x, pos[ii].y -3+y , pos[ii].x +3 +x, pos[ii].y +3 +y, PRIORITY_MAX,gxTrue , ATR_DFLT , 0xffffffff );
 		}
 	}
 
@@ -649,10 +649,10 @@ Uint32 gxUtil::PutFreeSprite(
 
 		if( bDebug )
 		{
-			gxLib::DrawPoint( pMat[ ii             ].x+x , pMat[ ii                ].y+y , 100 ,ATR_DFLT , debARGB );
-			gxLib::DrawPoint( pMat[ (div-1)*div+ii ].x+x , pMat[(div - 1)*div + ii ].y+y , 100 ,ATR_DFLT , debARGB );
-			gxLib::DrawPoint( pMat[ ii*div         ].x+x , pMat[ ii*div ].y+y , 100 ,ATR_DFLT , debARGB );
-			gxLib::DrawPoint( pMat[ ii*div+(div-1) ].x+x , pMat[ ii*div+(div-1) ].y+y , 100 ,ATR_DFLT , debARGB );
+			gxLib::DrawPoint( pMat[ ii             ].x+x , pMat[ ii                ].y+y , prio+1 ,ATR_DFLT , debARGB );
+			gxLib::DrawPoint( pMat[ (div-1)*div+ii ].x+x , pMat[(div - 1)*div + ii ].y+y , prio+1 ,ATR_DFLT , debARGB );
+			gxLib::DrawPoint( pMat[ ii*div         ].x+x , pMat[ ii*div ].y+y            , prio+1 ,ATR_DFLT , debARGB );
+			gxLib::DrawPoint( pMat[ ii*div+(div-1) ].x+x , pMat[ ii*div+(div-1) ].y+y    , prio+1 ,ATR_DFLT , debARGB );
 		}
 	}
 
@@ -717,15 +717,15 @@ Uint32 gxUtil::PutFreeSprite(
 					pMat[ p1 ].x+x , pMat[ p1 ].y+y ,	pTx[p1].x , pTx[p1].y,
 					pMat[ p2 ].x+x , pMat[ p2 ].y+y ,	pTx[p2].x , pTx[p2].y,
 					pMat[ p4 ].x+x , pMat[ p4 ].y+y ,	pTx[p4].x , pTx[p4].y,
-					0,
-					prio ,ATR_DFLT , ARGB_DFLT );
+					tpg,
+					prio ,atr , argb );
 
 			gxLib::PutTriangle(
 					pMat[ p2 ].x+x , pMat[ p2 ].y+y ,	pTx[p2].x , pTx[p2].y,
 					pMat[ p4 ].x+x , pMat[ p4 ].y+y ,	pTx[p4].x , pTx[p4].y,
 					pMat[ p3 ].x+x , pMat[ p3 ].y+y ,	pTx[p3].x , pTx[p3].y,
-					0,
-					prio ,ATR_DFLT , ARGB_DFLT );
+					tpg,
+					prio ,atr , argb );
 
 		}
 	}
