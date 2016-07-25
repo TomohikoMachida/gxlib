@@ -26,8 +26,8 @@
 //#define PLATFORM_IOS
 //#define PLATFORM_COCOS2DX
 
-#define WINDOW_W (320)//320)
-#define WINDOW_H (320)//480)
+#define WINDOW_W (960)	//(320)//320)
+#define WINDOW_H (560)	//(320)//480)
 
 #define MAX_ORDER_NUM (4096)	//グラフィックのオーダー（同時）限界数
 #define MAX_TEXT_NUM  (256)		//gxLib::Printfでリクエスト可能な限界数
@@ -408,10 +408,10 @@ public:
 		Float32 r  = 0,	Float32 sx = 1.0f,	Float32 sy = 1.0f	);
 
 	//テクスチャをファイルからマスターテクスチャへ読み込みます
-	static gxBool LoadTexture ( Uint32 texPage , const gxChar* fileName , Uint32 colorKey=0xff00ff00 ,Uint32 ox = 0 , Uint32 oy = 0);
+	static gxBool LoadTexture ( Uint32 texPage , const gxChar* fileName , Uint32 colorKey=0xff00ff00 ,Uint32 ox = 0 , Uint32 oy = 0 , Sint32 *w=NULL_POINTER , Sint32 *h=NULL_POINTER  );
 
 	//テクスチャをメモリからマスターテクスチャへ読み込みます
-	static gxBool ReadTexture ( Uint32 texPage , const Uint8* pBuffer , Uint32 pSize , Uint32 colorKey=0xff00ff00 );
+	static gxBool ReadTexture ( Uint32 texPage , const Uint8* pBuffer , Uint32 pSize , Uint32 colorKey=0xff00ff00 ,Uint32 ox = 0 , Uint32 oy = 0 , Sint32 *w=NULL_POINTER , Sint32 *h=NULL_POINTER );
 
 	//マスターテクスチャをVRAMに転送します
 	//※処理が重たいので、更新時にすべてのテクスチャを読み込んでから１回だけ行います

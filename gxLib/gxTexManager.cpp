@@ -46,26 +46,28 @@ gxBool CTexManager::save( Sint32 bankNo )
 }
 
 
-gxBool CTexManager::LoadTexture( Sint32 tpg , const gxChar* fileName , Uint32 colorKey , Uint32 ox , Uint32 oy )
+gxBool CTexManager::LoadTexture( Sint32 tpg , const gxChar* fileName , Uint32 colorKey , Uint32 ox , Uint32 oy ,Sint32 *w , Sint32 *h )
 {
 	//画像ファイルの読み込み
 	//BMP,TGAに対応
 
 	CFileTarga tga;
+
 	gxLib::DebugLog("[テクスチャ]%s",fileName );
+
 	if( !tga.LoadFile( fileName , colorKey ) )
 	{
 		gxLib::DebugLog("ファイルが見つからなかった" );
 		return gxFalse;
 	}
 
-	addTexture( tpg , &tga ,colorKey , ox , oy );
+	addTexture( tpg , &tga ,colorKey , ox , oy , w , h );
 
 	return gxTrue;
 }
 
 
-gxBool CTexManager::addTexture( Sint32 tpg ,CFileTarga* pTga , Uint32 colorKey ,Uint32 ox , Uint32 oy )
+gxBool CTexManager::addTexture( Sint32 tpg ,CFileTarga* pTga , Uint32 colorKey ,Uint32 ox , Uint32 oy , Sint32 *pTexW , Sint32 *pTexH )
 {
 	//テクスチャをVRAMバッファへ更新する
 
@@ -74,6 +76,9 @@ gxBool CTexManager::addTexture( Sint32 tpg ,CFileTarga* pTga , Uint32 colorKey ,
 	Uint32 h  = (enMasterHeight / enPageWidth);
 	Uint32 u  = enPageWidth  * (tpg%w);
 	Uint32 v  = enPageHeight * ((tpg/w)%h);
+
+	if( pTexW ) *pTexW = w;
+	if( pTexH ) *pTexH = h;
 
 	for(Uint32 x=0;x<pTga->GetWidth(); x++)
 	{

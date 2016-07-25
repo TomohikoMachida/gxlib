@@ -10,7 +10,6 @@
 #define MaxCollisionNum (1024+512)
 
 class CCollisionManager;
-extern CCollisionManager *g_pCollisionManager;
 
 enum EnCollisionID {
 	enCollisionID_None,
@@ -128,7 +127,7 @@ public:
 			m_pCollision[i] = NULL;
 			m_pStCollisionBackup[i] = NULL;
 		}
-		g_pCollisionManager = this;
+		//s_pInstance = this;
 		m_sMaxCollision = 0;
 		m_sCollisionNum = 0;
 
@@ -145,6 +144,7 @@ public:
 		}
 	};
 
+/*
 	static CCollisionManager* GetInstance()
 	{
 		if( g_pCollisionManager )
@@ -157,7 +157,7 @@ public:
 		}
 		return g_pCollisionManager;
 	}
-
+*/
 	Sint32 SetRegist(CCollision* p);
 	void UnRegist(Sint32 id);
 	void Action();
@@ -185,7 +185,11 @@ public:
 	Sint32 m_sMaxCollision;
 	Sint32 m_sCollisionNum;
 
+	SINGLETON_DECLARE(CCollisionManager);
+
+
 private:
+
 
 	CCollision *m_pStCollisionBackup[MaxCollisionNum];
 };

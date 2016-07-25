@@ -370,20 +370,20 @@ Uint32 gxLib::DrawBox(
 }
 
 
-gxBool gxLib::LoadTexture( Uint32 texPage , const gxChar* fileName , Uint32 colorKey , Uint32 ox , Uint32 oy )
+gxBool gxLib::LoadTexture( Uint32 texPage , const gxChar* fileName , Uint32 colorKey , Uint32 ox , Uint32 oy , Sint32 *w , Sint32 *h )
 {
-	CTexManager::GetInstance()->LoadTexture( texPage , fileName , colorKey , ox , oy );
+	CTexManager::GetInstance()->LoadTexture( texPage , fileName , colorKey , ox , oy , w , h );
 
 	return gxTrue;
 }
 
-gxBool gxLib::ReadTexture( Uint32 texPage , const Uint8* pBuffer , Uint32 pSize , Uint32 colorKey )
+gxBool gxLib::ReadTexture( Uint32 texPage , const Uint8* pBuffer , Uint32 pSize , Uint32 colorKey , Uint32 ox , Uint32 oy , Sint32 *w , Sint32 *h )
 {
 	CFileTarga tga;
 
 	tga.ReadFile( pBuffer , pSize , colorKey );
 
-	CTexManager::GetInstance()->addTexture( texPage , &tga ,colorKey );//pBuffer , Uint32 w , Uint32 h);
+	CTexManager::GetInstance()->addTexture( texPage , &tga ,colorKey , ox , oy , w , h );
 
 	return gxTrue;
 }

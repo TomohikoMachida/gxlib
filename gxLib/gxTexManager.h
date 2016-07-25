@@ -16,7 +16,7 @@ class CTexManager
 public:
 
 	enum {
-		enMasterPageNum = 16,
+		enMasterPageNum = 512,//16,
 		enMasterWidth   = 256*MASTER_TEXTURE_NUM,
 		enMasterHeight  = 256*MASTER_TEXTURE_NUM,
 		enPageWidth     = 256,
@@ -34,7 +34,7 @@ public:
 	}
 
 	//テクスチャのロード
-	gxBool LoadTexture( Sint32 tpg , const gxChar* fileName , Uint32 colorKey=0xff00ff00 , Uint32 ox = 0, Uint32 oy = 0 );
+	gxBool LoadTexture( Sint32 tpg , const gxChar* fileName , Uint32 colorKey=0xff00ff00 , Uint32 ox = 0, Uint32 oy = 0 , Sint32 *w=NULL , Sint32 *h=NULL );
 
 	//バンクのイメージファイル
 	Uint8* GetFileImage(Sint32 n)
@@ -59,7 +59,7 @@ public:
 	// ------------------------------------------
 
 	//テクスチャの追加
-	gxBool addTexture( Sint32 tpg ,CFileTarga* pTga , Uint32 colorKey , Uint32 ox = 0, Uint32 oy = 0 );
+	gxBool addTexture( Sint32 tpg ,CFileTarga* pTga , Uint32 colorKey , Uint32 ox = 0, Uint32 oy = 0 , Sint32 *w=NULL , Sint32 *h=NULL );
 
 	//テクスチャイメージの保存
 	gxBool save( Sint32 tpg );

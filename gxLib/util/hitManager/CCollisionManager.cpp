@@ -8,7 +8,8 @@
 #include <gxLib.h>
 #include "CCollisionManager.h"
 
-CCollisionManager *g_pCollisionManager = NULL;
+//CCollisionManager *g_pCollisionManager = NULL;
+SINGLETON_DECLARE_INSTANCE(CCollisionManager);
 
 Sint32 CCollisionManager::SetRegist(CCollision* p)
 {
