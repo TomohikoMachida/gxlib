@@ -28,7 +28,7 @@ Sint32 CCollisionManager::SetRegist(CCollision* p)
 	}
 
 //	ASSERT( i<MaxCollisionNum );
-#ifdef _DEBUG
+#ifdef GX_DEBUG
 	gxLib::DebugLog( "あたり判定に充分な空きがない" );
 #endif
 	return 0;

@@ -165,13 +165,17 @@ void CGLDraw::render()
 	CCommandList* pCommand = NULL;
 	Sint32 sCommandMax      = CRender::GetInstance()->GetCommandNum();
 	StCustomVertex *pVertex = CRender::GetInstance()->GetVertex(0);
-	//Uint32         *pIndex  = CRender::GetInstance()->GetIndexBuffer32(0);
-	Uint16         *pIndex  = CRender::GetInstance()->GetIndexBuffer(0);
+
+#if INDEXBUFFER_BIT == 32
+	Uint32         *pIndex  = CRender::GetInstance()->GetIndexBuffer( 0 );
+#else
+	Uint16         *pIndex  = CRender::GetInstance()->GetIndexBuffer( 0 );
+#endif
 
 	Sint32 debug = 0;
 
 
-#ifdef _DEBUG
+#ifdef GX_DEBUG
 	switch( glGetError() ){
 	case GL_NO_ERROR:
 		break;

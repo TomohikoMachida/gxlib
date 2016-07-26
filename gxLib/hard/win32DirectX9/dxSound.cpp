@@ -22,7 +22,7 @@
 
 SINGLETON_DECLARE_INSTANCE( CDxSound )
 
-#define SOUND_THREAD
+//#define SOUND_THREAD
 
 gxBool g_bThreadEnable = gxFalse;
 void ThreadFunc( void* n );
@@ -320,6 +320,7 @@ gxBool CDxSound::read( Uint32 no )
 
 	if( pWaveBuffer == NULL )
 	{
+		SAFE_DELETE( CSoundManager::GetInstance()->GetPlayInfo( no )->m_pWave );
 		gxLib::DebugLog("gxLib::pWaveBufferがNULL。ファイルないかも。");
 		goto EXIT_LOAD;
 	}
@@ -528,6 +529,11 @@ Sint32 CDxSound::getFormat( Uint8* pData )
 {
 	//ファイルフォーマットからOggかRiffの判断をする
 	char str[32];
+
+	if ( pData == NULL )
+	{
+		return enSoundFormatUNKNOWN;
+	}
 
 	memcpy( str , pData , 0x04 );
 	str[4] = 0x00;

@@ -102,7 +102,7 @@ void CActManager::Regist(CAction* pAct)
 		}
 	}
 
-#ifdef _DEBUG
+#ifdef GX_DEBUG
 	gxLib::DebugLog( "Action登録に充分な空きがない" );
 #endif
 

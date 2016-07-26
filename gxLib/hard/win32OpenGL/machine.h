@@ -33,6 +33,7 @@
 
 #define DEBUG_FONT_SIZE (12)					//デバッグ用のフォントサイズ 12がデフォ
 #define DEBUG_FONT_NAME "M+2VM+IPAG circle"		//デバッグ用のフォント種類
+#define INDEXBUFFER_BIT (32)
 
 #pragma warning(disable : 4244)
 #pragma warning(disable : 4996)
@@ -94,9 +95,9 @@ class CCommandList
 {
 public:
 
-	Uint16 eCommand;
-	Uint16 arg[4];
-	Sint16 x,y;
+	Uint32 eCommand;
+	Uint32 arg[4];
+	Sint32 x,y;
 	void*  pString;
 	Float32 opt;
 private:

@@ -75,6 +75,8 @@ void gxDebug::CheckEnd()
 
 	m_stInfo.OrderNum    = COrderManager::GetInstance()->GetOrderNum();
 	m_stInfo.SubOrderNum = COrderManager::GetInstance()->GetSubOrderNum();
+	m_stInfo.vtx_max     = CRender::GetInstance()->GetVertexNum();
+	m_stInfo.idx_max     = CRender::GetInstance()->GetIndexNum();
 
 
 	Uint32 now = gxLib::GetTime();
@@ -108,9 +110,12 @@ void gxDebug::Draw()
 
 	gxLib::DrawBox( ax , ay , ax + 100 , ay + 100 , az , gxTrue , ATR_ALPHA_MINUS , 0x80ffffff );
 	gxLib::Printf( ax+8 , ay + 12*0+8 , az , ATR_DFLT , 0xffffffff , "fps %.2f" , m_stInfo.fps );
-	gxLib::Printf( ax+8 , ay + 12*1+8 , az , ATR_DFLT , 0xffffffff , "Order %d" , m_stInfo.OrderNum + m_stInfo.SubOrderNum -4  );
-	gxLib::Printf( ax+8 , ay + 12*2+8 , az , ATR_DFLT , 0xffffffff , "Sub   %d" , m_stInfo.SubOrderNum );
-/*
+	gxLib::Printf( ax+8 , ay + 12*1+8 , az , ATR_DFLT , 0xffffffff , "Order %d" , m_stInfo.OrderNum + m_stInfo.SubOrderNum -6  );
+	gxLib::Printf( ax+8 , ay + 12*2+8 , az , ATR_DFLT , 0xffffffff , "Sub   %d (%d%%)" , m_stInfo.SubOrderNum  , 100*m_stInfo.SubOrderNum / (m_stInfo.OrderNum + m_stInfo.SubOrderNum -6) );
+	gxLib::Printf( ax+8 , ay + 12*3+8 , az , ATR_DFLT , 0xffffffff , "vtx   %d" , m_stInfo.vtx_max );
+	gxLib::Printf( ax+8 , ay + 12*4+8 , az , ATR_DFLT , 0xffffffff , "idx   %d" , m_stInfo.idx_max );
+//	gxLib::PutSprite(100, 100, 100, 17, 0, 0, 512, 512, 256, 256, ATR_DFLT, 0xffffffff);
+	/*
 	drawBar( 2 , m_fWorks[2] );
 	drawBar( 1 , m_fWorks[1] );
 	drawBar( 0 , m_fWorks[0] );

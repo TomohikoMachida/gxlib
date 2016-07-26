@@ -40,6 +40,8 @@ private:
 		Uint32 start;
 		Sint32 drawCnt;
 		Float32 fps;
+		Sint32  vtx_max;
+		Sint32  idx_max;
 	} StInfo;
 
 	StInfo m_stInfo;

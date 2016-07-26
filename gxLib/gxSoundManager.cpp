@@ -11,7 +11,7 @@
 #include "gx.h"
 #include "gxSoundManager.h"
 
-#ifdef _DEBUG
+#ifdef GX_DEBUG
 //#define _NO_SOUND_
 #endif
 

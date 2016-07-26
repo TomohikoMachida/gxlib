@@ -8,7 +8,7 @@
 
 //#define _NO_GXI_IMAGE_
 
-#ifdef _DEBUG
+#ifdef GX_DEBUG
 	#define GXI_READ_SIZE (8192*32)	//32ではT4でガクガクだった
 #else
 	#define GXI_READ_SIZE (8192*16)	//32ではT4でガクガクだった

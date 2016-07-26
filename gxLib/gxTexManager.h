@@ -16,7 +16,7 @@ class CTexManager
 public:
 
 	enum {
-		enMasterPageNum = 512,//16,
+		enMasterPageNum = 32,//16,
 		enMasterWidth   = 256*MASTER_TEXTURE_NUM,
 		enMasterHeight  = 256*MASTER_TEXTURE_NUM,
 		enPageWidth     = 256,

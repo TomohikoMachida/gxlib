@@ -7,7 +7,7 @@
 
 #ifndef _CACTMANAGER_H_
 #define _CACTMANAGER_H_
-#define ACTION_MAX (2048+512)
+#define ACTION_MAX (1024*12)	//(2048+512)
 
 enum {
 	enActionPrioAll,

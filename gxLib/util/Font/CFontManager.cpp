@@ -381,7 +381,7 @@ void CFontManager::scanMoji( CFileTarga* pTga , Sint32 mx , Sint32 my , Sint32 w
 		for(Sint32 y=0;y<h;y++)
 		{
 			Uint32 argb;
-#ifdef _DEBUG
+#ifdef GX_DEBUG
 			argb = pTga->GetARGB( mx+x , my+y );
 #endif
 			argb = argb&0xff000000;
@@ -389,13 +389,13 @@ void CFontManager::scanMoji( CFileTarga* pTga , Sint32 mx , Sint32 my , Sint32 w
 			if( argb )
 			{
 				bTrouble = gxTrue;
-#ifdef _DEBUG
+#ifdef GX_DEBUG
 				pTga->SetARGB( mx+x , my+y , 0xff00ffff );
 #endif
 				break;
 			}
 
-#ifdef _DEBUG
+#ifdef GX_DEBUG
 			pTga->SetARGB( mx+x , my+y , 0xffff0000 );
 #endif
 		}

@@ -318,7 +318,11 @@ gxBool CDXDraw::resetDevice()
 	}
 
 	//インデックスバッファ作成
-	hr = m_pDirect3DDevice->CreateIndexBuffer( sizeof(WORD)*enIndexMax, 0, D3DFMT_INDEX16, D3DPOOL_DEFAULT, &m_pIB, NULL);
+#if INDEXBUFFER_BIT == 32
+	hr = m_pDirect3DDevice->CreateIndexBuffer( sizeof(Uint32)*enIndexMax, 0, D3DFMT_INDEX32, D3DPOOL_DEFAULT, &m_pIB, NULL);
+#else
+	hr = m_pDirect3DDevice->CreateIndexBuffer( sizeof(Uint16)*enIndexMax, 0, D3DFMT_INDEX16, D3DPOOL_DEFAULT, &m_pIB, NULL);
+#endif
 
 	if(FAILED(hr))
 	{
@@ -342,8 +346,7 @@ gxBool CDXDraw::resetDevice()
 	logFont.OutputPrecision = OUT_DEFAULT_PRECIS;
 	logFont.Quality			= CLIP_DEFAULT_PRECIS;
 	logFont.PitchAndFamily	= FIXED_PITCH | FF_SCRIPT;
-//	sprintf( logFont.FaceName , "ＭＳ ゴシック" );
-	_tcscpy_s( logFont.FaceName, _T( DEBUG_FONT_NAME ) );//ＭＳ ゴシック" ) );
+	_tcscpy_s( logFont.FaceName, _T( DEBUG_FONT_NAME ) );
 
 	D3DXCreateFontIndirect( m_pDirect3DDevice, &logFont, &m_pDirect3DFont);
 
@@ -551,8 +554,15 @@ void CDXDraw::render()
 	CCommandList* pCommand = NULL;
 	Sint32 sCommandMax      = CRender::GetInstance()->GetCommandNum();
 	StCustomVertex *pVertex = CRender::GetInstance()->GetVertex(0);
-	Uint16         *pIndex  = CRender::GetInstance()->GetIndexBuffer(0);
-//	Uint32         *pIndex  = CRender::GetInstance()->GetIndexBuffer32(0);
+
+#if INDEXBUFFER_BIT == 32
+	Uint32         *pIndex  = CRender::GetInstance()->GetIndexBuffer( 0 );
+#else
+	Uint16         *pIndex  = CRender::GetInstance()->GetIndexBuffer( 0 );
+#endif
+
+	Uint32 vtx_max = CRender::GetInstance()->GetVertexNum();
+	Uint32 idx_max = CRender::GetInstance()->GetIndexNum();
 
 	// ---------------------------------------------------------------
 
@@ -563,19 +573,22 @@ void CDXDraw::render()
 	//pV
 	//for(Sint32 ii=0;ii<sCommandMax; ii++)
 	{
-		memcpy( pV , pVertex , sizeof(StCustomVertex)*enVertexMax );
+		memcpy( pV , pVertex , sizeof(StCustomVertex)*vtx_max );
 	}
 
 	if(FAILED( m_pVB->Unlock() ))return;
 
 	// ---------------------------------------------------------------
 
-	WORD* wIndex;
+	Uint32* wIndex;
+
 	if( FAILED( m_pIB->Lock(0, 0, (VOID**)&wIndex, 0 ) ) ) return;
 
-	// 
-//	memcpy( wIndex , pIndex , sizeof(Uint32)*enIndexMax );	//毒？
-	memcpy(wIndex, pIndex, sizeof(Uint16)*enIndexMax);	//毒？
+#if INDEXBUFFER_BIT == 32
+	memcpy( wIndex , pIndex , sizeof(Uint32)*idx_max );
+#else
+	memcpy( wIndex , pIndex , sizeof(Uint16)*idx_max );
+#endif
 
 	if( FAILED( m_pIB->Unlock() ) ) return;
 
@@ -589,35 +602,10 @@ void CDXDraw::render()
 
 	// ---------------------------------------------------------------
 
-/*
-	pVertex[0].x = 320.f;
-	pVertex[0].y = 240;
-	pVertex[0].z = 0.f;
-
-	pVertex[1].x = 576;
-	pVertex[1].y = 240.f;
-	pVertex[1].z = 0.f;
-
-	pVertex[2].x = 576;
-	pVertex[2].y = 368.f;
-	pVertex[2].z = 0.f;
-
-	pVertex[3].x = 320.f;
-	pVertex[3].y = 368.f;
-	pVertex[3].z = 0.f;
-*/
-
 	Sint32 debug = 0;
-
-//	if( gxLib::Joy(0)->trg&BTN_A )
-//	{
-//		debug = 1;
-//	}
 
 	if( debug )
 	{
-		Uint32 vtx_max = CRender::GetInstance()->GetVertexNum();
-		Uint32 idx_max = CRender::GetInstance()->GetIndexNum();
 		Uint32 ii;
 
 		gxLib::DebugLog( "command数[%d]" , sCommandMax );
@@ -637,9 +625,15 @@ void CDXDraw::render()
 		}
 	}
 
+/*
+	m_pDirect3DDevice->SetSamplerState(0, D3DSAMP_MAGFILTER, D3DTEXF_POINT);		//D3DTEXF_GAUSSIANQUAD	//D3DTEXF_LINEAR
+	m_pDirect3DDevice->SetSamplerState(0, D3DSAMP_MINFILTER, D3DTEXF_POINT);		//D3DTEXF_GAUSSIANQUAD	//D3DTEXF_LINEAR
+	m_pDirect3DDevice->SetSamplerState(0, D3DSAMP_MIPFILTER, D3DTEXF_POINT);
+	m_pDirect3DDevice->SetSamplerState(0, D3DSAMP_ADDRESSU, D3DTADDRESS_BORDER);	//D3DTADDRESS_CLAMP
+	m_pDirect3DDevice->SetSamplerState(0, D3DSAMP_ADDRESSV, D3DTADDRESS_BORDER);	//D3DTADDRESS_CLAMP
+	m_pDirect3DDevice->SetSamplerState(0, D3DSAMP_BORDERCOLOR, 0xffff0000);
+*/
 	//コマンドバッファにしたがって描画を行う
-
-//	m_pDirect3DDevice->SetSamplerState     (0, D3DSAMP_MAGFILTER, g_sAntialiesMode );
 
 	for(Sint32 n=0; n<sCommandMax; n++)
 	{

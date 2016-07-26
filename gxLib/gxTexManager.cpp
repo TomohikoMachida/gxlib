@@ -39,7 +39,7 @@ gxBool CTexManager::save( Sint32 bankNo )
 
 	gxChar buf[255];
 
-	sprintf( buf , "vram%02d.tga" , bankNo ); 
+	sprintf( buf , "vram%03d.tga" , bankNo ); 
 	m_Targa[bankNo].SaveFile( buf );
 
 	return gxTrue;
@@ -106,7 +106,7 @@ gxBool CTexManager::addTexture( Sint32 tpg ,CFileTarga* pTga , Uint32 colorKey ,
 	m_bUpdate[ pg ] = gxTrue;
 	m_bUsed[ pg ]   = gxTrue;
 
-#if _DEBUG
+#ifdef GX_DEBUG
 	save( pg );
 #endif
 

@@ -1,7 +1,11 @@
 ﻿enum {
 	enCommandMax = MAX_ORDER_NUM*4,
-	enVertexMax  = 65535*4,//MAX_ORDER_NUM*4,
-	enIndexMax   = 65535*2,//MAX_ORDER_NUM*6,
+
+	enVertexMax  = 65535*4,
+	enIndexMax   = 65535*2,
+
+//	enVertexMax  = 250000 * 3,
+//	enIndexMax   = (enVertexMax * 3) / 2, 
 };
 
 typedef struct StCmdMake {
@@ -39,9 +43,13 @@ public:
 		return &m_pCutomVertex[n];
 	}
 
+#if INDEXBUFFER_BIT == 32
+	Uint32* GetIndexBuffer(int n)
+#else
 	Uint16* GetIndexBuffer(int n)
+#endif
 	{
-		return (Uint16*)&m_pIndexBuffer[0];
+		return &m_pIndexBuffer[0];
 	}
 
 //	Uint32* GetIndexBuffer32(int n)
@@ -125,8 +133,12 @@ private:
 	Sint32			m_sStartVertex;
 	Sint32			m_sLastVertex;
 
-	Uint16*			m_pIndexBuffer;	//毒32bitいけるか？
-	Uint32			m_sIBufferNum;	//毒32bitいけるか？
+#if INDEXBUFFER_BIT == 32
+	Uint32*			m_pIndexBuffer;
+#else
+	Uint16*			m_pIndexBuffer;
+#endif
+	Uint32			m_sIBufferNum;
 
 	Sint32			m_sStartIndex;
 	Sint32			m_sLastIndex;

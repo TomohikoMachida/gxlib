@@ -993,8 +993,6 @@ Uint8* CFileTarga::RLEunpack( Uint8* pBuf , Uint32 uSize )
 
 			for(Uint32 ii=0;ii<sCnt;ii++)
 			{
-//#ifdef _DEBUG
-//#endif
 				if( uBufPos2 > uBufSize )
 				{
 					//展開後のバッファサイズを超えてしまった

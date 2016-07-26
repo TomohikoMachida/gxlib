@@ -23,7 +23,12 @@ CRender::CRender()
 
 	m_pCommand     = new CCommandList[enCommandMax];
 	m_pCutomVertex = new StCustomVertex[enVertexMax];
+
+#if INDEXBUFFER_BIT == 32
+	m_pIndexBuffer = new Uint32[enIndexMax];
+#else
 	m_pIndexBuffer = new Uint16[enIndexMax];
+#endif
 
 	m_sOldBankNum  = NONE_TEXTURE;
 	m_sStartVertex = 0;

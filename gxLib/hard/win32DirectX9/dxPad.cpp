@@ -131,7 +131,7 @@ CDxPad::CDxPad()
 	//コンフィグデータからの書き戻し
 	AssignPadData();
 
-#ifdef _DEBUG
+#ifdef GX_DEBUG
 	//-----------------
 /*
 	for(Uint32 jj=0;jj<2;jj++)
@@ -146,7 +146,7 @@ CDxPad::CDxPad()
 	}
 */
 	//-----------------
-#endif	// #ifdef _DEBUG
+#endif
 }
 
 CDxPad::~CDxPad()
