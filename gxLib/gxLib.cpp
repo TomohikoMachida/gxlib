@@ -694,15 +694,15 @@ gxBool gxLib::SaveFile( const gxChar* pFileName , Uint8* pData ,Uint32 uSize )
 }
 
 
-Uint8* gxLib::LoadStrageFile( const gxChar* pFileName , Uint32* pLength )
+Uint8* gxLib::LoadStorage( const gxChar* pFileName , Uint32* pLength )
 {
-	return ::LoadFile( pFileName , pLength );
+	return ::LoadStorageFile( pFileName , pLength );
 }
 
 
-gxBool gxLib::SaveStrageFile( const gxChar* pFileName , Uint8* pData ,Uint32 uSize )
+gxBool gxLib::SaveStorage( const gxChar* pFileName , Uint8* pData ,Uint32 uSize )
 {
-	return ::SaveFile( pFileName , pData , uSize );
+	return ::SaveStorageFile( pFileName , pData , uSize );
 }
 
 

@@ -26,12 +26,13 @@
 //#define PLATFORM_IOS
 //#define PLATFORM_COCOS2DX
 
-#define WINDOW_W (960)	//(320)//320)
-#define WINDOW_H (560)	//(320)//480)
+#define WINDOW_W (320)
+#define WINDOW_H (320)
 
-#define MAX_ORDER_NUM (4096)	//グラフィックのオーダー（同時）限界数
+//#define MAX_ORDER_NUM (4096)	//グラフィックのオーダー（同時）限界数
+#define MAX_ORDER_NUM (2048)	//グラフィックのオーダー（同時）限界数
 #define MAX_TEXT_NUM  (256)		//gxLib::Printfでリクエスト可能な限界数
-#define MAX_SOUND_NUM (128)		//サウンドのバンク数（同時発音数はマシンのｃｈ数）
+#define MAX_SOUND_NUM (64)		//サウンドのバンク数（同時発音数はマシンのｃｈ数）
 #define PRIORITY_MAX  (255)		//優先順位
 
 #define APPLICATION_NAME "garurururu"
@@ -517,11 +518,11 @@ public:
 	//ローカルにファイルを保存する
 	static gxBool SaveFile( const gxChar* pFileName , Uint8* pData ,Uint32 uSize );
 
-	//ローカルストレージにファイルを取得する
-	static Uint8* LoadStrageFile( const gxChar* pFileName , Uint32* pLength );
+	//ローカルストレージからファイルを取得する
+	static Uint8* LoadStorage( const gxChar* pFileName , Uint32* pLength );
 
 	//ローカルストレージにファイルを保存する
-	static gxBool SaveStrageFile( const gxChar* pFileName , Uint8* pData ,Uint32 uSize );
+	static gxBool SaveStorage( const gxChar* pFileName , Uint8* pData ,Uint32 uSize );
 
 	//（xorShift法の）ランダム値を生成する
 	static Uint32 Rand( Uint32 uSeed=0 );
@@ -529,7 +530,7 @@ public:
 	//毎フレームインクリメントされるカウンタを取得する
 	static Uint32 GetGameCounter();
 
-	//WEB上のファイルを取得する
+	//WEB上のファイルを取得する（未対応）
 	static Uint8* LoadWebFile( gxChar* pURL , Uint32* pLength , gxChar* pUser , gxChar* pPassword);
 
 	//スレッドを作成する
@@ -538,6 +539,8 @@ public:
 	//デバッグ用のフラグを確認する
 
 	static gxBool IsDebugSwitchOn(Sint32 n);
+
+	//デバッグ用のスイッチを設定する
 
 	static void   SetDebugSwitch( Sint32 n , gxBool bOn , gxBool bToggle = gxFalse );
 

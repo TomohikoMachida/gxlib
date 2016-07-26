@@ -380,86 +380,18 @@ gxBool SaveFile( const gxChar* pFileName , Uint8* pReadBuf , Uint32 uSize )
 }
 
 
-Uint8* LoadStrageFile( gxChar* pFileName , Uint32* pLength )
+gxBool SaveStorageFile( const gxChar* pFileName , Uint8* pReadBuf , Uint32 uSize )
 {
-	//------------------------------------------
-	//ファイルの読み込み(Win32ではLoadFileと同じ扱い)
-	//------------------------------------------
-	TCHAR* pStr = GetCommandLine();
-	SetCurrentDirectory( pStr );
+	// とりあえずSaveFileと同じ扱い
+	return SaveFile( pFileName, pReadBuf, uSize );
 
-	Uint8* pBuffer=NULL;
-	int fh;
-	long sz_zero;
-	long sz,readsz;
-	unsigned long pos=0;
-	int ret=1;
-	struct stat filestat;
-
-	fh = open((char*)pFileName,O_RDONLY|O_BINARY);
-
-	updateMemoryStatus();
-
-	if(fh<0)
-	{
-		//読み込みミス
-		//close(fh);
-		return NULL;
-	}
-	else
-	{
-		fstat(fh,&filestat);
-		readsz = sz = sz_zero = filestat.st_size;
-
-		*pLength = filestat.st_size;
-		pBuffer = new Uint8[readsz];//(Uint8*)malloc( readsz );
-
-		if( pBuffer == NULL ) return NULL;
-
-		while(ret > 0)
-		{
-			if( readsz > 1024 ) readsz = 1024; 
-
-			ret = read(fh,&pBuffer[pos],readsz);
-			pos += ret;
-			sz -= ret;
-			readsz = sz;
-		}
-	}
-
-	close(fh);
-
-	return pBuffer;
 }
-
-
-gxBool SaveStrageFile( gxChar* pFileName , Uint8* pReadBuf , Uint32 uSize )
+Uint8* LoadStorageFile( const gxChar* pFileName , Uint32* pLength )
 {
-	//ファイルの書き込み(Win32ではLoadFileと同じ扱い)
-	TCHAR* pStr = GetCommandLine();
-	SetCurrentDirectory( pStr );
+	// とりあえずLoadFileと同じ扱い
+	return LoadFile( pFileName, pLength );
 
-	int fh;
-
-	fh = open((char*)pFileName,O_WRONLY|O_BINARY|O_TRUNC|O_CREAT,S_IREAD|S_IWRITE);
-
-	updateMemoryStatus();
-
-	if(fh<0)
-	{
-		//書き込みミス
-		return gxFalse;
-	}
-	else
-	{
-		write(fh,pReadBuf,uSize);
-	}
-
-	close(fh);
-
-	return gxTrue;
 }
-
 
 void LogDisp( char* pString )
 {

@@ -40,20 +40,31 @@ gxBool GameResume();
 gxBool GameEnd();
 gxBool GameReset();
 
-void   Clock();
-void   Movie();
-
 void   InitAction();
 void   Render();
 gxBool vSync( gxBool bNoWait = gxFalse );
 void   Flip();
-void   LogDisp(char* pString);
+
+void   Clock();
+void   Movie();
+
 void   Resume();
 
-void   Play();
 void   Upload(Sint32 sBank);
+void   LogDisp(char* pString);
+void   Play();
+
+
 Uint8* LoadFile( const gxChar* pFileName , Uint32* pLength );
 gxBool SaveFile( const gxChar* pFileName , Uint8* pReadBuf , Uint32 uSize );
+
+//ストレージへのファイルアクセス
+
+gxBool SaveStorageFile( const gxChar* pFileName , Uint8* pReadBuf , Uint32 uSize );
+Uint8* LoadStorageFile( const gxChar* pFileName , Uint32* pLength );
+
+//特殊
+
 void   MakeThread( void (*pFunc)(void*) , void * pArg );
 gxBool PadConfig( Sint32 padNo , Uint32 button );
 
