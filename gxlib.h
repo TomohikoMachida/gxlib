@@ -29,7 +29,6 @@
 #define WINDOW_W (320)
 #define WINDOW_H (320)
 
-//#define MAX_ORDER_NUM (4096)	//グラフィックのオーダー（同時）限界数
 #define MAX_ORDER_NUM (2048)	//グラフィックのオーダー（同時）限界数
 #define MAX_TEXT_NUM  (256)		//gxLib::Printfでリクエスト可能な限界数
 #define MAX_SOUND_NUM (64)		//サウンドのバンク数（同時発音数はマシンのｃｈ数）
