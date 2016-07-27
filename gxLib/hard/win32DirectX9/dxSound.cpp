@@ -321,7 +321,7 @@ gxBool CDxSound::read( Uint32 no )
 	if( pWaveBuffer == NULL )
 	{
 		SAFE_DELETE( CSoundManager::GetInstance()->GetPlayInfo( no )->m_pWave );
-		gxLib::DebugLog("gxLib::pWaveBufferがNULL。ファイルないかも。");
+		gxLib::DebugLog("gxLib::pWaveBufferがNULL。ファイルないかも。[%s]", CSoundManager::GetInstance()->GetPlayInfo(no)->fileName);
 		goto EXIT_LOAD;
 	}
 

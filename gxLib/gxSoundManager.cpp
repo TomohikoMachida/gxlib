@@ -116,39 +116,44 @@ gxBool CSoundManager::LoadAudioFile( Uint32 uIndex , const gxChar* pFileName )
 		delete m_Info[ uIndex ].m_pWave;
 	}
 
-	m_Info[ uIndex ].bUse = gxTrue;
-	m_Info[ uIndex ].bReq = gxTrue;
-	m_Info[ uIndex ].uStatus |= enSoundReqLoad;
-	m_Info[ uIndex ].m_pWave = NULL;
-
 	Uint32 uSize = 0;
 
 	Uint8* pMemory;
+
 	pMemory = ::LoadFile( pFileName , &uSize );
 
 	if( pMemory == NULL )
 	{
 		//ファイルがなかった
-		gxLib::DebugLog("[%s]の音楽ファイルが存在しません", pFileName );
+		gxLib::DebugLog("[%d:%s]の音楽ファイルが存在しません", uIndex , pFileName );
 		delete m_Info[ uIndex ].m_pWave;
 		m_Info[ uIndex ].m_pWave = NULL;
 		m_Info[ uIndex ].bReq    = gxFalse;
 		m_Info[ uIndex ].bUse    = gxFalse;
 		m_Info[ uIndex ].uStatus = enSoundReqNone;
+		m_Info[ uIndex ].fileName[0] = 0x00;
 		return gxFalse;
 	}
 
+	gxLib::DebugLog("[LoadAudioFile] %d , \"%s\"", uIndex , pFileName );
+
 	SAFE_DELETE(m_Info[uIndex].m_pTempBuffer);
 
-	m_Info[ uIndex ].m_pTempBuffer =  new Uint8[ uSize ]; //malloc( uSize );
+	m_Info[ uIndex ].m_pTempBuffer =  new Uint8[ uSize ];
 
 	memcpy( m_Info[ uIndex ].m_pTempBuffer , pMemory , uSize );
 
 	delete[] pMemory;
 
-	m_Info[ uIndex ].m_uTempSize = uSize;
+	//スレッドで動いているローディング処理が途中で走ってしまうので最後にリクエストを設定することにする
 
+	m_Info[ uIndex ].m_uTempSize = uSize;
+	m_Info[ uIndex ].bUse = gxTrue;
+	m_Info[ uIndex ].bReq = gxTrue;
+	m_Info[ uIndex ].m_pWave = NULL;
 	sprintf( m_Info[ uIndex ].fileName , "%s" , pFileName );
+
+	m_Info[ uIndex ].uStatus |= enSoundReqLoad;
 
 	return gxTrue;
 

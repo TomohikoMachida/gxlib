@@ -76,12 +76,12 @@ private:
 	Sint32 rangeX;							//セルの列（Ｘ）
 	Sint32 rangeY;							//セルの行（Ｙ）
 
-	gxChar* pCell[ CSV_MAX_Y ][ CSV_MAX_X ];			//?Z???̓燉e?i?[???Ă??驛A?h???X?ւ̃|?C???^?z?・
+	gxChar* pCell[ CSV_MAX_Y ][ CSV_MAX_X ];
 
-	gxChar* temporaryBuf;	//?Z???̓燉e?ﾔ?????߂̈ꎞ?I?ȃX?g?????O?o?b?t?@
+	gxChar* temporaryBuf;
 
-	gxBool bIgnoreComment;				//セル取得時にコメントを考慮する
-	gxBool bCommentActive;				//ロード時にコメント以降は相手にしない
+	gxBool m_bIgnoreComment;				//セル取得時にコメントを考慮する
+	gxBool m_bCommentActive;				//ロード時にコメント以降は相手にしない
 
 	gxChar *setNewCell(Sint32 x,Sint32 y,Sint32 len)
 	{
@@ -104,14 +104,13 @@ private:
 		return true;
 	}
 
-//	Sint32  getRangeX()	{ return rangeX+1; 	}												//Ｘの範囲を返す
-//	Sint32  getRangeY()	{ return rangeY+1; 	}												//Ｙの範囲を返す
-	void  GetCell(Sint32 x,Sint32 y,gxChar *buf,Uint32 sz);										//?Z???̃f?[?^?・????・
+	void  GetCell(Sint32 x,Sint32 y,gxChar *buf,Uint32 sz);
+
 	gxBool analysingCsv( gxChar *p,Uint32 sz);
 
-	void SetIgnoreFlag(bool n)
+	void SetIgnoreFlag( gxBool n)
 	{
-		bIgnoreComment = n;
+		m_bIgnoreComment = n;
 	}
 
 	gxBool IsIgnore(gxChar *p);

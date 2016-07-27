@@ -22,8 +22,8 @@ CCsv::CCsv()
 			pCell[y][x] = NULL;
 		}
 	}
-	bIgnoreComment = gxFalse;
-	bCommentActive = gxFalse;
+	m_bIgnoreComment = gxFalse;
+	m_bCommentActive = gxFalse;
 }
 
 
@@ -47,7 +47,8 @@ gxBool CCsv::DelCell( Sint32 x,Sint32 y )
 {
 	//セルバッファを削除する
 
-	if(pCell[y][x] != NULL)	delete pCell[y][x];
+	if(pCell[y][x] != NULL)	delete[] pCell[y][x];
+
 	pCell[y][x] = NULL;
 
 	return true;
@@ -107,7 +108,7 @@ gxBool CCsv::IsIgnore(gxChar *p)
 {
 	//コメントを無視するか？
 
-	if(bIgnoreComment == gxFalse) return gxFalse;
+	if(m_bIgnoreComment == gxFalse) return gxFalse;
 
 	for(Uint32 i=0;i<strlen(p);i++) {
 		if(strlen(p)==1) break;
@@ -133,7 +134,7 @@ Sint32 CCsv::COUNTA( Sint32 x1 , Sint32 y1 , Sint32 x2 , Sint32 y2 )
 
 		for( Sint32 x=x1;x<=x2;x++ )
 		{
-			if( x2 >= GetWidth() ) continue;
+			if( x >= GetWidth() ) continue;
 
 			p = GetCell( x , y );
 
@@ -151,29 +152,18 @@ gxBool CCsv::LoadFile(gxChar *filename,gxBool cmtActive)
 {
 	//ＣＳＶファイルをロードする
 
-	bCommentActive = cmtActive;
+	m_bCommentActive = cmtActive;
 
 	Uint32 sz;
 	Uint8* p = gxLib::LoadFile( filename , &sz );
 
 	if( p == NULL ) return gxFalse;
 
-	Uint8 *pCsv = new Uint8[ CSV_MAX_FILE_SIZE ];
-
-	if( sz >= CSV_MAX_FILE_SIZE ) sz = CSV_MAX_FILE_SIZE;
+	Uint8 *pCsv = new Uint8[sz + 1024];
 
 	gxUtil::MemCpy( pCsv , p , sz );
 
 	delete[] p;
-
-/*
-	if( sz < CSV_MAX_FILE_SIZE-1 )
-	{
-		pCsv[ sz ] = '\n';	//最後に無理やり改行しておく
-		sz ++;
-	}
-
-*/
 
 	analysingCsv( (gxChar*)pCsv , sz );
 
@@ -189,11 +179,9 @@ gxBool CCsv::ReadFile( Uint8 *pMem , Uint32 sz , gxBool cmtActive)
 	//ＣＳＶファイルをロードする
 	//------------------------------------------------
 
-	Uint8 *p = new Uint8[ CSV_MAX_FILE_SIZE ];
+	Uint8 *p = new Uint8[ sz + 1024 ];
 
 	gxUtil::MemCpy( p , pMem , sz );
-
-//	p[sz] = '\n';	//最後に無理やり改行しておく
 
 	analysingCsv( (gxChar*)p , sz );
 
@@ -212,6 +200,8 @@ gxBool CCsv::analysingCsv( gxChar *p,Uint32 sz)
 	gxChar buf[TEMP_SIZE_MAX];
 	Sint32 start=0;
 	gxBool bCmt=false;
+
+	CleanTab();
 
 	Uint8 word;
 
@@ -267,7 +257,7 @@ gxBool CCsv::analysingCsv( gxChar *p,Uint32 sz)
 		case '/':
 			if(p[i+1]=='/')
 			{	//以降を無効とする
-				if(bCommentActive) bCmt = true;
+				if(m_bCommentActive) bCmt = true;
 			}
 			break;
 		}
@@ -338,28 +328,6 @@ gxBool CCsv::SaveFile( gxChar* pFileName )
 
 	delete pOldSave;
 
-/*
-	FILE* fp;
-
-	fp = fopen(filename,"wt");
-
-	if(fp==NULL) return gxFalse;
-
-//	if(rangeY<=0 || rangeX<=0) return gxFalse;
-
-	for(Sint32 y=0;y<getRangeY();y++)
-	{
-		for(Sint32 x=0;x<getRangeX();x++)
-		{
-			fprintf(fp,"%s,",GetCell(x,y));
-		}
-
-		fprintf(fp,"\n");
-	}
-
-	fclose(fp);
-*/
-
 	return gxTrue;
 }
 
@@ -392,9 +360,8 @@ gxBool CCsv::SearchWord(gxChar *msg,Sint32 &x,Sint32 &y)
 gxBool CCsv::CleanTab()
 {
 	//空白とかを破棄する
-//	gxChar *p = (gxChar*)malloc(TEMP_SIZE_MAX);
 
-	gxChar *p = new gxChar[ TEMP_SIZE_MAX ];//(gxChar*)malloc(TEMP_SIZE_MAX);
+	gxChar *p = new gxChar[ TEMP_SIZE_MAX ];
 
 	Sint32 len,cnt,add=0;
 
@@ -429,7 +396,7 @@ gxBool CCsv::CleanTab()
 		}
 	}
 
-	delete[] p;	//free(p);
+	delete[] p;
 
 	return gxTrue;
 
@@ -447,7 +414,9 @@ void CommaSeparatedValue()
 	pCsv->SetCell(0,0,"test.txt");
 	pCsv->SetCell(3,5,"testMessage2");
 	pCsv->SaveFile("test2.txt");
+
 	delete pCsv;
+
 }
 
 
