@@ -3,9 +3,6 @@
 
 	enVertexMax  = 65535*4,
 	enIndexMax   = 65535*2,
-
-//	enVertexMax  = 250000 * 3,
-//	enIndexMax   = (enVertexMax * 3) / 2, 
 };
 
 typedef struct StCmdMake {

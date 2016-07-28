@@ -471,15 +471,25 @@ gxBool gxLib::ReadAudio( Uint32 uIndex , const Uint8* pMemory ,Uint32 uSize )
 }
 
 
-gxBool gxLib::PlayAudio( Uint32 uIndex , gxBool bLoop , gxBool bOverWrap )
+gxBool gxLib::PlayAudio( Uint32 uIndex , gxBool bLoop , gxBool bOverWrap , Uint32 uFrm )
 {
 
-	CSoundManager::GetInstance()->PlayAudio( uIndex , 1.0f , bOverWrap, bLoop );
+	if( uFrm )
+	{
+		CSoundManager::GetInstance()->PlayAudio( uIndex , 1.0f , bOverWrap, bLoop );
+		CSoundManager::GetInstance()->SetFade( uIndex , 1.0f , uFrm );
+	}
+	else
+	{
+		CSoundManager::GetInstance()->PlayAudio( uIndex , 1.0f , bOverWrap, bLoop );
+		CSoundManager::GetInstance()->SetFade( uIndex , 1.0f , 0 );
+	}
 
 	return gxTrue;
 }
 
 
+/*
 gxBool gxLib::SetAudioFadeIn( Uint32 uIndex , gxBool bLoop , Float32 fTgtVolume ,Uint32 uFrm )
 {
 	CSoundManager::GetInstance()->PlayAudio( uIndex , 0.f , gxFalse , bLoop );
@@ -496,6 +506,7 @@ gxBool gxLib::SetAudioFadeOut( Uint32 uIndex , Uint32 uFrm )
 
 	return gxTrue;
 }
+*/
 
 
 gxBool gxLib::SetAudioVolume( Uint32 uIndex , Float32 fVol )

@@ -599,7 +599,6 @@ Uint32 CFontManager::printf( Sint32 x , Sint32 y , Sint32 prio , StFontStat *pSt
 			//文字がなかった
 			n = 0;
 
-/*
 			if( p8[0] == '\t' )
 			{
 				//TABに関してだけは許してやる
@@ -608,7 +607,6 @@ Uint32 CFontManager::printf( Sint32 x , Sint32 y , Sint32 prio , StFontStat *pSt
 				continue;
 			
 			}
-*/
 			//----------------------------
 
 			if( prio != -1 ) gxLib::DrawBox( ax , ay , ax+16,ay+16 , PRIORITY_MAX , gxTrue,  ATR_DFLT , gxLib::Rand()%0xffffffff );

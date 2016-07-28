@@ -102,10 +102,11 @@ void CMovieManager::Action()
 		if (pData == NULL) continue;
 
 		m_bUpdate = gxTrue;
+		Sint32 masterTextureX=4, masterTextureY = 4;
 
-		Sint32 texPage = m_pMovie[ii].m_uTextureBindIndex / (MASTER_TEXTURE_NUM*MASTER_TEXTURE_NUM) ;
-		Sint32 offsetX = (m_pMovie[ii].m_uTextureBindIndex%MASTER_TEXTURE_NUM)*CTexManager::enPageWidth;
-		Sint32 offsetY = ((m_pMovie[ii].m_uTextureBindIndex/MASTER_TEXTURE_NUM)%MASTER_TEXTURE_NUM)*CTexManager::enPageHeight;
+		Sint32 texPage = m_pMovie[ii].m_uTextureBindIndex / (masterTextureX*masterTextureY) ;
+		Sint32 offsetX = (m_pMovie[ii].m_uTextureBindIndex%masterTextureX)*CTexManager::enPageWidth;
+		Sint32 offsetY = ((m_pMovie[ii].m_uTextureBindIndex/ masterTextureX)% masterTextureX)*CTexManager::enPageHeight;
 
 		pTga = CTexManager::GetInstance()->GetAtlasTexture( texPage );
 

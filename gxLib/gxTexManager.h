@@ -8,17 +8,15 @@
 
 #include "util/CFileTarga.h"
 
-#define MASTER_TEXTURE_NUM (4)	//256x256テクスチャをいくつおけるか設定しマスターテクスチャのサイズを決める（4であれば1024x1024になる）
-
 class CTexManager
 {
 
 public:
 
 	enum {
-		enMasterPageNum = 32,//16,
-		enMasterWidth   = 256*MASTER_TEXTURE_NUM,
-		enMasterHeight  = 256*MASTER_TEXTURE_NUM,
+		enMasterPageNum = MAX_MASTERTEX_NUM,//512,//16,
+		enMasterWidth   = 256*4,
+		enMasterHeight  = 256*4,
 		enPageWidth     = 256,
 		enPageHeight    = 256,
 	};

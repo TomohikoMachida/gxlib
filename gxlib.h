@@ -29,10 +29,12 @@
 #define WINDOW_W (320)
 #define WINDOW_H (320)
 
-#define MAX_ORDER_NUM (2048)	//グラフィックのオーダー（同時）限界数
-#define MAX_TEXT_NUM  (256)		//gxLib::Printfでリクエスト可能な限界数
-#define MAX_SOUND_NUM (64)		//サウンドのバンク数（同時発音数はマシンのｃｈ数）
-#define PRIORITY_MAX  (255)		//優先順位
+//#define MAX_ORDER_NUM (4096)		//グラフィックのオーダー（同時）限界数
+#define MAX_ORDER_NUM (40000*2)		//グラフィックのオーダー（同時）限界数
+#define MAX_TEXT_NUM  (256)			//gxLib::Printfでリクエスト可能な限界数
+#define MAX_MASTERTEX_NUM (32)		//マスターテクスチャの最大枚数
+#define MAX_SOUND_NUM (256)			//サウンドのバンク数（同時発音数はマシンのｃｈ数）
+#define PRIORITY_MAX  (255)			//優先順位
 
 #define APPLICATION_NAME "garurururu"
 #define FILENAME_CONFIG  "config.dat"
@@ -438,19 +440,13 @@ public:
 	static gxBool LoadAudio( Uint32 uIndex , const gxChar* pFileName );
 
 	//指定バンクのサウンドを再生します
-	static gxBool PlayAudio( Uint32 index , gxBool bLoop = gxFalse , gxBool bOverWrap = gxFalse );
+	static gxBool PlayAudio( Uint32 index , gxBool bLoop = gxFalse , gxBool bOverWrap = gxFalse , Uint32 uFrm = 0 );
 
 	//指定バンクのサウンドを停止します
 	static gxBool StopAudio( Uint32 index , Uint32 uFrm=0 );
 
 	//特定バンクのサウンドボリュームを設定します
 	static gxBool SetAudioVolume ( Uint32 index ,Float32 fVolume );
-
-	//特定バンクのサウンドを？フレームでフェードイン再生します
-	static gxBool SetAudioFadeIn ( Uint32 uIndex , gxBool bLoop, Float32 fTgtVolume=1.f ,Uint32 uFrm=60);
-
-	//特定バンクのサウンドを？フレームでフェードアウトします
-	static gxBool SetAudioFadeOut( Uint32 uIndex , Uint32 uFrm=60);
 
 	//すべてのバンクのサウンドのボリュームを一括して調整します
 	static gxBool SetAudioMasterVolume( Float32 fVolume );

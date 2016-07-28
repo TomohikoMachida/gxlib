@@ -96,7 +96,7 @@ void gxDebug::CheckEnd()
 
 void gxDebug::Draw()
 {
-#ifndef GX_DEBUG
+#ifdef GX_MASTER
 	return;
 #endif
 
@@ -114,24 +114,20 @@ void gxDebug::Draw()
 	gxLib::Printf( ax+8 , ay + 12*2+8 , az , ATR_DFLT , 0xffffffff , "Sub   %d (%d%%)" , m_stInfo.SubOrderNum  , 100*m_stInfo.SubOrderNum / (m_stInfo.OrderNum + m_stInfo.SubOrderNum -6) );
 	gxLib::Printf( ax+8 , ay + 12*3+8 , az , ATR_DFLT , 0xffffffff , "vtx   %d" , m_stInfo.vtx_max );
 	gxLib::Printf( ax+8 , ay + 12*4+8 , az , ATR_DFLT , 0xffffffff , "idx   %d" , m_stInfo.idx_max );
-//	gxLib::PutSprite(100, 100, 100, 17, 0, 0, 512, 512, 256, 256, ATR_DFLT, 0xffffffff);
-	/*
-	drawBar( 2 , m_fWorks[2] );
-	drawBar( 1 , m_fWorks[1] );
-	drawBar( 0 , m_fWorks[0] );
 
-	Sint32 ax, ay, max = 128, w = 0;
-	ax = 0;
-	ay = 0;
-
-	w = max;
-
-	gxLib::DrawBox( ax,ay, ax+w ,ay+8, PRIORITY_MAX, gxFalse , ATR_DFLT , 0xffffffff );
-
-
-	gxLib::Printf( 8 , 8 , 255 , ATR_DFLT , 0xffff0000 , "%.2f" , fps );
-*/
-
+	Sint32 num = 0;
+	for( Sint32 ii=0; ii<MAX_SOUND_NUM; ii++ )
+	{
+		if( CSoundManager::GetInstance()->GetPlayInfo( ii )->bPlayNow )
+		{
+			gxLib::Printf( ax+8 , ay + 12*(5+num)+8 , az , ATR_DFLT , 0xffffffff , "snd(%03d)   %04x/%d/%.2f" ,
+				ii,
+				CSoundManager::GetInstance()->GetPlayInfo( ii )->uStatus,
+				CSoundManager::GetInstance()->GetPlayInfo( ii )->bPlayNow,
+				CSoundManager::GetInstance()->GetPlayInfo( ii )->fVolume );
+				num ++;
+		}
+	}
 }
 
 

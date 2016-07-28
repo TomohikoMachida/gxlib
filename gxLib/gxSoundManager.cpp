@@ -85,10 +85,11 @@ void CSoundManager::Action()
 			p->bPlayNow = gxFalse;
 			p->bLoop = gxFalse;
 		}
-		else if( p->fVolume >= 1.f )
+		else if( p->fVolume > 1.f )
 		{
 			p->fVolume    = 1.f;
 			p->fVolumeAdd = 0.f;
+			p->uStatus |= enSoundReqVolume;
 		}
 		else
 		{
@@ -249,10 +250,20 @@ gxBool CSoundManager::SetFade( Sint32 uIndex , Float32 fVolume , Uint32 frm )
 {
 	if( uIndex < 0 || uIndex >= MAX_SOUND_NUM ) return gxFalse;
 
-	if( frm <= 0 ) frm = 1;
-	m_Info[ uIndex ].bReq = gxTrue;
-	m_Info[ uIndex ].fVolumeAdd = (fVolume-m_Info[ uIndex ].fVolume)/frm;
-	m_Info[ uIndex ].uStatus |= enSoundReqVolume;
+	if( frm <= 0 )
+	{
+		frm = 1;
+		m_Info[ uIndex ].bReq       = gxFalse;
+		m_Info[ uIndex ].fVolumeAdd = 1.0f;
+		m_Info[ uIndex ].uStatus |= enSoundReqVolume;
+		return gxTrue;
+	}
+	else
+	{
+		m_Info[ uIndex ].bReq = gxTrue;
+		m_Info[ uIndex ].fVolumeAdd = (fVolume-m_Info[ uIndex ].fVolume)/frm;
+		m_Info[ uIndex ].uStatus |= enSoundReqVolume;
+	}
 
 	return gxTrue;
 }

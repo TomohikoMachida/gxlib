@@ -53,7 +53,7 @@ gxBool CTexManager::LoadTexture( Sint32 tpg , const gxChar* fileName , Uint32 co
 
 	CFileTarga tga;
 
-	gxLib::DebugLog("[テクスチャ]%s",fileName );
+	gxLib::DebugLog("[テクスチャ%3d(%d)]%s",tpg,tpg/16,fileName );
 
 	if( !tga.LoadFile( fileName , colorKey ) )
 	{
