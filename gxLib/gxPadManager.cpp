@@ -639,10 +639,13 @@ void CGXPadConfig::Draw()
 
 	case 1000:
 		//コンフィグ
-		drawController( ax , ay , 0x01<<(m_sBtnIndex%16) , 0);
-		gxLib::Printf ( ax, ay+64+16*0, az, ATR_STR_CENTER, 0xffffffff, "%d%sに該当するボタンを押してください。",m_sSelectPad + 1, btnTbl[m_sBtnIndex].Name);
-		gxLib::Printf ( ax, ay+64+16*1, az, ATR_STR_CENTER, 0xffffffff, "[→] キーで設定をスキップします。");
-		gxLib::Printf ( ax, ay+64+16*2, az, ATR_STR_CENTER, 0xffffffff, "[BS] キーでキャンセルします。");
+		if( m_sBtnIndex < 16 )
+		{
+			drawController( ax , ay , 0x01<<(m_sBtnIndex%16) , 0);
+			gxLib::Printf ( ax, ay+64+16*0, az, ATR_STR_CENTER, 0xffffffff, "%d%sに該当するボタンを押してください。",m_sSelectPad + 1, btnTbl[m_sBtnIndex].Name);
+			gxLib::Printf ( ax, ay+64+16*1, az, ATR_STR_CENTER, 0xffffffff, "[→] キーで設定をスキップします。");
+			gxLib::Printf ( ax, ay+64+16*2, az, ATR_STR_CENTER, 0xffffffff, "[BS] キーでキャンセルします。");
+		}
 		break;
 
 	default:
