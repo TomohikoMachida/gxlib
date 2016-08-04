@@ -119,7 +119,8 @@ class CCollisionManager
 {
 public:
 
-	CCollisionManager()
+	CCollisionManager();
+/*
 	{
 		//全判定を初期化
 		for(int i=0;i<MaxCollisionNum;i++)
@@ -132,7 +133,7 @@ public:
 		m_sCollisionNum = 0;
 
 	};
-
+*/
 	virtual ~CCollisionManager()
 	{
 		//全判定を解放

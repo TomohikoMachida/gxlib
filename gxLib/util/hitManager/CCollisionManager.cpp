@@ -11,6 +11,25 @@
 //CCollisionManager *g_pCollisionManager = NULL;
 SINGLETON_DECLARE_INSTANCE(CCollisionManager);
 
+CCollisionManager::CCollisionManager()
+{
+	if (s_pInstance) delete s_pInstance;
+
+	s_pInstance = this;
+
+	//全判定を初期化
+
+	for (int i = 0; i<MaxCollisionNum; i++)
+	{
+		m_pCollision[i] = NULL;
+		m_pStCollisionBackup[i] = NULL;
+	}
+	//s_pInstance = this;
+	m_sMaxCollision = 0;
+	m_sCollisionNum = 0;
+
+}
+
 Sint32 CCollisionManager::SetRegist(CCollision* p)
 {
 	//当たり判定を登録する
