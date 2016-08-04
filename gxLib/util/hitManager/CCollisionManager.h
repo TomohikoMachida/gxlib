@@ -134,7 +134,8 @@ public:
 
 	};
 */
-	virtual ~CCollisionManager()
+	virtual ~CCollisionManager();
+/*
 	{
 		//全判定を解放
 		for(int i=0;i<MaxCollisionNum;i++)
@@ -144,7 +145,7 @@ public:
 //if( m_pStCollisionBackup[i] ) delete m_pStCollisionBackup[i];
 		}
 	};
-
+*/
 /*
 	static CCollisionManager* GetInstance()
 	{

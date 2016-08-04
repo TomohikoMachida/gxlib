@@ -53,6 +53,19 @@ Sint32 CCollisionManager::SetRegist(CCollision* p)
 	return 0;
 }
 
+CCollisionManager::~CCollisionManager()
+{
+	//全判定を解放
+	for (int i = 0; i<MaxCollisionNum; i++)
+	{
+		if (m_pCollision[i]) delete m_pCollision[i];
+		m_pCollision[i] = NULL;
+		//if( m_pStCollisionBackup[i] ) delete m_pStCollisionBackup[i];
+	}
+
+	s_pInstance = NULL;
+};
+
 void CCollisionManager::UnRegist(Sint32 id)
 {
 	//当たり判定の登録を解除する
