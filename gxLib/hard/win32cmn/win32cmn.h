@@ -79,7 +79,8 @@ enum {
 	enID_PadConfig			  = 1005,	//コントローラー設定
 	enID_DebugMode			  = 1006,	//デバッグモードのON/OFF
 	enID_Reset				  = 1007,	//リセット
-	enAccelMax			  	  = 7,
+	enID_ScreenShot           = 1008,	//スクリーンショット
+	enAccelMax			  	  = 8,
 
 };
 
@@ -92,5 +93,10 @@ extern StTouchDevice *m_pTouchDevice;
 void makeWindow();
 void updateMemoryStatus();
 gxBool vSyncWithTimer( gxBool bNoWaitvSync );
+
+extern Sint32 g_sFrameSkip;
+extern Sint32 g_sScreenModeIndex;
+extern Sint32 g_sAntialiesMode;
+//Sint32 g_sWideScreen      = 0;
 
 #endif

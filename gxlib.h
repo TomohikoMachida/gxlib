@@ -19,15 +19,15 @@
 //#define PLATFORM_WIN32_CONSOLE
 //#define PLATFORM_WIN32_APP
 //#define PLATFORM_WIN32_WINDOW
-#define PLATFORM_WIN32_DIRECTX9
-//#define PLATFORM_WIN32_OPENGL
+//#define PLATFORM_WIN32_DIRECTX9
+#define PLATFORM_WIN32_OPENGL
 //#define PLATFORM_WIN64_DIRECTX11
 //#define PLATFORM_ANDROID
 //#define PLATFORM_IOS
 //#define PLATFORM_COCOS2DX
 
-#define WINDOW_W (320)
-#define WINDOW_H (320)
+#define WINDOW_W (640)
+#define WINDOW_H (480)
 
 //#define MAX_ORDER_NUM (4096)		//グラフィックのオーダー（同時）限界数
 #define MAX_ORDER_NUM (40000*2)		//グラフィックのオーダー（同時）限界数
@@ -728,7 +728,7 @@ namespace gxKey
 //win32では、VC環境にて設定済み
 
 //#define GX_DEBUG		//デバッグコンパイル時に使用（デバッグ情報を出力）、最適化なし
-//#define GX_RELEASE		//マスターコンパイル環境と同等だが、デバッグ出力あり、最適化レベル最高
+//#define GX_RELEASE	//マスターコンパイル環境と同等だが、デバッグ出力あり、最適化レベル最高
 //#define GX_MASTER		//マスターコンパイル、デバッグ出力なし、最適化レベル最高
 
 #endif

@@ -168,15 +168,5 @@ public:
 
 };
 
-
-gxBool GameDragAndDrop();
-
-
-
-
-/*
-*/
-
-
 #endif
 

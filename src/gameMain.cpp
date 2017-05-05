@@ -9,7 +9,7 @@
 #include <gxLib.h>
 
 
-void Visorizer(void);
+void Visorizer( gxBool bReset = gxFalse );
 
 gxBool GameMain()
 {
@@ -35,6 +35,8 @@ gxBool GameResume()
 
 gxBool GameReset()
 {
+	Visorizer( gxTrue );
+
 	return gxTrue;
 }
 

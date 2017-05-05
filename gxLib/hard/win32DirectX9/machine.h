@@ -5,6 +5,7 @@
 // --------------------------------------------------------------------
 
 #define PLATFORM_WINDOWS
+#define GX_USE_OGGVORBIS
 
 #ifdef _DEBUG
 	#define GX_DEBUG
@@ -65,6 +66,7 @@ Uint32 GetVsyncRate();
 void ExecuteApp( char *appname );
 gxBool IsFullScreen();
 void ChangeWindowMode( gxBool bWindow );
+void ScreenCapture();
 
 
 enum {
@@ -105,89 +107,34 @@ private:
 
 };
 
-
-class CAppManager
-{
-public:
-
-	enum {
-		enArgMax = 32,
-	};
-
-	CAppManager()
-	{
-		for( Sint32 ii=0; ii<enArgMax; ii++)
-		{
-			m_pArg[ii] = NULL;
-		}
-
-		m_sArgNum = 0;
-	}
-
-	~CAppManager()
-	{
-		for( Sint32 ii=0; ii<enArgMax; ii++)
-		{
-			if( m_pArg[ii] ) SAFE_DELETES( m_pArg[ii] );
-		}
-	}
-
-	void SetArg( int n , gxChar *pStr )
-	{
-		Uint32 len = strlen( pStr );
-
-		if( m_pArg[n] ) SAFE_DELETES( m_pArg[n] );
-
-		m_pArg[n] = new gxChar[len];
-
-		sprintf( &m_pArg[n][0] , "%s" , pStr );
-
-		if( m_sArgNum < n+1 ) m_sArgNum = n+1;
-	}
-
-	gxChar* GetArg( int n )
-	{
-		if( n >= m_sArgNum ) return "None Arg";
-
-		return &m_pArg[n][0];
-	}
-
-	SINGLETON_DECLARE( CAppManager );
-
-	gxChar *m_pArg[enArgMax];
-	Sint32 m_sArgNum;
-
-};
-
-
-#define KEYBOARD_ESCAPE      (VK_ESCAPE)
-#define KEYBOARD_BACKSPACE   (VK_BACK)
-#define KEYBOARD_TAB         (VK_TAB)
-#define KEYBOARD_RETURN      (VK_RETURN)
-#define KEYBOARD_SHIFT       (VK_LSHIFT)
-#define KEYBOARD_RSHIFT      (VK_RSHIFT)
-#define KEYBOARD_CTRL        (VK_LCONTROL)
-#define KEYBOARD_RCTRL       (VK_RCONTROL)
-#define KEYBOARD_ALT         (VK_LMENU)
-#define KEYBOARD_RALT        (VK_RMENU)
-#define KEYBOARD_ARROW_UP    (VK_UP)
-#define KEYBOARD_ARROW_DOWN  (VK_DOWN)
-#define KEYBOARD_ARROW_LEFT  (VK_LEFT)
-#define KEYBOARD_ARROW_RIGHT (VK_RIGHT)
-#define KEYBOARD_SPACE       (VK_SPACE)
-#define KEYBOARD_ENTER       (VK_RETURN)
-#define KEYBOARD_F1          (VK_F1)
-#define KEYBOARD_F2          (VK_F2)
-#define KEYBOARD_F3          (VK_F3)
-#define KEYBOARD_F4          (VK_F4)
-#define KEYBOARD_F5          (VK_F5)
-#define KEYBOARD_F6          (VK_F6)
-#define KEYBOARD_F7          (VK_F7)
-#define KEYBOARD_F8          (VK_F8)
-#define KEYBOARD_F9          (VK_F9)
-#define KEYBOARD_F10         (VK_F10)
-#define KEYBOARD_F11         (VK_F11)
-#define KEYBOARD_F12         (VK_F12)
+#define KEYBOARD_ESCAPE      (0x10)	//(VK_ESCAPE)
+#define KEYBOARD_BACKSPACE   (0x11)	//(VK_BACK)
+#define KEYBOARD_TAB         (0x12)	//(VK_TAB)
+#define KEYBOARD_RETURN      (0x13)	//(VK_RETURN)
+#define KEYBOARD_SHIFT       (0x14)	//(VK_LSHIFT)
+#define KEYBOARD_RSHIFT      (0x15)	//(VK_RSHIFT)
+#define KEYBOARD_CTRL        (0x16)	//(VK_LCONTROL)
+#define KEYBOARD_RCTRL       (0x17)	//(VK_RCONTROL)
+#define KEYBOARD_ALT         (0x18)	//(VK_LMENU)
+#define KEYBOARD_RALT        (0x19)	//(VK_RMENU)
+#define KEYBOARD_ARROW_UP    (0x1A)	//(VK_UP)
+#define KEYBOARD_ARROW_DOWN  (0x1B)	//(VK_DOWN)
+#define KEYBOARD_ARROW_LEFT  (0x1C)	//(VK_LEFT)
+#define KEYBOARD_ARROW_RIGHT (0x1D)	//(VK_RIGHT)
+#define KEYBOARD_SPACE       (0x1E)	//(VK_SPACE)
+#define KEYBOARD_ENTER       (0x13)	//(VK_RETURN)
+#define KEYBOARD_F1          (0x01)	//(VK_F1)
+#define KEYBOARD_F2          (0x02)	//(VK_F2)
+#define KEYBOARD_F3          (0x03)	//(VK_F3)
+#define KEYBOARD_F4          (0x04)	//(VK_F4)
+#define KEYBOARD_F5          (0x05)	//(VK_F5)
+#define KEYBOARD_F6          (0x06)	//(VK_F6)
+#define KEYBOARD_F7          (0x07)	//(VK_F7)
+#define KEYBOARD_F8          (0x08)	//(VK_F8)
+#define KEYBOARD_F9          (0x09)	//(VK_F9)
+#define KEYBOARD_F10         (0x0A)	//(VK_F10)
+#define KEYBOARD_F11         (0x0B)	//(VK_F11)
+#define KEYBOARD_F12         (0x0C)	//(VK_F12)
 #define KEYBOARD_0           ('0')
 #define KEYBOARD_1           ('1')
 #define KEYBOARD_2           ('2')
@@ -224,6 +171,16 @@ public:
 #define KEYBOARD_X           ('X')
 #define KEYBOARD_Y           ('Y')
 #define KEYBOARD_Z           ('Z')
+#define KEYBOARD_N0          (0x20)	//(Numpad0)
+#define KEYBOARD_N1          (0x21)	//(Numpad1)
+#define KEYBOARD_N2          (0x22)	//(Numpad2)
+#define KEYBOARD_N3          (0x23)	//(Numpad3)
+#define KEYBOARD_N4          (0x24)	//(Numpad4)
+#define KEYBOARD_N5          (0x25)	//(Numpad5)
+#define KEYBOARD_N6          (0x26)	//(Numpad6)
+#define KEYBOARD_N7          (0x27)	//(Numpad7)
+#define KEYBOARD_N8          (0x28)	//(Numpad8)
+#define KEYBOARD_N9          (0x29)	//(Numpad9)
 
 #define KEYSIGN_U KEYBOARD_ARROW_UP
 #define KEYSIGN_D KEYBOARD_ARROW_DOWN
@@ -242,6 +199,4 @@ public:
 #define KEYSIGN10 KEYBOARD_RCTRL	//ボタンR2
 #define KEYSIGN11 KEYBOARD_SPACE	//ＳＥＬＥＣＴ
 #define KEYSIGN12 KEYBOARD_ENTER	//ＳＴＡＲＴ
-
-gxBool GameDragAndDrop();
 

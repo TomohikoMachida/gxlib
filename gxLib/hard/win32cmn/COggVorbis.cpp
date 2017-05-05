@@ -14,6 +14,7 @@
 #include <vorbis/vorbisenc.h>
 #include <gxLib.h>
 
+#ifdef GX_USE_OGGVORBIS
 #ifdef GX_BUILD_OPTIONx86
 	#ifdef GX_DEBUG
 		#pragma comment(lib,"oggVorbis/debug/x86/d_libogg_static_x86.lib")
@@ -464,5 +465,13 @@ long makeWaveHeader( vorbis_info* vi , Uint32 uPcmSize , Uint8* pData )
 //    DWORD pcmbytes;//波形データのバイト数
 //} WAVHEADER;
 
-
 #pragma pack (pop)
+
+#else
+
+Uint8* ReadOgg( Uint8* pData , Uint32 uSize , Uint32 *pSize)
+{
+	return NULL;
+}
+#endif
+

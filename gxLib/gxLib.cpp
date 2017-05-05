@@ -32,7 +32,7 @@ gxLib::StSaveData gxLib::SaveData;
 static StOrder s_Order;
 
 enum {
-	enStringMaxSize   = 0xff,
+	enStringMaxSize   = 512,
 	enNoneTexturePage = -1,
 	enNoneWiredPage   = -2,
 };
@@ -558,7 +558,7 @@ gxBool gxLib::SetAudioMasterVolume( Float32 fVolume )
 
 void gxLib::DebugLog( gxChar* pFormat , ... )
 {
-#if _MASTERVERSION_
+#if GX_MASTER
 
 #else
 	gxChar _buf[ enStringMaxSize ];
@@ -576,7 +576,13 @@ void gxLib::DebugLog( gxChar* pFormat , ... )
 
 	va_end( app );
 
+	if( CGameGirl::GetInstance()->IsInitCompleted() )
+	{
+		gxDebug::GetInstance()->LogDisp( _buf );
+	}
+
 	LogDisp( _buf );
+
 #endif
 }
 

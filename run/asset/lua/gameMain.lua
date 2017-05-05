@@ -1,4 +1,4 @@
-[[
+--[[
 
   GameMain.lua
 
@@ -8,8 +8,8 @@
 
 ]]
 
-require "visor/gxLib"
-require "visor/visorizer"
+require "gxLib/api"
+require "visorizer"
 
 function gameMain()
 

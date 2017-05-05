@@ -49,6 +49,10 @@ StTouchDevice *m_pTouchDevice;//[ CPadManager::enTouchMax ];
 #define NAME_APRICATION APPLICATION_NAME
 #define NAME_APRICLASS  "gxLib9"
 
+Sint32 g_sFrameSkip = 0;	//毒
+Sint32 g_sScreenModeIndex = 2;
+//Sint32 g_sWideScreen      = 0;
+Sint32 g_sAntialiesMode   = 0;
 
 void makeWindow( )
 {
@@ -164,6 +168,56 @@ void updateMemoryStatus()
 }
 
 
+Sint32 convertKeyNumber( WPARAM id )
+{
+	//キーと配列をマッチングさせる
+
+	switch( id ){
+	case VK_ESCAPE:		return KEYBOARD_ESCAPE      ;
+	case VK_BACK:       return KEYBOARD_BACKSPACE   ;
+	case VK_TAB:        return KEYBOARD_TAB         ;
+	case VK_RETURN:     return KEYBOARD_RETURN      ;
+//	case VK_RETURN:     return KEYBOARD_ENTER       ;
+	case VK_LSHIFT:     return KEYBOARD_SHIFT       ;
+	case VK_RSHIFT:     return KEYBOARD_RSHIFT      ;
+	case VK_LCONTROL:   return KEYBOARD_CTRL        ;
+	case VK_RCONTROL:   return KEYBOARD_RCTRL       ;
+	case VK_LMENU:      return KEYBOARD_ALT         ;
+	case VK_RMENU:      return KEYBOARD_RALT        ;
+	case VK_UP:         return KEYBOARD_ARROW_UP    ;
+	case VK_DOWN:       return KEYBOARD_ARROW_DOWN  ;
+	case VK_LEFT:       return KEYBOARD_ARROW_LEFT  ;
+	case VK_RIGHT:      return KEYBOARD_ARROW_RIGHT ;
+	case VK_SPACE:      return KEYBOARD_SPACE       ;
+	case VK_F1:         return KEYBOARD_F1          ;
+	case VK_F2:         return KEYBOARD_F2          ;
+	case VK_F3:         return KEYBOARD_F3          ;
+	case VK_F4:         return KEYBOARD_F4          ;
+	case VK_F5:         return KEYBOARD_F5          ;
+	case VK_F6:         return KEYBOARD_F6          ;
+	case VK_F7:         return KEYBOARD_F7          ;
+	case VK_F8:         return KEYBOARD_F8          ;
+	case VK_F9:         return KEYBOARD_F9          ;
+	case VK_F10:        return KEYBOARD_F10         ;
+	case VK_F11:        return KEYBOARD_F11         ;
+	case VK_F12:        return KEYBOARD_F12         ;
+	case VK_NUMPAD0:	return KEYBOARD_N0;
+	case VK_NUMPAD1:	return KEYBOARD_N1;
+	case VK_NUMPAD2:	return KEYBOARD_N2;
+	case VK_NUMPAD3:	return KEYBOARD_N3;
+	case VK_NUMPAD4:	return KEYBOARD_N4;
+	case VK_NUMPAD5:	return KEYBOARD_N5;
+	case VK_NUMPAD6:	return KEYBOARD_N6;
+	case VK_NUMPAD7:	return KEYBOARD_N7;
+	case VK_NUMPAD8:	return KEYBOARD_N8;
+	case VK_NUMPAD9:	return KEYBOARD_N9;
+	default:
+		return id;
+	}
+
+	return 0x00;
+}
+
 void InputKeyCheck( UINT iMsg , WPARAM wParam ,LPARAM lParam )
 {
 	//キー入力されたら記録する
@@ -172,14 +226,14 @@ void InputKeyCheck( UINT iMsg , WPARAM wParam ,LPARAM lParam )
 	case WM_KEYDOWN:
 		//キーボード押した
 		//CPadManager::GetInstance()->SetKeyDown(wParam);
-		g_pWindows->m_KeyBoard[ wParam ] = 0x01;
+		g_pWindows->m_KeyBoard[ convertKeyNumber( wParam ) ] = 0x01;
 		return;
 
 	case WM_KEYUP:
 		//キーボード離した
 		//CPadManager::GetInstance()->SetKeyUp(wParam);
 		{
-			g_pWindows->m_KeyBoard[wParam] = 0x02;
+			g_pWindows->m_KeyBoard[ convertKeyNumber( wParam ) ] = 0x02;
 		}
 		return;
 
@@ -808,17 +862,9 @@ void InputShortCutCheck( Uint32 uId )
 		break;
 
 	case enID_PadConfig:
-		/*
-		if( CGameGirl::GetInstance()->IsPadConfigMode() )
-		{
-			CGameGirl::GetInstance()->SetPadConfig( gxFalse );
-
-		}
-		else
-		*/
 		{
 			CGameGirl::GetInstance()->SetPadConfig();
-	}
+		}
 		break;
 
 	case enID_DebugMode:
@@ -829,6 +875,11 @@ void InputShortCutCheck( Uint32 uId )
 	case enID_Reset:
 		//リセット
 		CGameGirl::GetInstance()->SetReset();
+		break;
+
+	case enID_ScreenShot:
+		//リセット
+		ScreenCapture();
 		break;
 
 	}

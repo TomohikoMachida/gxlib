@@ -13,7 +13,7 @@
 -- //マクロ
 -- //----------------------------------------------
 
-ORIGIN_ONE  = (1)		--配列の添字が１スタートの場合は１
+ORIGIN_ONE  = (1)		--配列の添字が1から始まる場合は１
 
 enObjMax     = (90)				-- //マックスオブジェクト数
 enMyShipIndex= (ORIGIN_ONE)		-- //バスターのオブジェクトナンバー
@@ -37,6 +37,7 @@ ScrollY = 0;
 -- @@@ static int GetStylus(int *x, int *y);
 -- @@@ static void _PadControl(void);
 -- @@@ 
+
 GBATR_ALPHA_PLUS = ATR_DFLT;
 
 -- //----------------------------------------------

@@ -15,8 +15,6 @@
 #include "gxMovieManager.h"
 #include "gxDebug.h"
 
-Sint32 g_sFrameSkip = 0;	//毒
-
 SINGLETON_DECLARE_INSTANCE( CGameGirl );
 
 CGameGirl::CGameGirl()
@@ -30,6 +28,7 @@ CGameGirl::CGameGirl()
 
 	m_sTimer = 0;
 	m_uGameCounter = 0;
+	m_sFrameSkip = 0;
 
 	m_uMemoryTotal   = 1;
 	m_uMemoryMaximum = 1;
@@ -45,6 +44,8 @@ CGameGirl::CGameGirl()
 
 	m_bResetButton   = gxFalse;
 	m_bPadDeviceConfigMode = gxFalse;
+
+	m_bInitializeCompleted = gxFalse;
 }
 
 
@@ -83,6 +84,8 @@ void CGameGirl::Init()
 	soundInit();
 	movieInit();
 	inputInit();
+
+	m_bInitializeCompleted = gxTrue;
 }
 
 
@@ -105,7 +108,7 @@ void CGameGirl::Main()
 
 		inputMain();
 
-		if( m_uGameCounter%(g_sFrameSkip +1 ) )
+		if( m_uGameCounter%(m_sFrameSkip +1 ) )
 		{
 			bSkip = gxTrue;
 		}

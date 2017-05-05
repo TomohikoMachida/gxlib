@@ -182,6 +182,3 @@ public:
 };
 
 
-gxBool GameDragAndDrop();
-
-

@@ -25,11 +25,6 @@ SINGLETON_DECLARE_INSTANCE( CDXDraw )
 
 LPDIRECT3DVERTEXBUFFER9  m_pVB;
 LPDIRECT3DINDEXBUFFER9   m_pIB;
-
-Sint32 g_sScreenModeIndex = 2;
-//Sint32 g_sWideScreen      = 0;
-Sint32 g_sAntialiesMode   = D3DTEXF_NONE;
-
 LPDIRECT3DSURFACE9 g_lpSurface = NULL;
 
 /*
@@ -135,7 +130,7 @@ gxBool CDXDraw::Init()
 	}
 
 	//	画面の設定が想定外に謎な時
-	if ( !isSuccess )
+	if ( true )//!isSuccess )
 	{
 		width  = WINDOW_W;
 		height = WINDOW_H;

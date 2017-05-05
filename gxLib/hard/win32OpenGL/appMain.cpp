@@ -118,9 +118,17 @@ int APIENTRY wWinMain( _In_ HINSTANCE hInstance, _In_opt_ HINSTANCE hPrevInstanc
 	wAccel[4].key   = VK_F4;
 	wAccel[4].fVirt = FVIRTKEY;
 
-	wAccel[5].cmd   = enID_DebugMode;
-	wAccel[5].key   = VK_F8;
+	wAccel[5].cmd   = enID_Reset;
+	wAccel[5].key   = VK_F5;
 	wAccel[5].fVirt = FVIRTKEY;
+
+	wAccel[6].cmd   = enID_DebugMode;
+	wAccel[6].key   = VK_F8;
+	wAccel[6].fVirt = FVIRTKEY;
+
+	wAccel[7].cmd   = enID_ScreenShot;
+	wAccel[7].key   = VK_F12;
+	wAccel[7].fVirt = FVIRTKEY;
 
 	g_pWindows->m_hAccel = CreateAcceleratorTable(wAccel, enAccelMax );
 
@@ -309,5 +317,8 @@ void Upload( Sint32 sBank )
 	updateMemoryStatus();
 }
 
-
+void ScreenCapture()
+{
+	
+}
 

@@ -88,7 +88,7 @@ Uint32 gxUtil::atox( gxChar *p )
 {
 	int n,ret=0;
 
-	for(int i=strlen(p)-1,j=0 ;i>=0;i--,j++)
+	for(int i=gxUtil::StrLen(p)-1,j=0 ;i>=0;i--,j++)
 	{	
 		switch(p[i]){
 		 case '0':  n=0;	break;
@@ -236,7 +236,7 @@ void gxUtil::han2zen( gxChar* pSrc , gxChar *pDst)
 	static gxChar *pin , *pout,c[2],b2;
 	static int slen,i;
 
-	slen = strlen(pSrc);
+	slen = gxUtil::StrLen(pSrc);
 	pin  = pSrc ;
 	pout = pDst;
 
@@ -294,7 +294,7 @@ gxBool gxUtil::GetFileNameWithoutPath( gxChar * in , gxChar *out)
 {
 	//ファイル名だけを取り出す
 
-	for(int i=strlen(in);i>0;i--)
+	for(int i=gxUtil::StrLen(in);i>0;i--)
 	{
 		if( in[i]=='\\' || in[i]=='/')
 		{
@@ -310,7 +310,7 @@ gxBool gxUtil::GetPath( gxChar *in , gxChar *out )
 {
 	//ファイルのパスだけを取り出す
 
-	for(int i=strlen(in);i>0;i--)
+	for(int i=gxUtil::StrLen(in);i>0;i--)
 	{
 		if( in[i]=='\\' || in[i]=='/')
 		{
@@ -326,7 +326,7 @@ gxBool gxUtil::GetExt( gxChar *in , gxChar* out )
 {
 	//拡張子を得る
 
-	for(int i=strlen(in);i>0;i--)
+	for(int i=gxUtil::StrLen(in);i>0;i--)
 	{
 		if(in[i]=='.')
 		{
@@ -345,7 +345,7 @@ gxBool gxUtil::GetFileNameWithoutExt( gxChar *in , gxChar *out)
 {
 	//拡張子をカットする
 
-	for(int i=strlen(in);i>0;i--)
+	for(int i=gxUtil::StrLen(in);i>0;i--)
 	{
 		if(in[i]=='.')
 		{
@@ -533,7 +533,7 @@ void gxUtil::RotationPoint( gxPoint *pPoint, Float32 fRot )
 
 void gxUtil::StrUpr( gxChar* pStr )
 {
-	Uint32 len = strlen(pStr);
+	Uint32 len = gxUtil::StrLen(pStr);
 
 	for( Sint32 ii=0; ii<len; ii++ )
 	{
@@ -541,6 +541,13 @@ void gxUtil::StrUpr( gxChar* pStr )
 	}
 }
 
+
+Uint32 gxUtil::gxUtil::StrLen( gxChar* pStr )
+{
+	Uint32 len = strlen(pStr);
+
+	return len;
+}
 
 
 void gxUtil::MemSet( void* pMem ,Uint8 val , Uint32 sz )

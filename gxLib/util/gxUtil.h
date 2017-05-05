@@ -30,6 +30,7 @@ public:
 
 	static void RotationPoint( gxPoint *pPt, Float32 fRot );
 	static void StrUpr( gxChar* pStr );
+	static Uint32 StrLen( gxChar* pStr );
 	static void MemSet( void* pMem , Uint8 val, Uint32 sz );
 	static void MemCpy( void* pDst , void *pSrc , Uint32 sz );
 

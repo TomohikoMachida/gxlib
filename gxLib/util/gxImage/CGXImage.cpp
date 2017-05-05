@@ -14,8 +14,9 @@
 	#define GXI_READ_SIZE (8192*16)	//32ではT4でガクガクだった
 #endif
 
-#define GXI_DECODE_KEY (0xFF)
 #define MAX_PATH_LENGTH (256)
+#define GXI_DECODE_KEY (0xD9)
+//#define GXI_DECODE_KEY (0x00)
 
 gxChar g_NameBuf[MAX_PATH_LENGTH];
 gxChar g_NameBuf2[MAX_PATH_LENGTH];
@@ -61,6 +62,7 @@ CGXImage::CGXImage()
 	m_sFileListNum = 0;
 	m_pFileList = new StFileList[ enFileNumMax ];
 
+	m_uMask = GXI_DECODE_KEY;
 }
 
 
@@ -155,13 +157,15 @@ gxBool CGXImage::Add (gxChar* pUnitFileName)
 }
 
 
-gxBool CGXImage::Load( gxChar* pFileName )
+gxBool CGXImage::Load(gxChar* pFileName, Sint32 version , Uint32 mask)
 {
 	//-----------------------------------------------
 	//イメージファイルを読み込む(ブロック読み込み)
 	//-----------------------------------------------
 	Sint32 sRet = 1;
 	Uint32 sPos = 0;
+
+	m_uMask = mask;
 
 #ifdef _NO_GXI_IMAGE_
 	clearAll();
@@ -193,7 +197,7 @@ gxBool CGXImage::Load( gxChar* pFileName )
 		//delete[] pTemp;
 	}
 
-	Analyse();
+	Analyse(version );
 
 	m_bLoadComplete = gxTrue;
 
@@ -203,7 +207,7 @@ gxBool CGXImage::Load( gxChar* pFileName )
 
 
 
-gxBool CGXImage::Analyse()
+gxBool CGXImage::Analyse( Sint32 version )
 {
 	//-----------------------------------------------------------
 	//情報解析
@@ -214,7 +218,61 @@ gxBool CGXImage::Analyse()
 	Uint32 sImgPos = 0;
 
 	//ヘッダー情報を登録
-	m_pStHeader = (StPackHeader*)&m_pFileImage[0];
+	StPackHeader hdr;
+
+	if ( version == enVersion_AutoDetect )
+	{
+		//Auto Detect
+		if (m_pFileImage[3] != 2)
+		{
+			//DRQ1
+			version = enVersion1_0_1;
+
+			if (m_pFileImage[0] == 'D' && m_pFileImage[1] == 'R' && m_pFileImage[2] == 'Q' && m_pFileImage[3] == 0x00 )
+			{
+				//DRQがそのまま入っていれば解除キーは３バイト目になるはず
+				//m_uMask = m_pFileImage[3];
+				//LX形式
+				version = enVersion1_0_2;
+
+			}
+		}
+		else
+		{
+			version = m_pFileImage[4]-1;// enVersion1_0_2;
+		}
+	}
+
+	if(version == enVersion1_0_1 )
+	{
+		//ver1をver2仕様に変換する
+		StPackHeader1 *phdrSrc;
+		phdrSrc = (StPackHeader1*)&m_pFileImage[0];
+		hdr.name[0] = 'D';
+		hdr.name[1] = 'R';
+		hdr.name[2] = 'Q';
+		hdr.name[3] = '2';
+		hdr.version   = phdrSrc->version;
+		hdr.filenum   = phdrSrc->filenum;
+		hdr.imagesize = phdrSrc->imagesize;
+		hdr.Offset    = phdrSrc->Offset;
+	}
+	else if( version == enVersion1_0_2 )
+	{
+		//ver2
+		StPackHeader2 *phdrSrc;
+		phdrSrc = (StPackHeader2*)&m_pFileImage[0];
+		hdr.name[0] = 'D';
+		hdr.name[1] = 'R';
+		hdr.name[2] = 'Q';
+		hdr.name[3] = '2';
+		hdr.version = phdrSrc->version;
+		hdr.filenum = phdrSrc->filenum;
+		hdr.imagesize = phdrSrc->imagesize;
+		hdr.Offset = phdrSrc->Offset;
+	}
+
+	m_pStHeader = &hdr;//(StPackHeader*)&m_pFileImage[0];
 
 	//ファイル数、バージョンを記録
 	m_sFileNum = m_pStHeader->filenum;
@@ -252,11 +310,11 @@ gxBool CGXImage::Save(gxChar* pSaveName)
 	//ヘッダ情報作成
 	//---------------------------------------
 
-	StPackHeader stHead;
+	StPackHeader2 stHead;
 	stHead.name[0]  = 'D';
 	stHead.name[1]  = 'R';
 	stHead.name[2]  = 'Q';
-	stHead.name[3]  = 0;
+	stHead.name[3]  = '2';
 	stHead.version  = enVersionSaisin;
 	stHead.filenum  = m_sAddFileNum;
 	stHead.imagesize = 0;
@@ -265,15 +323,14 @@ gxBool CGXImage::Save(gxChar* pSaveName)
 	//ファイル情報書き込み
 	//---------------------------------------
 #if 0
- -- poison
+
 	for(ii=0;ii<m_sAddFileNum;ii++)
 	{
 		int fh;
 		struct stat filestat;
 
 		sprintf( g_NameBuf,"%s\\%s",m_ZettaiPath,m_pStFileInfo[ii]->FileName );
-		fh = open( g_NameBuf , O_RDONLY|O_BINARY );
-
+/*		fh = open( g_NameBuf , O_RDONLY|O_BINARY );
 		if( fh < 0 )
 		{
 			//---------------------------------------
@@ -299,6 +356,7 @@ gxBool CGXImage::Save(gxChar* pSaveName)
 			ret = read( fh , &m_pStFileInfo[ii]->pFileImage[ pos ] , filestat.st_size );
 			close( fh );
 		}
+*/
 		stHead.imagesize += m_pStFileInfo[ii]->DiskSize;
 	}
 
@@ -454,7 +512,7 @@ void CGXImage::InfoMake(gxChar *filename)
 	//-------------------------------------
 	//ディスクイメージ情報を書き出す
 	//-------------------------------------
-	Load( filename );
+	Load( filename , enVersion_AutoDetect , m_uMask );
 
 //	sprintf(g_NameBuf,"%s", filename );
 	gxUtil::GetFileNameWithoutExt( filename , g_NameBuf);
@@ -485,7 +543,7 @@ void CGXImage::Decode( Uint8 *p ,Uint32 sz)
 	
 	for(Uint32 ii=0;ii<sz;ii++)
 	{
-		p[ii] ^= GXI_DECODE_KEY;
+		p[ii] ^= m_uMask;
 	}
 
 }
@@ -503,7 +561,7 @@ Uint32 CGXImage::DecodeAsync( Uint8 *p ,Uint32 sz,Uint32 sPos)
 			return sz;
 		}
 
-		p[sPos] ^= GXI_DECODE_KEY;
+		p[sPos] ^= m_uMask;
 		sPos ++;
 		m_NowWork ++;
 	}

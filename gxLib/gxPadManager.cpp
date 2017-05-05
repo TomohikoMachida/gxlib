@@ -117,6 +117,18 @@ void CPadManager::MixingKeyboardStat()
 	m_uButton[ enIDJoypad1 + 14 ] = (m_uButton[KEYSIGN11])?	gxTrue : gxFalse;	//SELECT
 	m_uButton[ enIDJoypad1 + 15 ] = (m_uButton[KEYSIGN12])?	gxTrue : gxFalse;	//START
 
+	//2P
+
+	m_uButton[ enIDJoypad2 + 0 ] =  (m_uButton[KEYBOARD_N8])?	gxTrue : gxFalse;	//Ten Key
+	m_uButton[ enIDJoypad2 + 1 ] =  (m_uButton[KEYBOARD_N6])?	gxTrue : gxFalse;	//
+	m_uButton[ enIDJoypad2 + 2 ] =  (m_uButton[KEYBOARD_N2])?	gxTrue : gxFalse;	//
+	m_uButton[ enIDJoypad2 + 3 ] =  (m_uButton[KEYBOARD_N4])?	gxTrue : gxFalse;	//
+	m_uButton[ enIDJoypad2 + 4 ] =  (m_uButton[KEYBOARD_N1])?	gxTrue : gxFalse;	//A
+	m_uButton[ enIDJoypad2 + 5 ] =  (m_uButton[KEYBOARD_N3])?	gxTrue : gxFalse;	//B
+	m_uButton[ enIDJoypad2 + 7 ] =  (m_uButton[KEYBOARD_N7])?	gxTrue : gxFalse;	//X
+	m_uButton[ enIDJoypad2 + 8 ] =  (m_uButton[KEYBOARD_N9])?	gxTrue : gxFalse;	//Y
+	m_uButton[ enIDJoypad2 + 15 ] = (m_uButton[KEYBOARD_N5])?	gxTrue : gxFalse;	//START
+
 	//-----------------------------------------------------------------------------
 	//マウス情報をプレイヤー１の情報に含める
 	//-----------------------------------------------------------------------------
@@ -128,7 +140,7 @@ void CPadManager::MixingKeyboardStat()
 	//プレイヤー２～４の情報を全て消去する
 	//-----------------------------------------------------------------------------
 
-	memset( &m_uButton[enIDJoypad2] , 0x00 , enJoypadButtonNum *sizeof(Uint8) );
+//	memset( &m_uButton[enIDJoypad2] , 0x00 , enJoypadButtonNum *sizeof(Uint8) );
 	memset( &m_uButton[enIDJoypad3] , 0x00 , enJoypadButtonNum *sizeof(Uint8) );
 	memset( &m_uButton[enIDJoypad4] , 0x00 , enJoypadButtonNum *sizeof(Uint8) );
 	memset( &m_uButton[enIDJoypad5] , 0x00 , enJoypadButtonNum *sizeof(Uint8) );

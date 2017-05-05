@@ -526,7 +526,7 @@ Uint32 CFontManager::printf( Sint32 x , Sint32 y , Sint32 prio , StFontStat *pSt
 	//prioが-1なら、表示せずにサイズのみ返す
 	//------------------------------------------------------------
 	StFontStat _Config;
-	Sint32 sLen = strlen( pStr );
+	Sint32 sLen = gxUtil::StrLen( pStr );
 	gxChar *p8  = s_StrTemp;
 	Uint32 ax,ay;
 	gxChar word[16];

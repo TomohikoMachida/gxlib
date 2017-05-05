@@ -10,40 +10,54 @@
 //ファイルアドレスリスト
 //----------------------------------
 #pragma pack ( push , 1 )
-enum {
-	enVersion1_0_0_=0,
-	enVersion1_0_1,
-	enVersion1_0_2,
-	enVersionSaisin,
-};
 
+#define GXI_DECODE_KEY (0xD9)
 
 class CGXImage
 {
 public:
+
+	enum {
+		enVersion_AutoDetect,
+		enVersion1_0_1,
+		enVersion1_0_2,
+		enVersionSaisin = enVersion1_0_2,
+	};
 
 	//--------------------------------------
 	//イメージファイル情報
 	//--------------------------------------
 	typedef struct StPackHeader
 	{
-		//enVersion1_0_0_
-#if 1
-		gxChar name[4];				//4
-		gxChar version;				//1
-		Uint8  filenum;		//1
-		Uint32 imagesize;			//4
-		Uint32 Offset;				//4
-		gxChar dummy2[2];				//2
-#else
-		//enVersion1_0_1_
-		gxChar  name[4];		//4
+		gxChar name[4];			//4
 		Uint16 version;			//2
 		Uint16 filenum;			//2
 		Uint32 imagesize;		//4
 		Uint32 Offset;			//4
-#endif
 	} StPackHeader;
+
+	typedef struct StPackHeader1
+	{
+		//enVersion1_0_0_
+		//GounHound I用
+		gxChar name[4];				//4
+		gxChar version;				//1
+		Uint8  filenum;				//1
+		Uint32 imagesize;			//4
+		Uint32 Offset;				//4
+		gxChar dummy2[2];			//2
+	} StPackHeader1;
+
+	typedef struct StPackHeader2
+	{
+		//enVersion1_0_1_
+		//GounHound EX用
+		gxChar  name[4];		//4(4byte目に2が入る)
+		Uint16 version;			//2
+		Uint16 filenum;			//2
+		Uint32 imagesize;		//4
+		Uint32 Offset;			//4
+	} StPackHeader2;
 
 	//--------------------------------------
 	//単一ファイル情報
@@ -57,7 +71,7 @@ public:
 	}StPackFile;
 
 	enum {
-		enFileNumMax = 1024,//256,
+		enFileNumMax = 1024*8,//256,
 	};
 
 
@@ -76,14 +90,14 @@ public:
 
 	//---------------------------------------
 
-	gxBool Load    (gxChar* pFileName);
+	gxBool Load    (gxChar* pFileName , Sint32 version = enVersion_AutoDetect, Uint32 mask = GXI_DECODE_KEY );
 
 	gxBool IsLoadFinish()
 	{
 		return m_bLoadComplete;
 	}
 
-	Uint8* GetFile(gxChar* pFileName,Uint32 *pSize=NULL );
+	Uint8* GetFile(gxChar* pFileName , Uint32 *pSize=NULL );
 
 	Uint32 GetFileSize( gxChar* pFileName )
 	{
@@ -121,7 +135,7 @@ private:
 
 	Sint32 getIndex( gxChar* pFileName );
 
-	gxBool Analyse();
+	gxBool Analyse( Sint32 version = enVersion_AutoDetect);
 	void Decode( Uint8 *p ,Uint32 sz);
 	Uint32 DecodeAsync( Uint8 *p ,Uint32 sz,Uint32 sPos);
 
@@ -220,6 +234,8 @@ private:
 
 	Uint32 m_sAllWork;
 	Uint32 m_NowWork;
+
+	Uint32 m_uMask;
 
 	//追加
 	gxChar tempBuf[280];

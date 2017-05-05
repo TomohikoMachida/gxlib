@@ -130,6 +130,11 @@ public:
 		return m_bPadDeviceConfigMode;
 	}
 
+	gxBool IsInitCompleted()
+	{
+		return  m_bInitializeCompleted;
+	}
+
 	SINGLETON_DECLARE( CGameGirl );
 
 private:
@@ -174,6 +179,7 @@ private:
 
 	Sint32 m_sTimer;
 	Uint32 m_uGameCounter;
+	Sint32 m_sFrameSkip;
 
 	//メモリ管理
 	Uint32 m_uMemoryTotal;
@@ -194,6 +200,8 @@ private:
 
 	gxBool m_bResetButton;
 	gxBool m_bPadDeviceConfigMode;
+
+	gxBool m_bInitializeCompleted;
 };
 
 

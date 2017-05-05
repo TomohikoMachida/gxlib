@@ -93,6 +93,12 @@ gxBool CGLDraw::resetDevice()
 	Float32 z = sin( DEG2RAD(67.5) )*1.f;
 	gluLookAt(0.0 , 0 , 5 , 0.0,0.0,0.0, 0.0, 1.0, 0.0);
 
+	BOOL (WINAPI *wglSwapIntervalEXT)(int) = NULL;
+	wglSwapIntervalEXT = (BOOL (WINAPI*)(int))wglGetProcAddress("wglSwapIntervalEXT");
+	if( wglSwapIntervalEXT )
+	{
+		wglSwapIntervalEXT( 0 );
+	}
 	return gxTrue;
 
 }
