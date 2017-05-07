@@ -181,6 +181,8 @@ private:
 #define KEYBOARD_X           ('X')
 #define KEYBOARD_Y           ('Y')
 #define KEYBOARD_Z           ('Z')
+#define KEYBOARD_PAGEUP      (0x2A)	//(PageUp)
+#define KEYBOARD_PAGEDOWN    (0x2B)	//(PageDown)
 
 #define KEYSIGN_U KEYBOARD_ARROW_UP
 #define KEYSIGN_D KEYBOARD_ARROW_DOWN

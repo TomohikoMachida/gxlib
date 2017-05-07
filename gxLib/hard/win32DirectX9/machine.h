@@ -181,6 +181,8 @@ private:
 #define KEYBOARD_N7          (0x27)	//(Numpad7)
 #define KEYBOARD_N8          (0x28)	//(Numpad8)
 #define KEYBOARD_N9          (0x29)	//(Numpad9)
+#define KEYBOARD_PAGEUP      (0x2A)	//(PageUp)
+#define KEYBOARD_PAGEDOWN    (0x2B)	//(PageDown)
 
 #define KEYSIGN_U KEYBOARD_ARROW_UP
 #define KEYSIGN_D KEYBOARD_ARROW_DOWN

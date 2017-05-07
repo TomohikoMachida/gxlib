@@ -201,16 +201,18 @@ Sint32 convertKeyNumber( WPARAM id )
 	case VK_F10:        return KEYBOARD_F10         ;
 	case VK_F11:        return KEYBOARD_F11         ;
 	case VK_F12:        return KEYBOARD_F12         ;
-	case VK_NUMPAD0:	return KEYBOARD_N0;
-	case VK_NUMPAD1:	return KEYBOARD_N1;
-	case VK_NUMPAD2:	return KEYBOARD_N2;
-	case VK_NUMPAD3:	return KEYBOARD_N3;
-	case VK_NUMPAD4:	return KEYBOARD_N4;
-	case VK_NUMPAD5:	return KEYBOARD_N5;
-	case VK_NUMPAD6:	return KEYBOARD_N6;
-	case VK_NUMPAD7:	return KEYBOARD_N7;
-	case VK_NUMPAD8:	return KEYBOARD_N8;
-	case VK_NUMPAD9:	return KEYBOARD_N9;
+	case VK_NUMPAD0:	return KEYBOARD_N0			;
+	case VK_NUMPAD1:	return KEYBOARD_N1			;
+	case VK_NUMPAD2:	return KEYBOARD_N2			;
+	case VK_NUMPAD3:	return KEYBOARD_N3			;
+	case VK_NUMPAD4:	return KEYBOARD_N4			;
+	case VK_NUMPAD5:	return KEYBOARD_N5			;
+	case VK_NUMPAD6:	return KEYBOARD_N6			;
+	case VK_NUMPAD7:	return KEYBOARD_N7			;
+	case VK_NUMPAD8:	return KEYBOARD_N8			;
+	case VK_NUMPAD9:	return KEYBOARD_N9			;
+	case VK_PRIOR: 		return KEYBOARD_PAGEUP		;
+	case VK_NEXT:		return KEYBOARD_PAGEDOWN	;
 	default:
 		return id;
 	}
