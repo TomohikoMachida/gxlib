@@ -107,6 +107,8 @@ private:
 
 };
 
+
+
 #define KEYBOARD_ESCAPE      (0x10)	//(VK_ESCAPE)
 #define KEYBOARD_BACKSPACE   (0x11)	//(VK_BACK)
 #define KEYBOARD_TAB         (0x12)	//(VK_TAB)
@@ -183,6 +185,9 @@ private:
 #define KEYBOARD_N9          (0x29)	//(Numpad9)
 #define KEYBOARD_PAGEUP      (0x2A)	//(PageUp)
 #define KEYBOARD_PAGEDOWN    (0x2B)	//(PageDown)
+#define KEYBOARD_DELETE		 (0x2C)	//(VK_DELETE)
+#define KEYBOARD_INSERT		 (0x2D)	//(VK_INSERT)
+
 
 #define KEYSIGN_U KEYBOARD_ARROW_UP
 #define KEYSIGN_D KEYBOARD_ARROW_DOWN

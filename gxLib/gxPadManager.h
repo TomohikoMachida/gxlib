@@ -167,7 +167,7 @@ enum {
 	TOUCH_aCBK7  = 13,
 	TOUCH_aCBK8  = 15,
 	TOUCH_aCBK9  = 17,
-	TOUCH_aCBK10 = 19,
+	TOUCH_aCBK10 = 14,
 };
 
 

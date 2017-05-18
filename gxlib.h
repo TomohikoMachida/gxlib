@@ -19,8 +19,8 @@
 //#define PLATFORM_WIN32_CONSOLE
 //#define PLATFORM_WIN32_APP
 //#define PLATFORM_WIN32_WINDOW
-//#define PLATFORM_WIN32_DIRECTX9
-#define PLATFORM_WIN32_OPENGL
+#define PLATFORM_WIN32_DIRECTX9
+//#define PLATFORM_WIN32_OPENGL
 //#define PLATFORM_WIN64_DIRECTX11
 //#define PLATFORM_ANDROID
 //#define PLATFORM_IOS
@@ -240,8 +240,12 @@ enum
 
 	BTN_25=(0x10000000),	//アナログ１
 	BTN_26=(0x20000000),	//アナログ２
-	BTN_27=(0x40000000),	//以下、未使用
-	BTN_28=(0x80000000),
+
+	BTN_27=(0x40000000),	//マウスM
+	BTN_28=(0x80000000),	//以下、未使用
+	BTN_29=(0x80000000),	//
+	BTN_30=(0x80000000),	//
+	BTN_31=(0x80000000),	//
 
 	BTN_MAX=32,
 };
@@ -285,6 +289,7 @@ enum {
 
 	MOUSE_L = BTN_23,
 	MOUSE_R = BTN_24,
+	MOUSE_M = BTN_27,
 
 	//Analogスティック
 
@@ -294,25 +299,22 @@ enum {
 };
 
 
-
-//VK_NUMPAD0 ～ VK_NUMPAD9
-
 typedef struct StJoyStat
 {
-	Uint32  psh;
-	Uint32  trg;
-	Uint32  rep;
-	Uint32  rls;
-	Uint32  dcl;
-	Sint32  mx;
-	Sint32  my;
-	Float32 ax;
-	Float32 ay;
-	Float32 az;
-	Float32 rx;
-	Float32 ry;
-	Float32 rz;
-	Sint32  whl;
+	Uint32  psh;	// 押しっぱなし
+	Uint32  trg;	// 押した瞬間
+	Uint32  rep;	// リピート
+	Uint32  rls;	// 離した瞬間
+	Uint32  dcl;	// ダブルクリック
+	Sint32  mx;		// マウス座標Ｘ
+	Sint32  my;		// マウス座標Ｙ
+	Float32 ax;		// アナログＸ	左スティック
+	Float32 ay;		// アナログＹ
+	Float32 az;		// アナログＺ
+	Float32 rx;		// アナログ（回転）Ｘ	右スティック
+	Float32 ry;		// アナログ（回転）Ｙ
+	Float32 rz;		// アナログ（回転）Ｚ
+	Sint32  whl;	// ホイール回転
 
 } StJoyStat;
 
@@ -325,8 +327,6 @@ typedef struct StTouch
 
 } StTouch;
 
-
-#if 1
 
 class gxLib {
 
@@ -569,10 +569,9 @@ public:
 
 	} StSaveData;
 
-
 	static StSaveData SaveData;
 
-	static Sint32 m_DebugSwitch[8];
+	static Sint32 m_DebugSwitch[8];				//PSPデバッガのDIPスイッチ相当
 	static gxBool m_bMasterDebugSwitch;			//F8で切り替え
 
 private:
@@ -581,18 +580,13 @@ private:
 
 };
 
+//標準的なボタンのアサイン
 
-
-#endif
 enum {
 	enBtnDecision = BTN_B,	//決定
 	enBtnCancel   = BTN_A,	//キャンセル
 };
 
-
-//#ifndef ZERO
-//#define ZERO (0.0f)
-//#endif
 
 //キャスト
 #define s_cast static_cast
@@ -601,28 +595,20 @@ enum {
 #define d_cast dynamic_cast
 
 #define PI						(3.141592653589793238462643383279f)											///< π
-
-//ラジアン値　 → ディグリー値
 #define RAD2DEG( r )	((r)*180.0f/PI)
-//ディグリー値 → ラジアン値
 #define DEG2RAD( r )	((r)/180.f*PI)
-
-// xの絶対値を求める
 #define ABS( x )			( ( (x) < 0 ) ? -(x) : (x) )
 #define	ARRAY_LENGTH( a )	( sizeof( a ) / sizeof( a[0] ) )
-#define REV(V)					toF(1.0f/toF(V))															///< 逆数算出マクロ
+#define REV(v)					toF(1.0f/toF(v))															///< 逆数算出マクロ
 #define SAFE_RELEASE(V)			if ( (V) != NULL ) { (V)->Release(); (V) = NULL; }							///< COM安全解放マクロ
 #define SAFE_DELETE(V)			if ( (V) != NULL ) { delete (V); (V) = NULL; }								///< newメモリ安全解放
 #define SAFE_DELETES(V)			if ( (V) != NULL ) { delete [] (V); (V) = NULL; }							///< new[]メモリ安全解放
 #define SWAP(N1,N2)				{ N1 = N2 - N1; N2 -= N1; N1 += N2; }										///< 値交換マクロ
-
-
-//２乗する
+#define CLAMP(x, low, high) ((x) > (high))? (high) : ((x) < (low))? (low) : (x)
 #define POW(n) ((n)*(n))
 
 //角度を３６０度以内に正規化する
 #define NORMALIZE( n ){	while( (n)<0)  { (n)+=360; }	while( (n)>360){ (n)-=360; }	}
-
 #define LIMIT_MIN(a,b) { (a) = ( (a) < (b) )? (b) : (a);	}
 #define LIMIT_MAX(a,b) { (a) = ( (a) > (b) )? (b) : (a);	}
 #define INIT_ARRAY( a , b , c )	for( Sint32 __ii__=0; __ii__< (b); __ii__ ++ ) { a[__ii__] = (c); }
@@ -656,72 +642,85 @@ private: \
 namespace gxKey
 {
 	enum {
-		B_ESCAPE        = KEYBOARD_ESCAPE,
-		B_BACKSPACE     = KEYBOARD_BACKSPACE,
-		B_TAB           = KEYBOARD_TAB,
-		B_RETURN        = KEYBOARD_RETURN,
-		B_SHIFT         = KEYBOARD_SHIFT,
-		B_RSHIFT        = KEYBOARD_RSHIFT,
-		B_CTRL          = KEYBOARD_CTRL,
-		B_RCTRL         = KEYBOARD_RCTRL,
-		B_ALT           = KEYBOARD_ALT,
-		B_RALT          = KEYBOARD_RALT,
-		B_PAGEUP        = KEYBOARD_PAGEUP,
-		B_PAGEDOWN      = KEYBOARD_PAGEDOWN,
-		B_ARROW_UP      = KEYBOARD_ARROW_UP,
-		B_ARROW_DOWN    = KEYBOARD_ARROW_DOWN,
-		B_ARROW_LEFT    = KEYBOARD_ARROW_LEFT,
-		B_ARROW_RIGHT   = KEYBOARD_ARROW_RIGHT,
-		B_SPACE         = KEYBOARD_SPACE,
-		B_ENTER         = KEYBOARD_ENTER,
-		B_F1            = KEYBOARD_F1,
-		B_F2            = KEYBOARD_F2,
-		B_F3            = KEYBOARD_F3,
-		B_F4            = KEYBOARD_F4,
-		B_F5            = KEYBOARD_F5,
-		B_F6            = KEYBOARD_F6,
-		B_F7            = KEYBOARD_F7,
-		B_F8            = KEYBOARD_F8,
-		B_F9            = KEYBOARD_F9,
-		B_F10           = KEYBOARD_F10,
-		B_F11           = KEYBOARD_F11,
-		B_F12           = KEYBOARD_F12,
-		B_0             = KEYBOARD_0,
-		B_1             = KEYBOARD_1,
-		B_2             = KEYBOARD_2,
-		B_3             = KEYBOARD_3,
-		B_4             = KEYBOARD_4,
-		B_5             = KEYBOARD_5,
-		B_6             = KEYBOARD_6,
-		B_7             = KEYBOARD_7,
-		B_8             = KEYBOARD_8,
-		B_9             = KEYBOARD_9,
-		B_A             = KEYBOARD_A,
-		B_B             = KEYBOARD_B,
-		B_C             = KEYBOARD_C,
-		B_D             = KEYBOARD_D,
-		B_E             = KEYBOARD_E,
-		B_F             = KEYBOARD_F,
-		B_G             = KEYBOARD_G,
-		B_H             = KEYBOARD_H,
-		B_I             = KEYBOARD_I,
-		B_J             = KEYBOARD_J,
-		B_K             = KEYBOARD_K,
-		B_L             = KEYBOARD_L,
-		B_M             = KEYBOARD_M,
-		B_N             = KEYBOARD_N,
-		B_O             = KEYBOARD_O,
-		B_P             = KEYBOARD_P,
-		B_Q             = KEYBOARD_Q,
-		B_R             = KEYBOARD_R,
-		B_S             = KEYBOARD_S,
-		B_T             = KEYBOARD_T,
-		B_U             = KEYBOARD_U,
-		B_V             = KEYBOARD_V,
-		B_W             = KEYBOARD_W,
-		B_X             = KEYBOARD_X,
-		B_Y             = KEYBOARD_Y,
-		B_Z             = KEYBOARD_Z,
+		DEL           = KEYBOARD_DELETE,
+		INS           = KEYBOARD_INSERT,
+		PAD0          = KEYBOARD_N0,
+		PAD1          = KEYBOARD_N1,
+		PAD2          = KEYBOARD_N2,
+		PAD3          = KEYBOARD_N3,
+		PAD4          = KEYBOARD_N4,
+		PAD5          = KEYBOARD_N5,
+		PAD6          = KEYBOARD_N6,
+		PAD7          = KEYBOARD_N7,
+		PAD8          = KEYBOARD_N8,
+		PAD9          = KEYBOARD_N9,
+
+		ESC           = KEYBOARD_ESCAPE,
+		BS            = KEYBOARD_BACKSPACE,
+		TAB           = KEYBOARD_TAB,
+		RETURN        = KEYBOARD_RETURN,
+		SHIFT         = KEYBOARD_SHIFT,
+		RSHIFT        = KEYBOARD_RSHIFT,
+		CTRL          = KEYBOARD_CTRL,
+		RCTRL         = KEYBOARD_RCTRL,
+		ALT           = KEYBOARD_ALT,
+		RALT          = KEYBOARD_RALT,
+		PAGEUP        = KEYBOARD_PAGEUP,
+		PAGEDOWN      = KEYBOARD_PAGEDOWN,
+		UP            = KEYBOARD_ARROW_UP,
+		DOWN          = KEYBOARD_ARROW_DOWN,
+		LEFT          = KEYBOARD_ARROW_LEFT,
+		RIGHT         = KEYBOARD_ARROW_RIGHT,
+		SPACE         = KEYBOARD_SPACE,
+		ENTER         = KEYBOARD_ENTER,
+		F1            = KEYBOARD_F1,
+		F2            = KEYBOARD_F2,
+		F3            = KEYBOARD_F3,
+		F4            = KEYBOARD_F4,
+		F5            = KEYBOARD_F5,
+		F6            = KEYBOARD_F6,
+		F7            = KEYBOARD_F7,
+		F8            = KEYBOARD_F8,
+		F9            = KEYBOARD_F9,
+		F10           = KEYBOARD_F10,
+		F11           = KEYBOARD_F11,
+		F12           = KEYBOARD_F12,
+		NUM0             = KEYBOARD_0,
+		NUM1             = KEYBOARD_1,
+		NUM2             = KEYBOARD_2,
+		NUM3             = KEYBOARD_3,
+		NUM4             = KEYBOARD_4,
+		NUM5             = KEYBOARD_5,
+		NUM6             = KEYBOARD_6,
+		NUM7             = KEYBOARD_7,
+		NUM8             = KEYBOARD_8,
+		NUM9             = KEYBOARD_9,
+		A             = KEYBOARD_A,
+		B             = KEYBOARD_B,
+		C             = KEYBOARD_C,
+		D             = KEYBOARD_D,
+		E             = KEYBOARD_E,
+		F             = KEYBOARD_F,
+		G             = KEYBOARD_G,
+		H             = KEYBOARD_H,
+		I             = KEYBOARD_I,
+		J             = KEYBOARD_J,
+		K             = KEYBOARD_K,
+		L             = KEYBOARD_L,
+		M             = KEYBOARD_M,
+		N             = KEYBOARD_N,
+		O             = KEYBOARD_O,
+		P             = KEYBOARD_P,
+		Q             = KEYBOARD_Q,
+		R             = KEYBOARD_R,
+		S             = KEYBOARD_S,
+		T             = KEYBOARD_T,
+		U             = KEYBOARD_U,
+		V             = KEYBOARD_V,
+		W             = KEYBOARD_W,
+		X             = KEYBOARD_X,
+		Y             = KEYBOARD_Y,
+		Z             = KEYBOARD_Z,
 	};
 }
 

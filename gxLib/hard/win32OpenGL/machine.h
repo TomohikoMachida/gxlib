@@ -183,6 +183,8 @@ private:
 #define KEYBOARD_Z           ('Z')
 #define KEYBOARD_PAGEUP      (0x2A)	//(PageUp)
 #define KEYBOARD_PAGEDOWN    (0x2B)	//(PageDown)
+#define KEYBOARD_DELETE		 (0x2C)	//(VK_DELETE)
+#define KEYBOARD_INSERT		 (0x2D)	//(VK_INSERT)
 
 #define KEYSIGN_U KEYBOARD_ARROW_UP
 #define KEYSIGN_D KEYBOARD_ARROW_DOWN

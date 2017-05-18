@@ -213,6 +213,8 @@ Sint32 convertKeyNumber( WPARAM id )
 	case VK_NUMPAD9:	return KEYBOARD_N9			;
 	case VK_PRIOR: 		return KEYBOARD_PAGEUP		;
 	case VK_NEXT:		return KEYBOARD_PAGEDOWN	;
+	case VK_DELETE:		return KEYBOARD_DELETE		;
+	case VK_INSERT:		return KEYBOARD_INSERT		;
 	default:
 		return id;
 	}
@@ -233,15 +235,12 @@ void InputKeyCheck( UINT iMsg , WPARAM wParam ,LPARAM lParam )
 
 	case WM_KEYUP:
 		//キーボード離した
-		//CPadManager::GetInstance()->SetKeyUp(wParam);
-		{
-			g_pWindows->m_KeyBoard[ convertKeyNumber( wParam ) ] = 0x02;
-		}
+		g_pWindows->m_KeyBoard[ convertKeyNumber( wParam ) ] = 0x02;
 		return;
 
 	case WM_LBUTTONDOWN:
 		//マウスボタン押した
-		CPadManager::GetInstance()->SetMouseButtonDown( 0 );	//←
+		CPadManager::GetInstance()->SetMouseButtonDown( 0 );
 		break;
 	case WM_LBUTTONUP:
 		//マウスボタン離した
@@ -249,11 +248,19 @@ void InputKeyCheck( UINT iMsg , WPARAM wParam ,LPARAM lParam )
 		break;
 	case WM_RBUTTONDOWN:
 		//マウスボタン押した
-		CPadManager::GetInstance()->SetMouseButtonDown( 1 );	//→
+		CPadManager::GetInstance()->SetMouseButtonDown( 1 );
 		break;
 	case WM_RBUTTONUP:
 		//マウスボタン離した
 		CPadManager::GetInstance()->SetMouseButtonUp( 1 );
+		break;
+	case WM_MBUTTONDOWN:
+		//マウスボタン押した
+		CPadManager::GetInstance()->SetMouseButtonDown( 2 );
+		break;
+	case WM_MBUTTONUP:
+		//マウスボタン離した
+		CPadManager::GetInstance()->SetMouseButtonUp( 2 );
 		break;
 
 	case WM_MOUSEWHEEL:

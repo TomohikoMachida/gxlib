@@ -135,6 +135,7 @@ void CPadManager::MixingKeyboardStat()
 
 	m_uButton[ enIDJoypad1 + 26   ] = ( m_uButton[enIDMouse+0] )?	gxTrue : gxFalse;
 	m_uButton[ enIDJoypad1 + 27   ] = ( m_uButton[enIDMouse+1] )?	gxTrue : gxFalse;
+	m_uButton[ enIDJoypad1 + 30   ] = ( m_uButton[enIDMouse+2] )?	gxTrue : gxFalse;
 
 	//-----------------------------------------------------------------------------
 	//プレイヤー２～４の情報を全て消去する
@@ -185,15 +186,14 @@ void CPadManager::MixingKeyboardStat()
 
 
 static Uint8 convTbl[]={
-	(TOUCH_iCBK5<<4)|TOUCH_aCBK4,	(TOUCH_iCBK4<<4)|TOUCH_iCBK6,	(TOUCH_iCBK4<<4)|TOUCH_iCBK8,	(TOUCH_iCBK5<<4)|TOUCH_aCBK3,
-	(TOUCH_iCBK5<<4)|TOUCH_aCBK1,	(TOUCH_iCBK5<<4)|TOUCH_aCBK2,	(TOUCH_iCBK4<<4)|TOUCH_iCBK10,	(TOUCH_iCBK4<<4)|TOUCH_iCBK7,
-	(TOUCH_iCBK5<<4)|TOUCH_aCBK2,	(TOUCH_iCBK4<<4)|TOUCH_iCBK1,	(TOUCH_iCBK4<<4)|TOUCH_iCBK9,	(TOUCH_iCBK4<<4)|TOUCH_iCBK8,
-	(TOUCH_iCBK5<<4)|TOUCH_aCBK3,	(TOUCH_iCBK4<<4)|TOUCH_iCBK9,	(TOUCH_iCBK4<<4)|TOUCH_iCBK1,	(TOUCH_iCBK4<<4)|TOUCH_iCBK4,
-	(TOUCH_iCBK4<<4)|TOUCH_iCBK5,	(TOUCH_iCBK4<<4)|TOUCH_iCBK2,	(TOUCH_iCBK5<<4)|TOUCH_aCBK6,	(TOUCH_iCBK4<<4)|TOUCH_iCBK4,
-	(TOUCH_iCBK5<<4)|TOUCH_aCBK2,	(TOUCH_iCBK4<<4)|TOUCH_iCBK1,	(TOUCH_iCBK4<<4)|TOUCH_iCBK3,	(TOUCH_iCBK5<<4)|TOUCH_aCBK5,
-	(TOUCH_iCBK4<<4)|TOUCH_iCBK5,	(TOUCH_iCBK5<<4)|TOUCH_aCBK5,	(TOUCH_iCBK5<<4)|TOUCH_aCBK2,	(TOUCH_iCBK5<<4)|TOUCH_aCBK3,
-	(TOUCH_iCBK5<<4)|TOUCH_aCBK1,	(TOUCH_iCBK5<<4)|TOUCH_aCBK2,	(TOUCH_iCBK4<<4)|TOUCH_iCBK10,	(TOUCH_iCBK4<<4)|TOUCH_iCBK7,
-	(TOUCH_iCBK5<<4)|TOUCH_aCBK4,	(TOUCH_iCBK4<<4)|TOUCH_iCBK6,	(TOUCH_iCBK4<<4)|TOUCH_iCBK8,	(TOUCH_iCBK5<<4)|TOUCH_aCBK3,
+	(TOUCH_iCBK5 << 4) | TOUCH_iCBK4,(TOUCH_iCBK4 << 4) | TOUCH_iCBK6,(TOUCH_iCBK4 << 4) | TOUCH_iCBK8,(TOUCH_iCBK5 << 4) | TOUCH_iCBK3,
+	(TOUCH_iCBK2 << 4) | TOUCH_aCBK1,(TOUCH_iCBK5 << 4) | TOUCH_aCBK1,(TOUCH_iCBK5 << 4) | TOUCH_iCBK2,(TOUCH_iCBK4 << 4) | TOUCH_iCBK10,
+	(TOUCH_iCBK4 << 4) | TOUCH_iCBK7,(TOUCH_iCBK5 << 4) | TOUCH_iCBK2,(TOUCH_iCBK4 << 4) | TOUCH_iCBK1,(TOUCH_iCBK4 << 4) | TOUCH_iCBK9,
+	(TOUCH_iCBK2 << 4) | TOUCH_aCBK1,(TOUCH_iCBK4 << 4) | TOUCH_iCBK8,(TOUCH_iCBK5 << 4) | TOUCH_iCBK3,(TOUCH_aCBK2 << 4) | TOUCH_aCBK1,
+	(TOUCH_aCBK4 << 4) | TOUCH_aCBK7,(TOUCH_aCBK4 << 4) | TOUCH_iCBK1,(TOUCH_aCBK4 << 4) | TOUCH_aCBK4,(TOUCH_aCBK4 << 4) | TOUCH_aCBK5,
+	(TOUCH_aCBK2 << 4) | TOUCH_aCBK1,(TOUCH_aCBK4 << 4) | TOUCH_aCBK2,(TOUCH_aCBK5 << 4) | TOUCH_aCBK6,(TOUCH_aCBK2 << 4) | TOUCH_aCBK1,
+	(TOUCH_aCBK4 << 4) | TOUCH_iCBK7,(TOUCH_aCBK4 << 4) | TOUCH_iCBK1,(TOUCH_aCBK5 << 4) | TOUCH_aCBK2,(TOUCH_aCBK5 << 4) | TOUCH_aCBK5,
+	(TOUCH_aCBK5 << 4) | TOUCH_aCBK2,(TOUCH_aCBK5 << 4) | TOUCH_aCBK5,(TOUCH_aCBK2 << 4) | TOUCH_aCBK10,(TOUCH_aCBK2 << 4) | TOUCH_aCBK1,
 };
 
 void CPadManager::SetCurrentStatus()
@@ -435,15 +435,15 @@ void CPadManager::SetKeyUp(Uint32 uKey)
 }
 
 
-void CPadManager::SetMouseButtonUp( Uint32 uLR )
+void CPadManager::SetMouseButtonUp( Uint32 uLRM )
 {
-	m_uButton[ enIDMouse+uLR ] = gxFalse;
+	m_uButton[ enIDMouse+uLRM ] = gxFalse;
 }
 
 
-void CPadManager::SetMouseButtonDown( Uint32 uLR )
+void CPadManager::SetMouseButtonDown( Uint32 uLRM )
 {
-	m_uButton[ enIDMouse+uLR ] = gxTrue;
+	m_uButton[ enIDMouse+uLRM ] = gxTrue;
 }
 
 void CPadManager::SetMousePosition( Sint32 x , Sint32 y )

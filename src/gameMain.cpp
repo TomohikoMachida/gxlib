@@ -10,6 +10,7 @@
 
 
 void Visorizer( gxBool bReset = gxFalse );
+#include <gxLib/gxDebug.h>
 
 gxBool GameMain()
 {
