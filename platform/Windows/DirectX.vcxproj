@@ -187,7 +187,6 @@
     <ClCompile Include="..\..\gxLib\hard\win32DirectX9\dxSound.cpp" />
     <ClCompile Include="..\..\gxLib\util\actManager\CActManager.cpp" />
     <ClCompile Include="..\..\gxLib\util\CFileTarga.cpp" />
-    <ClCompile Include="..\..\gxLib\util\command\CWazaCommand.cpp" />
     <ClCompile Include="..\..\gxLib\util\csv\CCsv.cpp" />
     <ClCompile Include="..\..\gxLib\util\Font\CFontManager.cpp" />
     <ClCompile Include="..\..\gxLib\util\gxImage\CGXImage.cpp" />
@@ -217,7 +216,6 @@
     <ClInclude Include="..\..\gxLib\hard\win32DirectX9\machine.h" />
     <ClInclude Include="..\..\gxLib\util\actManager\CActManager.h" />
     <ClInclude Include="..\..\gxLib\util\CFileTarga.h" />
-    <ClInclude Include="..\..\gxLib\util\command\CWazaCommand.h" />
     <ClInclude Include="..\..\gxLib\util\csv\CCsv.h" />
     <ClInclude Include="..\..\gxLib\util\Font\CFontManager.h" />
     <ClInclude Include="..\..\gxLib\util\Font\CKanjiTbl.h" />

@@ -135,6 +135,16 @@ public:
 		return  m_bInitializeCompleted;
 	}
 
+	void WaitVSync( gxBool bWaitOn = gxTrue )
+	{
+		m_bWaitVSync = bWaitOn;
+	}
+
+	gxBool GetWaitVSync()
+	{
+		return m_bWaitVSync;
+	}
+
 	SINGLETON_DECLARE( CGameGirl );
 
 private:
@@ -202,6 +212,8 @@ private:
 	gxBool m_bPadDeviceConfigMode;
 
 	gxBool m_bInitializeCompleted;
+
+	gxBool m_bWaitVSync;
 };
 
 

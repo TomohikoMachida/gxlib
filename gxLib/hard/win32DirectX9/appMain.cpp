@@ -94,43 +94,7 @@ int APIENTRY wWinMain( _In_ HINSTANCE hInstance, _In_opt_ HINSTANCE hPrevInstanc
 	// ---------------------------------------------------------------
 	//アクセラレータキーの設定
 	// ---------------------------------------------------------------
-
-	ACCEL wAccel[ enAccelMax ];
-
-	wAccel[0].cmd   = enID_ChangeFullScreenMode;
-	wAccel[0].key   = VK_RETURN;
-	wAccel[0].fVirt = FVIRTKEY|FALT;
-
-	wAccel[1].cmd   = enID_AppExit;
-	wAccel[1].key   = VK_ESCAPE;
-	wAccel[1].fVirt = 0;
-
-	wAccel[2].cmd   = enID_GamePause;
-	wAccel[2].key   = VK_F1;
-	wAccel[2].fVirt = FVIRTKEY;
-
-	wAccel[3].cmd   = enID_GameStep;
-	wAccel[3].key   = VK_F3;
-	wAccel[3].fVirt = FVIRTKEY;
-
-	wAccel[4].cmd   = enID_PadConfig;
-	wAccel[4].key   = VK_F4;
-	wAccel[4].fVirt = FVIRTKEY;
-
-	wAccel[5].cmd   = enID_Reset;
-	wAccel[5].key   = VK_F5;
-	wAccel[5].fVirt = FVIRTKEY;
-
-	wAccel[6].cmd   = enID_DebugMode;
-	wAccel[6].key   = VK_F8;
-	wAccel[6].fVirt = FVIRTKEY;
-
-	wAccel[7].cmd   = enID_ScreenShot;
-	wAccel[7].key   = VK_F12;
-	wAccel[7].fVirt = FVIRTKEY;
-
-
-	g_pWindows->m_hAccel = CreateAcceleratorTable( wAccel, enAccelMax );
+	makeAccelKey();
 
 	// ---------------------------------------------------------------
 	//タッチ情報の初期化
@@ -243,7 +207,10 @@ void InitAction()
 
 		if( w == 0 || h == 0 ) return;
 
-		CPadManager::GetInstance()->SetMousePosition( SWINDOW_W*point.x/w , SWINDOW_H*point.y/h );
+		if( GetActiveWindow() == g_pWindows->m_hWindow )
+		{
+			CPadManager::GetInstance()->SetMousePosition( WINDOW_W*point.x/w , WINDOW_H*point.y/h );
+		}
 	}
 
 	//キーボードの状態を伝える

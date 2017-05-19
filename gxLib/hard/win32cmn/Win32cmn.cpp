@@ -76,11 +76,15 @@ void makeWindow( )
 
 	//画面の中央にセット
 	RECT		desktop;
+
 	GetWindowRect(GetDesktopWindow(), (LPRECT)&desktop);
 
-	/*-- フレームなどのクライアント領域以外のサイズを考慮 --*/
+	// フレームなどのクライアント領域以外のサイズを考慮
+
 	Sint32 w,h;
-	RECT rect = { 0, 0, SWINDOW_W, SWINDOW_H };
+
+	RECT rect = { 0, 0, WINDOW_W, WINDOW_H };
+
 	AdjustWindowRect( &rect, WS_OVERLAPPEDWINDOW|WS_POPUP | WS_CAPTION | WS_SYSMENU | WS_MINIMIZEBOX | WS_VISIBLE, FALSE );
 
 	w = rect.right - rect.left;
@@ -115,8 +119,8 @@ void makeWindow( )
 	/*-- 念のためウインドウサイズ補正 --*/
 	RECT client;
 	GetClientRect( g_pWindows->m_hWindow, &client );
-	int diffx = (client.right - client.left) - SWINDOW_W;
-	int diffy = (client.bottom - client.top) - SWINDOW_H;
+	int diffx = (client.right - client.left) - WINDOW_W;
+	int diffy = (client.bottom - client.top) - WINDOW_H;
 	if ( diffx != 0 || diffy != 0 ) {
 		rect.right -= diffx;
 		rect.bottom -= diffy;
@@ -535,8 +539,8 @@ void ChangeScreenMode( gxBool bFullScreen )
 
 		devmode.dmSize       = sizeof(DEVMODE);
 		devmode.dmFields     = DM_PELSWIDTH | DM_PELSHEIGHT;
-		devmode.dmPelsWidth  = w;//SWINDOW_W;
-		devmode.dmPelsHeight = h;//SWINDOW_H;
+		devmode.dmPelsWidth  = w;
+		devmode.dmPelsHeight = h;
 
 		Sint32 bw,bh;
 		bw =  GetSystemMetrics(SM_CXSIZEFRAME)*2;
@@ -570,13 +574,9 @@ void ChangeScreenMode( gxBool bFullScreen )
 		//Windowモード
 
 		if( !g_pWindows->m_bFullScreen ) return;
-/*
-		devmode.dmSize       = sizeof(DEVMODE);
-		devmode.dmFields     = DM_PELSWIDTH | DM_PELSHEIGHT;
-		devmode.dmPelsWidth  = SWINDOW_W;
-		devmode.dmPelsHeight = SWINDOW_H;
-*/
+
 		Sint32 bw,bh;
+
 #ifdef NDEBUG
 		bw =  GetSystemMetrics(SM_CXSIZEFRAME)*2;
 		bh =  GetSystemMetrics(SM_CYSIZEFRAME)*2+GetSystemMetrics(SM_CYCAPTION);
@@ -600,9 +600,6 @@ void ChangeScreenMode( gxBool bFullScreen )
 
 		//マルチディスプレイ時のカーソルの移動制限を解除
 		ClipCursor( NULL );
-
-//		g_pWindows->m_uScreenWidth  = SWINDOW_W;
-//		g_pWindows->m_uScreenHeight = SWINDOW_H;
 
 		UpdateWindow( g_pWindows->m_hWindow );
 
@@ -721,7 +718,7 @@ LRESULT	CALLBACK CGameGirlProc(HWND hw, UINT iMsg, WPARAM wParam, LPARAM lParam)
 
 
 
-gxBool vSyncWithTimer( gxBool bNoWaitvSync )
+gxBool vSyncWithTimer( gxBool bWaitvSync )
 {
 	//------------------------------------------
 	//ｖＳｙｎｃ待ち(1/60秒経ったら勝手に帰る)
@@ -736,8 +733,8 @@ gxBool vSyncWithTimer( gxBool bNoWaitvSync )
 	if( !s_bFirst )
 	{
 		// 高精度タイマーの初期化
-		g_pWindows->Vsyncrate = g_pWindows->Vsyncrate/60;									//１フレームのカウント数を取得
-		QueryPerformanceCounter((LARGE_INTEGER*)&before);			//現在の時間を取得
+		g_pWindows->Vsyncrate = g_pWindows->Vsyncrate/FRAME_PER_SECOND;		//１フレームのカウント数を取得
+		QueryPerformanceCounter((LARGE_INTEGER*)&before);					//現在の時間を取得
 		s_bFirst ++;
 	}
 
@@ -766,9 +763,9 @@ gxBool vSyncWithTimer( gxBool bNoWaitvSync )
 			}
 		}
 
-		if( bNoWaitvSync ) break;
+		if( !bWaitvSync ) break;
 	}
-	while( time<(before+g_pWindows->Vsyncrate) );
+	while( time < (before+g_pWindows->Vsyncrate) );
 
 	before = time;
 
@@ -876,6 +873,11 @@ void InputShortCutCheck( Uint32 uId )
 		}
 		break;
 
+	case enID_FullSpeed:
+		//フルスピード
+		CGameGirl::GetInstance()->WaitVSync( !CGameGirl::GetInstance()->GetWaitVSync() );
+		break;
+
 	case enID_DebugMode:
 		//デバッグスイッチ
 		gxDebug::GetInstance()->m_bMasterDebugSwitch = !gxDebug::GetInstance()->m_bMasterDebugSwitch;
@@ -894,4 +896,46 @@ void InputShortCutCheck( Uint32 uId )
 	}
 }
 
+void makeAccelKey()
+{
+	ACCEL wAccel[ enAccelMax ];
 
+	wAccel[0].cmd   = enID_ChangeFullScreenMode;
+	wAccel[0].key   = VK_RETURN;
+	wAccel[0].fVirt = FVIRTKEY|FALT;
+
+	wAccel[1].cmd   = enID_AppExit;
+	wAccel[1].key   = VK_ESCAPE;
+	wAccel[1].fVirt = 0;
+
+	wAccel[2].cmd   = enID_GamePause;
+	wAccel[2].key   = VK_F1;
+	wAccel[2].fVirt = FVIRTKEY;
+
+	wAccel[3].cmd   = enID_GameStep;
+	wAccel[3].key   = VK_F3;
+	wAccel[3].fVirt = FVIRTKEY;
+
+	wAccel[4].cmd   = enID_PadConfig;
+	wAccel[4].key   = VK_F4;
+	wAccel[4].fVirt = FVIRTKEY;
+
+	wAccel[5].cmd   = enID_Reset;
+	wAccel[5].key   = VK_F5;
+	wAccel[5].fVirt = FVIRTKEY;
+
+	wAccel[6].cmd = enID_FullSpeed;
+	wAccel[6].key = VK_F9;
+	wAccel[6].fVirt = FVIRTKEY;
+
+	wAccel[7].cmd   = enID_DebugMode;
+	wAccel[7].key   = VK_F8;
+	wAccel[7].fVirt = FVIRTKEY;
+
+	wAccel[8].cmd   = enID_ScreenShot;
+	wAccel[8].key   = VK_F12;
+	wAccel[8].fVirt = FVIRTKEY;
+
+	g_pWindows->m_hAccel = CreateAcceleratorTable( wAccel, enAccelMax );
+
+}

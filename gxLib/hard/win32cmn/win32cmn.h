@@ -80,19 +80,18 @@ enum {
 	enID_DebugMode			  = 1006,	//デバッグモードのON/OFF
 	enID_Reset				  = 1007,	//リセット
 	enID_ScreenShot           = 1008,	//スクリーンショット
-	enAccelMax			  	  = 8,
+	enID_FullSpeed			  = 1009,	//フルスピード
+	enAccelMax			  	  = 9,
 
 };
-
-#define SWINDOW_W (WINDOW_W)
-#define SWINDOW_H (WINDOW_H)
 
 extern CWindows* g_pWindows;
 extern StTouchDevice *m_pTouchDevice;
 
+void makeAccelKey();
 void makeWindow();
 void updateMemoryStatus();
-gxBool vSyncWithTimer( gxBool bNoWaitvSync );
+gxBool vSyncWithTimer( gxBool bWaitvSync = gxTrue );
 
 extern Sint32 g_sFrameSkip;
 extern Sint32 g_sScreenModeIndex;

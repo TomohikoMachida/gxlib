@@ -46,6 +46,8 @@ CGameGirl::CGameGirl()
 	m_bPadDeviceConfigMode = gxFalse;
 
 	m_bInitializeCompleted = gxFalse;
+
+	m_bWaitVSync = gxTrue;
 }
 
 
@@ -319,13 +321,9 @@ gxBool CGameGirl::gameEnd()
 
 gxBool CGameGirl::vsyncWait()
 {
-	gxBool bNoWaitvSync = gxFalse;
-
 	m_bSyoriochi = gxFalse;
 
-//	if( g_sFrameSkip == 0 ) bNoWaitvSync = gxTrue;
-
-	if( ::vSync( bNoWaitvSync ) )
+	if( ::vSync( m_bWaitVSync ) )
 	{
 		m_bSyoriochi = gxTrue;
 	}

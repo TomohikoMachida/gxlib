@@ -151,7 +151,8 @@ gxBool CDXDraw::Init()
 	m_pDirect3DPrePara.AutoDepthStencilFormat = D3DFMT_D16;
 	m_pDirect3DPrePara.Flags = 0;
 	m_pDirect3DPrePara.FullScreen_RefreshRateInHz = D3DPRESENT_RATE_DEFAULT;
-	m_pDirect3DPrePara.PresentationInterval = D3DPRESENT_INTERVAL_ONE;	//D3DPRESENT_INTERVAL_IMMEDIATE;
+//	m_pDirect3DPrePara.PresentationInterval = D3DPRESENT_INTERVAL_ONE;			//vSync待ちを行う
+	m_pDirect3DPrePara.PresentationInterval = D3DPRESENT_INTERVAL_IMMEDIATE;	//vSync待ちを行わない
 
 
 	m_pDirect3DPrePara.MultiSampleType  = D3DMULTISAMPLE_NONE;

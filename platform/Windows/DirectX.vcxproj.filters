@@ -24,9 +24,6 @@
     <Filter Include="Source Files\gxLib\util\actManager">
       <UniqueIdentifier>{93fd38fd-4821-43ae-ad21-5b27259a7d33}</UniqueIdentifier>
     </Filter>
-    <Filter Include="Source Files\gxLib\util\command">
-      <UniqueIdentifier>{a97e5783-5b6d-4503-92ec-c0fe73fad222}</UniqueIdentifier>
-    </Filter>
     <Filter Include="Source Files\gxLib\util\csv">
       <UniqueIdentifier>{01d85d88-16f4-4366-b18f-655f2172d3d0}</UniqueIdentifier>
     </Filter>
@@ -82,9 +79,6 @@
     </ClCompile>
     <ClCompile Include="..\..\gxLib\util\actManager\CActManager.cpp">
       <Filter>Source Files\gxLib\util\actManager</Filter>
-    </ClCompile>
-    <ClCompile Include="..\..\gxLib\util\command\CWazaCommand.cpp">
-      <Filter>Source Files\gxLib\util\command</Filter>
     </ClCompile>
     <ClCompile Include="..\..\gxLib\util\csv\CCsv.cpp">
       <Filter>Source Files\gxLib\util\csv</Filter>
@@ -162,9 +156,6 @@
     </ClInclude>
     <ClInclude Include="..\..\gxLib\util\actManager\CActManager.h">
       <Filter>Source Files\gxLib\util\actManager</Filter>
-    </ClInclude>
-    <ClInclude Include="..\..\gxLib\util\command\CWazaCommand.h">
-      <Filter>Source Files\gxLib\util\command</Filter>
     </ClInclude>
     <ClInclude Include="..\..\gxLib\util\csv\CCsv.h">
       <Filter>Source Files\gxLib\util\csv</Filter>

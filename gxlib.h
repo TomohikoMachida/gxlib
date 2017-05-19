@@ -9,8 +9,8 @@
 #define _GX_LIB_H_
 
 #define VERION_MAJOR   (2)
-#define VERION_MINOR   (1)
-#define VERION_RELEASE (0)
+#define VERION_MINOR   (2)
+#define VERION_RELEASE (1)
 
 //---------------------------------------------------------------------------
 //ユーザー定義
@@ -29,12 +29,12 @@
 #define WINDOW_W (640)
 #define WINDOW_H (480)
 
-//#define MAX_ORDER_NUM (4096)		//グラフィックのオーダー（同時）限界数
 #define MAX_ORDER_NUM (40000*2)		//グラフィックのオーダー（同時）限界数
 #define MAX_TEXT_NUM  (256)			//gxLib::Printfでリクエスト可能な限界数
 #define MAX_MASTERTEX_NUM (32)		//マスターテクスチャの最大枚数
 #define MAX_SOUND_NUM (256)			//サウンドのバンク数（同時発音数はマシンのｃｈ数）
 #define PRIORITY_MAX  (255)			//優先順位
+#define FRAME_PER_SECOND  (60)		//FPS(vSync同期した場合はリフレッシュレートに依る)
 
 #define APPLICATION_NAME "garurururu"
 #define FILENAME_CONFIG  "config.dat"
@@ -58,10 +58,8 @@ typedef long double			Float80;
 typedef char				gxBool;
 typedef char				gxChar;
 
-
 #define gxTrue  (1)
 #define gxFalse (0)
-
 
 #define NULL_POINTER (0)
 
