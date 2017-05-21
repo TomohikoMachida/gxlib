@@ -283,7 +283,7 @@ end
 --]]
 function sfcLibrary:UploadTexture ( bForce )
 
-	gxDraw( 410 , bForce );
+	gxDraw( 405 , bForce );
 
 end
 

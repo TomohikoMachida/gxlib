@@ -406,7 +406,7 @@ function visorizerInit(void)
 
 	gxLib:LoadTexture( 4        ,"asset/visor/wire.tga"    , 0xff00ff00 );
 	gxLib:LoadTexture( 6        ,"asset/visor/gameboy.bmp" , 0xff00ff00 );
-	gxLib:LoadTexture ( enTpgSpr,"asset/visor/shtimg.bmp"  , 0xff004080 );
+	gxLib:LoadTexture( enTpgSpr ,"asset/visor/shtimg.bmp"  , 0xff004080 );
 	gxLib:UploadTexture();
 
 end

@@ -53,6 +53,8 @@ public:
 		{
 			m_pDragAndDropFileName[ii] = new gxChar[512];
 		}
+
+		m_OffsettexPage = 0;
 	}
 
 	void dispose()
@@ -128,6 +130,11 @@ public:
 	{
 		m_Offset.x = x;
 		m_Offset.y = y;
+	}
+
+	void SetTexturePageOffset( Sint32 page )
+	{
+		m_OffsettexPage = page;
 	}
 
 	SINGLETON_DECLARE( CLuaManager );
@@ -270,6 +277,8 @@ protected:
 
 	Sint32 m_sDragAndDropCnt;
 	gxChar *m_pDragAndDropFileName[enDragAndDropFileMax];
+
+	static Sint32 m_OffsettexPage;
 };
 
 

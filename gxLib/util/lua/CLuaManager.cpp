@@ -5,6 +5,7 @@
 SINGLETON_DECLARE_INSTANCE( CLuaManager );
 
 gxPos g_LuaOffsetPos = { 0 , 0 , 0 };
+Sint32 CLuaManager::m_OffsettexPage = 0;
 
 void CLuaManager::userMain()
 {
@@ -124,7 +125,7 @@ Sint32 CLuaManager::gxDraw( lua_State *L )
 		y1 = lua_tonumber( L , 3 ) + g_LuaOffsetPos.y;
 		pr = lua_tonumber( L , 4 );
 
-		pg = lua_tonumber( L , 5 );
+		pg = lua_tonumber( L , 5 ) + m_OffsettexPage;
 		u  = lua_tonumber( L , 6 );
 		v  = lua_tonumber( L , 7 );
 		w  = lua_tonumber( L , 8 );
@@ -201,7 +202,7 @@ Sint32 CLuaManager::gxDraw( lua_State *L )
 		u3 = lua_tointeger( L ,12 );
 		v3 = lua_tointeger( L ,13 );
 
-		tpg  = lua_tointeger( L , 14 );
+		tpg  = lua_tointeger( L , 14 ) + m_OffsettexPage;
 		prio = lua_tointeger( L , 15 );
 		atr  = lua_tointeger( L , 16 );
 		argb = lua_tointeger( L , 17 );
@@ -263,7 +264,7 @@ Sint32 CLuaManager::gxDraw( lua_State *L )
 	else if (lua_tonumber(L, 1) == 400 )
 	{
 		//loadTexture
-		Sint32 page       = lua_tointeger(L, 2);
+		Sint32 page       = lua_tointeger(L, 2) + m_OffsettexPage;
 		gxChar *pFileName = GetLuaString( lua_tostring (L, 3) );
 		Uint32 colorKey   = lua_tointeger(L, 4);
 
@@ -272,6 +273,10 @@ Sint32 CLuaManager::gxDraw( lua_State *L )
 		oy = lua_tonumber( L, 6 );
 
 		gxLib::LoadTexture( page , pFileName , colorKey , ox, oy );
+	}
+	else if (lua_tonumber(L, 1) == 405)
+	{
+		gxLib::UploadTexture();
 	}
 	else if (lua_tonumber(L, 1) == 410 )
 	{
@@ -525,20 +530,22 @@ void errorFunc2(lua_State *L)
 
 void luaTest()
 {
-	static CLuaManager *pLuaControl = NULL;
+	static CLuaManager *pCLuaManager = NULL;
 
-	if( pLuaControl == NULL )
+	if(pCLuaManager == NULL )
 	{
-		pLuaControl = new CLuaManager();
-		pLuaControl->Load("lua/gameMain.lua");
+		pCLuaManager = new CLuaManager();
+		pCLuaManager->Load("lua/gameMain.lua");
+		pCLuaManager->SetOffset( 320 , 0 );
+		pCLuaManager->SetTexturePageOffset( 16 );
 	}
 
-	pLuaControl->Action();
+	pCLuaManager->Action();
 
 	if( gxLib::Joy(0)->trg&BTN_START )
 	{
-		delete pLuaControl;
-		pLuaControl = NULL;
+		delete pCLuaManager;
+		pCLuaManager = NULL;
 	}
 
 }
