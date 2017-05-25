@@ -15,7 +15,7 @@
 #include "../win32cmn/win32cmn.h"
 #include "glDraw.h"
 
-//#pragma comment(lib,"glut32.lib")
+#pragma comment (lib, "opengl32.lib") /* link Microsoft OpenGL lib   */
 
 SINGLETON_DECLARE_INSTANCE( CGLDraw )
 
@@ -89,9 +89,9 @@ gxBool CGLDraw::resetDevice()
 
 	glViewport(0,0, w,h );
 
-	gluPerspective(45, (double)WINDOW_W / (double)WINDOW_H, 0.1, 100.0);
+	//gluPerspective(45, (double)WINDOW_W / (double)WINDOW_H, 0.1, 100.0);
 	Float32 z = sin( DEG2RAD(67.5) )*1.f;
-	gluLookAt(0.0 , 0 , 5 , 0.0,0.0,0.0, 0.0, 1.0, 0.0);
+	//gluLookAt(0.0 , 0 , 5 , 0.0,0.0,0.0, 0.0, 1.0, 0.0);
 
 	BOOL (WINAPI *wglSwapIntervalEXT)(int) = NULL;
 	wglSwapIntervalEXT = (BOOL (WINAPI*)(int))wglGetProcAddress("wglSwapIntervalEXT");
@@ -127,7 +127,7 @@ void CGLDraw::Draw()
 	//　3D　→　2D
 	glMatrixMode( GL_PROJECTION );
 	glLoadIdentity();
-	gluOrtho2D(-1.0,1.0,-1.0,1.0);
+	//gluOrtho2D(-1.0,1.0,-1.0,1.0);
 	glMatrixMode( GL_MODELVIEW );
 	glLoadIdentity();
 

@@ -9,44 +9,85 @@ public:
 		enErrorAccessDenied,
 		enErrorFileSizeOver,
 	};
+	
 	enum {
-		enMaxFileSize = 1024*1024,	//1MBまで
-		enReadSize    = 1024,		//1KBずつ読む
-		enURLLength   = 3*512,
-		enPassLength      = 3*512,
-		enAccountLength   = 3*512,
+		enDataBufferMax = 32,
 	};
 
-	gxWebManager();
-	~gxWebManager();
-	void Open( gxChar* pURL , gxChar* pUser , gxChar* pPassword );
-	void Read();
-	gxBool IsReadEnd();
-	gxBool IsError();
-	Uint8* GetDataImage();
-	Uint32 GetDataSize()
+	gxWebManager()
 	{
-		return m_uFileSize;
+		m_sReqMinIndex = 0;
+		m_sReqMaxIndex = 0;
+
+		for(Sint32 ii=0; ii<enDataBufferMax; ii++ )
+		{
+			m_pWebData[ii].pData = NULL;
+		}
+	}
+
+	~gxWebManager()
+	{
+		for(Sint32 ii=0; ii<enDataBufferMax; ii++ )
+		{
+			if( m_pWebData[ii].pData )
+			{
+				SAFE_DELETE( m_pWebData[ii].pData );
+			}
+		}
+	}
+
+	Sint32 Open( gxChar* pURL , gxChar* pUser , gxChar* pPassword );
+
+	StWebData *GetWebData( Sint32 index );
+
+	gxBool IsLoadComplete( Sint32 index )
+	{
+		Sint32 n = index%enDataBufferMax;
+		
+		return m_pWebData[n].bComplete;
+	}
+
+	void Action();
+
+	typedef struct StWebData {
+
+		StWebData()
+		{
+			pData = NULL;
+			bComplete = gxFalse;
+			uSize = 0;
+			url[0]  = 0x00;
+			user[0] = 0x00;
+			pass[0] = 0x00;
+		}
+
+		gxChar url[256];
+		gxChar user[256];
+		gxChar pass[256];
+		Uint8  *pData;
+		Sint32 bComplete;
+		Uint32 uSize;
+
+	} StWebData;
+
+
+	Sint32 GetMinIndex()
+	{
+		return m_sReqMinIndex;
+	}
+	
+	Sint32 GetMaxIndex()
+	{
+		return m_sReqMaxIndex;
 	}
 
 private:
 
-	Uint8* m_pFileImage;
-	Uint8* m_pTemp;
-	Uint32 m_uFileSize;
-	Uint32 m_uOffset;
+	Sint32 m_sReqMinIndex;
+	Sint32 m_sReqMaxIndex;
 
-	Sint32 m_sStatus;
-	Sint32 m_sError;
+	StWebData *m_pWebData[ enDataBufferMax ];
 
-	gxChar m_sUrl[enURLLength];
-	gxChar m_sAcount[enAccountLength];
-	gxChar m_sPassword[enPassLength];
-
-	gxBool m_bError;
-	gxBool m_bReadComplete;
-
-	void *m_pInterNet;
 };
 
 

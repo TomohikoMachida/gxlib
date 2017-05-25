@@ -176,7 +176,6 @@
     <ClCompile Include="..\..\gxLib\gxRender.cpp" />
     <ClCompile Include="..\..\gxLib\gxSoundManager.cpp" />
     <ClCompile Include="..\..\gxLib\gxTexManager.cpp" />
-    <ClCompile Include="..\..\gxLib\gxWebManager.cpp" />
     <ClCompile Include="..\..\gxLib\hard\win32cmn\CFileWave.cpp" />
     <ClCompile Include="..\..\gxLib\hard\win32cmn\COggVorbis.cpp" />
     <ClCompile Include="..\..\gxLib\hard\win32cmn\COpenCVMovie.cpp" />
@@ -206,7 +205,6 @@
     <ClInclude Include="..\..\gxLib\gxRender.h" />
     <ClInclude Include="..\..\gxLib\gxSoundManager.h" />
     <ClInclude Include="..\..\gxLib\gxTexManager.h" />
-    <ClInclude Include="..\..\gxLib\gxWebManager.h" />
     <ClInclude Include="..\..\gxLib\hard\win32cmn\CFileWave.h" />
     <ClInclude Include="..\..\gxLib\hard\win32cmn\COpenCVMovie.h" />
     <ClInclude Include="..\..\gxLib\hard\win32cmn\resource.h" />

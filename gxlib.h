@@ -10,7 +10,7 @@
 
 #define VERION_MAJOR   (2)
 #define VERION_MINOR   (2)
-#define VERION_RELEASE (1)
+#define VERION_RELEASE (2)
 
 //---------------------------------------------------------------------------
 //ユーザー定義
@@ -19,8 +19,8 @@
 //#define PLATFORM_WIN32_CONSOLE
 //#define PLATFORM_WIN32_APP
 //#define PLATFORM_WIN32_WINDOW
-#define PLATFORM_WIN32_DIRECTX9
-//#define PLATFORM_WIN32_OPENGL
+//#define PLATFORM_WIN32_DIRECTX9
+#define PLATFORM_WIN32_OPENGL
 //#define PLATFORM_WIN64_DIRECTX11
 //#define PLATFORM_ANDROID
 //#define PLATFORM_IOS
@@ -30,7 +30,7 @@
 #define WINDOW_H (480)
 
 #define MAX_ORDER_NUM (40000*2)		//グラフィックのオーダー（同時）限界数
-#define MAX_TEXT_NUM  (256)			//gxLib::Printfでリクエスト可能な限界数
+#define MAX_TEXT_NUM  (256*2)			//gxLib::Printfでリクエスト可能な限界数
 #define MAX_MASTERTEX_NUM (32)		//マスターテクスチャの最大枚数
 #define MAX_SOUND_NUM (256)			//サウンドのバンク数（同時発音数はマシンのｃｈ数）
 #define PRIORITY_MAX  (255)			//優先順位

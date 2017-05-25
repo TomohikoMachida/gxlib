@@ -4,7 +4,6 @@
 */
 // --------------------------------------------------------
 
-#include "glut.h"
 #include "glFont.h"
 
 class CGLDraw

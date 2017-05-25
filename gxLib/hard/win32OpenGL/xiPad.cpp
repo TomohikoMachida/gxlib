@@ -8,7 +8,7 @@
 #include <gxLib/gxPadManager.h>
 #include "xiPad.h"
 
-#pragma comment(lib,"xinput.lib ")
+#pragma comment(lib,"XInput9_1_0.lib ")
 
 #define ILLEGAL_BTNID ( 0xFFFFFFFF )
 

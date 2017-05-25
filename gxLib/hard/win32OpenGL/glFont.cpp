@@ -1,5 +1,4 @@
 ﻿#include <gxlib.h>
-#include "glut.h"
 #include "./glFont.h"
 
 enum {

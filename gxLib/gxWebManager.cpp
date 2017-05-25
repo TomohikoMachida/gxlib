@@ -5,6 +5,34 @@
 //-------------------------------------------
 #include <gxLib.h>
 #include "gxWebManager.h"
+
+Sint32 gxWebManager::Open( gxChar* pURL , gxChar* pUser , gxChar* pPassword )
+{
+	
+}
+
+gxWebManager::StWebData *gxWebManager::GetWebData( Sint32 index )
+{
+	Sint32 n = index%enDataBufferMax;
+
+	//if( m_pWebData[n].pData )
+	//{
+	//	if( m_pWebData[n].bComplete )
+	//	{
+			return &m_pWebData[n];
+	//	}
+	//}
+
+	return NULL;
+}
+
+void gxWebManager::Action()
+{
+
+}
+
+
+
 /*
 #include <WININET.H>
 

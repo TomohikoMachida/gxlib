@@ -13,7 +13,7 @@
 #include "gxRender.h"
 #include "gxSoundManager.h"
 #include "gxMovieManager.h"
-#include "gxWebManager.h"
+//#include "gxWebManager.h"
 #include "gxDebug.h"
 /*
 【裏ルール】
@@ -775,6 +775,7 @@ Uint32 gxLib::GetGameCounter()
 
 Uint8* gxLib::LoadWebFile( gxChar* pURL , Uint32* pLength , gxChar* pUser , gxChar* pPassword)
 {
+#if 0
 	//--------------------------------------------------
 	//WEBのデータを取得する
 	//取得したデータは「必ず」freeすること！！！！
@@ -803,8 +804,10 @@ Uint8* gxLib::LoadWebFile( gxChar* pURL , Uint32* pLength , gxChar* pUser , gxCh
     pData[ *pLength-1 ] = 0x00;
 
 	delete pWebManager;
-
 	return pData;
+#endif
+
+	return NULL;
 }
 
 

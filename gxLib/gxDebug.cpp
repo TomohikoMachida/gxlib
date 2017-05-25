@@ -223,7 +223,7 @@ void gxDebug::LogDisp( gxChar *pFormat , ... )
 
 	va_end( app );
 
-	sprintf( m_pLineString[ m_sDebugNum%enLogMax ] , _buf );
+	sprintf(m_pLineString[m_sDebugNum%enLogMax], "[%d]%s", gxLib::GetGameCounter(), _buf);
 	m_sDebugNum ++;
 
 #endif
@@ -276,7 +276,7 @@ void gxDebug::drawConsole()
 	Sint32 ax,ay,az;
 
 	ax = 16;
-	ay = WINDOW_H - (enLogMax*16+16*3);
+	ay = WINDOW_H - (enLogMax*16+16*3)-12;
 	az = PRIORITY_MAX;
 
 	Sint32 max = enLogMax;
@@ -302,6 +302,36 @@ void gxDebug::drawConsole()
 		gxLib::Printf( ax , ay - 16*ii , PRIORITY_MAX , ATR_DFLT , ARGB_DFLT , "%s", m_pLineString[n] );
 	}
 
+	gxChar *funcName[]={
+		"pause",
+		"none",
+		"step",
+		"controller",
+		"reset",
+
+		"none",
+		"none",
+		"debug",
+		"full",
+		"none",
+
+		"none",
+		"sshot",
+		"none",
+		"none",
+		"none",
+	};
+
+
+	for( Sint32 ii=0; ii<5; ii++ )
+	{
+		Sint32 n = ii;
+		if (gxLib::KeyBoard(gxKey::SHIFT)&enStatPush)
+		{
+			n += 5;
+		}
+		gxLib::Printf( ax + (WINDOW_W/5)*ii , WINDOW_H-26 , PRIORITY_MAX , ATR_DFLT , ARGB_DFLT , funcName[n] );
+	}
 
 
 }

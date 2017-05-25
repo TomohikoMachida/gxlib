@@ -53,6 +53,8 @@
 //#include <d3d9types.h>
 //#include "directx9/CHttpAccess.h"
 
+#include <GL/gl.h>
+#include <GL/glu.h>
 
 //----------------------------------------------------
 //プラットフォーム専用関数
@@ -185,6 +187,8 @@ private:
 #define KEYBOARD_PAGEDOWN    (0x2B)	//(PageDown)
 #define KEYBOARD_DELETE		 (0x2C)	//(VK_DELETE)
 #define KEYBOARD_INSERT		 (0x2D)	//(VK_INSERT)
+#define KEYBOARD_HOME		 (0x2E)	//(VK_HOME)
+#define KEYBOARD_END		 (0x2F)	//(VK_END)
 
 #define KEYSIGN_U KEYBOARD_ARROW_UP
 #define KEYSIGN_D KEYBOARD_ARROW_DOWN

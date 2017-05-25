@@ -47,9 +47,6 @@
     <ClCompile Include="..\..\gxLib\gxTexManager.cpp">
       <Filter>Source Files\gxLib</Filter>
     </ClCompile>
-    <ClCompile Include="..\..\gxLib\gxWebManager.cpp">
-      <Filter>Source Files\gxLib</Filter>
-    </ClCompile>
     <ClCompile Include="..\..\gxLib\gxDebug.cpp">
       <Filter>Source Files\gxLib</Filter>
     </ClCompile>
@@ -134,9 +131,6 @@
       <Filter>Source Files\gxLib</Filter>
     </ClInclude>
     <ClInclude Include="..\..\gxLib\gxTexManager.h">
-      <Filter>Source Files\gxLib</Filter>
-    </ClInclude>
-    <ClInclude Include="..\..\gxLib\gxWebManager.h">
       <Filter>Source Files\gxLib</Filter>
     </ClInclude>
     <ClInclude Include="..\..\gxLib\gx.h">

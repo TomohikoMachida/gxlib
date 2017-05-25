@@ -182,8 +182,10 @@ Sint32 convertKeyNumber( WPARAM id )
 	case VK_TAB:        return KEYBOARD_TAB         ;
 	case VK_RETURN:     return KEYBOARD_RETURN      ;
 //	case VK_RETURN:     return KEYBOARD_ENTER       ;
+	case VK_SHIFT:		return KEYBOARD_SHIFT;
 	case VK_LSHIFT:     return KEYBOARD_SHIFT       ;
 	case VK_RSHIFT:     return KEYBOARD_RSHIFT      ;
+	case VK_CONTROL:	return KEYBOARD_CTRL		;
 	case VK_LCONTROL:   return KEYBOARD_CTRL        ;
 	case VK_RCONTROL:   return KEYBOARD_RCTRL       ;
 	case VK_LMENU:      return KEYBOARD_ALT         ;
@@ -219,6 +221,8 @@ Sint32 convertKeyNumber( WPARAM id )
 	case VK_NEXT:		return KEYBOARD_PAGEDOWN	;
 	case VK_DELETE:		return KEYBOARD_DELETE		;
 	case VK_INSERT:		return KEYBOARD_INSERT		;
+	case VK_END:		return KEYBOARD_HOME;
+	case VK_HOME:		return KEYBOARD_END;
 	default:
 		return id;
 	}
