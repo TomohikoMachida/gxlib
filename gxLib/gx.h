@@ -145,6 +145,31 @@ public:
 		return m_bWaitVSync;
 	}
 
+	void ConnectNetWork( gxBool bOnline = gxTrue)
+	{
+		//ネットワーク接続リクエスト
+		m_bConnenctNetwork = bOnline;
+	}
+
+	Uint32 GetIPAddressV4( gxBool bLocal = gxTrue )
+	{
+		if( bLocal )
+		{
+			return m_uLocalIP;
+		}
+		else
+		{
+			return m_uGlobalIP;
+		}
+
+		return 0x00000000;
+	}
+
+	gxBool IsOnline()
+	{
+		return m_bOnLine;
+	}
+
 	SINGLETON_DECLARE( CGameGirl );
 
 private:
@@ -177,6 +202,9 @@ private:
 
 	gxBool vsyncWait();
 	gxBool flip();
+
+	gxBool network();
+
 
 	Sint32 m_sStepFrm;
 
@@ -214,6 +242,12 @@ private:
 	gxBool m_bInitializeCompleted;
 
 	gxBool m_bWaitVSync;
+
+	//ネットワーク用
+	Uint32 m_uGlobalIP;
+	Uint32 m_uLocalIP;
+	gxBool m_bOnLine;
+	gxBool m_bConnenctNetwork;
 };
 
 

@@ -1,6 +1,8 @@
 ﻿#ifndef _CWIN32_H_
 #define _CWIN32_H_
 
+#define GARURU_WEBAPI_URL "http://garuru.co.jp/api/basic.php"
+
 class CWindows
 {
 public:

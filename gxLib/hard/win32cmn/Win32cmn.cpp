@@ -453,16 +453,95 @@ gxBool SaveFile( const gxChar* pFileName , Uint8* pReadBuf , Uint32 uSize )
 
 gxBool SaveStorageFile( const gxChar* pFileName , Uint8* pReadBuf , Uint32 uSize )
 {
-	// とりあえずSaveFileと同じ扱い
-	return SaveFile( pFileName, pReadBuf, uSize );
+	// ストレージフォルダへの書き込み
+
+	TCHAR* pStr = GetCommandLine();
+
+/*
+	gxChar storagePath[256];
+	sprintf( storagePath , "storage\\%s\\" , pStr );
+	SetCurrentDirectory( storagePath );
+	CreateDirectory(L"Storage");
+*/
+	SetCurrentDirectory( pStr );
+
+	int fh;
+
+	fh = open((char*)pFileName,O_WRONLY|O_BINARY|O_TRUNC|O_CREAT,S_IREAD|S_IWRITE);
+
+	updateMemoryStatus();
+
+	if(fh<0)
+	{
+		//書き込みミス
+		return gxFalse;
+	}
+	else
+	{
+		write(fh,pReadBuf,uSize);
+	}
+
+	close(fh);
 
 }
+
+
 Uint8* LoadStorageFile( const gxChar* pFileName , Uint32* pLength )
 {
-	// とりあえずLoadFileと同じ扱い
-	return LoadFile( pFileName, pLength );
+	//ストレージフォルダへの読み込み
+
+	TCHAR* pStr = GetCommandLine();
+
+/*
+	gxChar storagePath[256];
+	sprintf( storagePath , "storage\\%s\\" , pStr );
+	SetCurrentDirectory( (char*)storagePath , NULL );
+*/
+	SetCurrentDirectory( pStr );
+
+	Uint8* pBuffer=NULL;
+	int fh;
+	long sz_zero;
+	long sz,readsz;
+	unsigned long pos=0;
+	int ret=1;
+	struct stat filestat;
+
+	fh = open((char*)pFileName,O_RDONLY|O_BINARY);
+
+	updateMemoryStatus();
+
+	if(fh<0)
+	{
+		//読み込みミス
+		//close(fh);
+		return NULL;
+	}
+	else
+	{
+		fstat(fh,&filestat);
+		readsz = sz = sz_zero = filestat.st_size;
+
+		*pLength = filestat.st_size;
+		pBuffer = new Uint8[ readsz ];
+
+		if( pBuffer == NULL ) return NULL;
+
+		while(ret > 0)
+		{
+			if( readsz > 1024 ) readsz = 1024; 
+
+			ret = read(fh,&pBuffer[pos],readsz);
+			pos += ret;
+			sz -= ret;
+			readsz = sz;
+		}
+	}
+
+	close(fh);
 
 }
+
 
 void LogDisp( char* pString )
 {
@@ -942,4 +1021,12 @@ void makeAccelKey()
 
 	g_pWindows->m_hAccel = CreateAcceleratorTable( wAccel, enAccelMax );
 
+}
+
+
+gxBool NetWork()
+{
+
+
+	return gxFalse;
 }

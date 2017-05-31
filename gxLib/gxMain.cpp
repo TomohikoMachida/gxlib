@@ -48,6 +48,11 @@ CGameGirl::CGameGirl()
 	m_bInitializeCompleted = gxFalse;
 
 	m_bWaitVSync = gxTrue;
+
+	m_uGlobalIP = 0x00000000;
+	m_uLocalIP  = 0x00000000;
+	m_bOnLine   = gxFalse;
+
 }
 
 
@@ -114,6 +119,7 @@ void CGameGirl::Main()
 		{
 			bSkip = gxTrue;
 		}
+
 		if( !m_bPause || m_sStepFrm == 0 )
 		{
 			gxDebug::GetInstance()->Draw();
@@ -154,6 +160,33 @@ void CGameGirl::Main()
 		}
 
 	}
+
+	m_bOnLine = network();
+
+}
+
+
+gxBool CGameGirl::network()
+{
+	//ネットワーク処理
+
+	gxBool bOnlineReq = gxFalse;
+
+	if( m_bConnenctNetwork )
+	{
+		m_bConnenctNetwork = gxFalse;
+		bOnlineReq = gxTrue;
+	}
+
+	if(m_bOnLine || bOnlineReq )
+	{
+		if( ::NetWork() )
+		{
+			return gxTrue;
+		}
+	}
+
+	return gxFalse;
 
 }
 

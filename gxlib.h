@@ -9,8 +9,8 @@
 #define _GX_LIB_H_
 
 #define VERION_MAJOR   (2)
-#define VERION_MINOR   (2)
-#define VERION_RELEASE (2)
+#define VERION_MINOR   (3)
+#define VERION_RELEASE (1)
 
 //---------------------------------------------------------------------------
 //ユーザー定義
@@ -19,8 +19,8 @@
 //#define PLATFORM_WIN32_CONSOLE
 //#define PLATFORM_WIN32_APP
 //#define PLATFORM_WIN32_WINDOW
-//#define PLATFORM_WIN32_DIRECTX9
-#define PLATFORM_WIN32_OPENGL
+#define PLATFORM_WIN32_DIRECTX9
+//#define PLATFORM_WIN32_OPENGL
 //#define PLATFORM_WIN64_DIRECTX11
 //#define PLATFORM_ANDROID
 //#define PLATFORM_IOS
@@ -536,6 +536,11 @@ public:
 	//デバッグ用のスイッチを設定する
 
 	static void   SetDebugSwitch( Sint32 n , gxBool bOn , gxBool bToggle = gxFalse );
+
+	//IPアドレスを取得する
+	Uint32 GetIPAddressV4( gxBool bLocalAddress = gxFalse );
+
+	gxBool IsOnline();
 
 	//gxLibの設定ファイルです
 

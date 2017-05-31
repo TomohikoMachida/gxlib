@@ -1006,3 +1006,26 @@ void gxLib::SetDebugSwitch( Sint32 n , gxBool bOn , gxBool bToggle )
 }
 
 
+Uint32 gxLib::GetIPAddressV4( gxBool bLocalAddress )
+{
+	//IPアドレスを取得する
+	
+	if( bLocalAddress )
+	{
+		return CGameGirl::GetInstance()->GetIPAddressV4( gxTrue );
+	}
+	else
+	{
+		return CGameGirl::GetInstance()->GetIPAddressV4( gxFalse );
+	}
+
+	return 0x00000000;
+}
+
+
+gxBool gxLib::IsOnline()
+{
+	//オンラインでつながっているか？
+
+	return CGameGirl::GetInstance()->IsOnline();
+}

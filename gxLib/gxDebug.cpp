@@ -311,8 +311,8 @@ void gxDebug::drawConsole()
 
 		"none",
 		"none",
-		"debug",
-		"full",
+		"debugWindow",
+		"fullspeed",
 		"none",
 
 		"none",
@@ -329,6 +329,11 @@ void gxDebug::drawConsole()
 		if (gxLib::KeyBoard(gxKey::SHIFT)&enStatPush)
 		{
 			n += 5;
+
+			if (gxLib::KeyBoard(gxKey::CTRL)&enStatPush)
+			{
+				n += 5;
+			}
 		}
 		gxLib::Printf( ax + (WINDOW_W/5)*ii , WINDOW_H-26 , PRIORITY_MAX , ATR_DFLT , ARGB_DFLT , funcName[n] );
 	}
