@@ -11,7 +11,8 @@
 //----------------------------------
 #pragma pack ( push , 1 )
 
-#define GXI_DECODE_KEY (0xD9)
+//#define GXI_DECODE_KEY (0xD9)
+#define GXI_DECODE_KEY (0xFF)
 
 class CGXImage
 {

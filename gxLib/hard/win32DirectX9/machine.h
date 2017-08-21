@@ -22,8 +22,13 @@
 #pragma warning(disable : 4996)
 #pragma warning(disable : 4819)
 
+#if defined(PLATFORM_WIN64_DIRECTX11)
+#include <d3d11.h>
+#include <d3dx11.h>
+#else
 #include <d3d9.h>
 #include <d3dx9.h>
+#endif
 
 //#define _WIN32_WINNT _WIN32_WINNT_WINXP
 //#define _WIN32_WINNT _WIN32_WINNT_WIN2K

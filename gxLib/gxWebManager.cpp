@@ -8,7 +8,7 @@
 
 Sint32 gxWebManager::Open( gxChar* pURL , gxChar* pUser , gxChar* pPassword )
 {
-	
+	return 0;
 }
 
 gxWebManager::StWebData *gxWebManager::GetWebData( Sint32 index )
@@ -19,7 +19,7 @@ gxWebManager::StWebData *gxWebManager::GetWebData( Sint32 index )
 	//{
 	//	if( m_pWebData[n].bComplete )
 	//	{
-			return &m_pWebData[n];
+			return m_pWebData[n];
 	//	}
 	//}
 
@@ -58,9 +58,9 @@ void gxWebManager::Action()
 //#pragma comment(lib,"wininet.lib")
 
 
+#if 0
 gxWebManager::gxWebManager()
 {
-#if 0
 
 	m_pInterNet = new StInterNet;
 
@@ -99,14 +99,14 @@ gxWebManager::gxWebManager()
 	}
 
 	m_pTemp = (Uint8*)malloc( enMaxFileSize );
-#endif
 
 }
+#endif
 
 
+#if 0
 gxWebManager::~gxWebManager()
 {
-#if 0
 	if( m_pTemp ) free( m_pTemp );
 
 	StInterNet *pInet = (StInterNet*)m_pInterNet;
@@ -115,13 +115,13 @@ gxWebManager::~gxWebManager()
 	InternetCloseHandle( pInet->hInternet );
 
 	delete m_pInterNet;
-#endif
 
 }
+#endif
 
-void gxWebManager::Open( gxChar* pURL , gxChar* pUser , gxChar* pPassword )
-{
 #if 0
+Sint32 gxWebManager::Open( gxChar* pURL , gxChar* pUser , gxChar* pPassword )
+{
 	if( m_bError ) return;
 
 	StInterNet *pInet = (StInterNet*)m_pInterNet;
@@ -145,9 +145,9 @@ void gxWebManager::Open( gxChar* pURL , gxChar* pUser , gxChar* pPassword )
 		m_bError = gxTrue;
 		return;
 	}
-#endif
 
 }
+#endif
 
 
 void gxWebManager::Read()

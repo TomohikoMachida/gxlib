@@ -14,9 +14,11 @@
 	#include <opencv2/highgui/highgui.hpp>
 
 	#ifdef GX_DEBUG
-		#pragma comment(lib,"openCV/opencv_world310d.lib")
+		//#pragma comment(lib,"openCV/opencv_world310d.lib")
+		#pragma comment(lib,"openCV/opencv_world330d.lib")
 	#else
-		#pragma comment(lib,"openCV/opencv_world310.lib")
+		//#pragma comment(lib,"openCV/opencv_world310.lib")
+		#pragma comment(lib,"openCV/opencv_world330.lib")
 	#endif
 
 

@@ -15,7 +15,7 @@
 #endif
 
 #define MAX_PATH_LENGTH (256)
-#define GXI_DECODE_KEY (0xD9)
+//#define GXI_DECODE_KEY (0xD9)
 //#define GXI_DECODE_KEY (0x00)
 
 gxChar g_NameBuf[MAX_PATH_LENGTH];
@@ -233,7 +233,7 @@ gxBool CGXImage::Analyse( Sint32 version )
 				//DRQがそのまま入っていれば解除キーは３バイト目になるはず
 				//m_uMask = m_pFileImage[3];
 				//LX形式
-				version = enVersion1_0_2;
+				//version = enVersion1_0_2;
 
 			}
 		}

@@ -16,6 +16,17 @@
 //ユーザー定義
 //---------------------------------------------------------------------------
 
+#if \
+	!defined(PLATFORM_WIN32_CONSOLE) && \
+	!defined(PLATFORM_WIN32_APP) && \
+	!defined(PLATFORM_WIN32_WINDOW) && \
+	!defined(PLATFORM_WIN32_DIRECTX9) && \
+	!defined(PLATFORM_WIN32_OPENGL) && \
+	!defined(PLATFORM_WIN64_DIRECTX11) && \
+	!defined(PLATFORM_ANDROID) && \
+	!defined(PLATFORM_IOS) && \
+	!defined(PLATFORM_COCOS2DX)
+
 //#define PLATFORM_WIN32_CONSOLE
 //#define PLATFORM_WIN32_APP
 //#define PLATFORM_WIN32_WINDOW
@@ -26,8 +37,12 @@
 //#define PLATFORM_IOS
 //#define PLATFORM_COCOS2DX
 
-#define WINDOW_W (640)
-#define WINDOW_H (480)
+#endif
+
+//#define WINDOW_W (640)
+//#define WINDOW_H (480)
+#define WINDOW_W (480)
+#define WINDOW_H (272)
 
 #define MAX_ORDER_NUM (40000*2)		//グラフィックのオーダー（同時）限界数
 #define MAX_TEXT_NUM  (256*2)			//gxLib::Printfでリクエスト可能な限界数

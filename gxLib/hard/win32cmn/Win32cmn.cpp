@@ -483,6 +483,7 @@ gxBool SaveStorageFile( const gxChar* pFileName , Uint8* pReadBuf , Uint32 uSize
 
 	close(fh);
 
+	return gxTrue;
 }
 
 
@@ -540,6 +541,7 @@ Uint8* LoadStorageFile( const gxChar* pFileName , Uint32* pLength )
 
 	close(fh);
 
+	return pBuffer;
 }
 
 

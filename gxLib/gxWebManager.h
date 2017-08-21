@@ -21,7 +21,7 @@ public:
 
 		for(Sint32 ii=0; ii<enDataBufferMax; ii++ )
 		{
-			m_pWebData[ii].pData = NULL;
+			m_pWebData[ii]->pData = NULL;
 		}
 	}
 
@@ -29,25 +29,18 @@ public:
 	{
 		for(Sint32 ii=0; ii<enDataBufferMax; ii++ )
 		{
-			if( m_pWebData[ii].pData )
+			if( m_pWebData[ii]->pData )
 			{
-				SAFE_DELETE( m_pWebData[ii].pData );
+				SAFE_DELETE( m_pWebData[ii]->pData );
 			}
 		}
 	}
 
 	Sint32 Open( gxChar* pURL , gxChar* pUser , gxChar* pPassword );
-
-	StWebData *GetWebData( Sint32 index );
-
-	gxBool IsLoadComplete( Sint32 index )
-	{
-		Sint32 n = index%enDataBufferMax;
-		
-		return m_pWebData[n].bComplete;
-	}
-
-	void Action();
+	void Read();
+	gxBool IsReadEnd();
+	gxBool IsError();
+	Uint8* GetDataImage();
 
 	typedef struct StWebData {
 
@@ -56,7 +49,7 @@ public:
 			pData = NULL;
 			bComplete = gxFalse;
 			uSize = 0;
-			url[0]  = 0x00;
+			url[0] = 0x00;
 			user[0] = 0x00;
 			pass[0] = 0x00;
 		}
@@ -70,6 +63,17 @@ public:
 
 	} StWebData;
 
+
+	StWebData *GetWebData( Sint32 index );
+
+	gxBool IsLoadComplete( Sint32 index )
+	{
+		Sint32 n = index%enDataBufferMax;
+		
+		return m_pWebData[n]->bComplete;
+	}
+
+	void Action();
 
 	Sint32 GetMinIndex()
 	{
@@ -87,7 +91,9 @@ private:
 	Sint32 m_sReqMaxIndex;
 
 	StWebData *m_pWebData[ enDataBufferMax ];
-
+	gxBool m_bReadComplete;
+	gxBool m_bError;
+	Uint8* m_pFileImage;
 };
 
 

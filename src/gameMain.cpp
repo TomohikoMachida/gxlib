@@ -9,13 +9,16 @@
 #include <gxLib.h>
 
 
-void Visorizer( gxBool bReset = gxFalse );
+//void Visorizer( gxBool bReset = gxFalse );
+gxBool GunHoundMain(gxBool bReset);
 
 gxBool GameMain()
 {
-	Visorizer();
+	//Visorizer();
+	//
+	//return gxTrue;
 
-	return gxTrue;
+	return GunHoundMain(gxFalse);
 }
 
 gxBool GameEnd()
@@ -35,9 +38,11 @@ gxBool GameResume()
 
 gxBool GameReset()
 {
-	Visorizer( gxTrue );
+	//Visorizer( gxTrue );
+	//
+	//return gxTrue;
 
-	return gxTrue;
+	return GunHoundMain(gxTrue);
 }
 
 gxBool DragAndDrop(char* szFileName)
